@@ -81,8 +81,8 @@ public class BoardManager: MonoBehaviour
                 tile.pos.x = L;
                 tile.pos.y = W;
                 tileObj.transform.position = new Vector3(
-                    L * tileObj.transform.localScale.x, // check once we know what a tile is
-                    W * tileObj.transform.localScale.y, // check once we know what a tile is
+                    L * tileObj.transform.localScale.x,
+                    W * tileObj.transform.localScale.y,
                     tileObj.transform.position.z);
                 Tiles.Add(tile.pos, tile);
                 emptyTiles.Add(tile.pos);
@@ -118,7 +118,7 @@ public class BoardManager: MonoBehaviour
                 CheckAvailableNeighbours(currentTilePos);
 
                 // and we grow it appropriately
-                for (int j = 0; j < Random.Range(pair.Value.Size.x, pair.Value.Size.y + 1); j++)
+                for (int j = 1; j < Random.Range(pair.Value.Size.x, pair.Value.Size.y + 1); j++)
                 {
                     Vector2 chosenNeighbour = availableNeighbours[Random.Range(0, availableNeighbours.Count)];
                     availableNeighbours.Remove(chosenNeighbour);
@@ -146,6 +146,7 @@ public class Terrain
     public int number; // the number of seeds of this type of terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
     public Material material;
-    public Sprite imageSides;
-    public Sprite imageTop;
+    public Mesh mesh;
+   // public Sprite imageSides;
+   // public Sprite imageTop;
 }

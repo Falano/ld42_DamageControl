@@ -16,7 +16,8 @@ public class Tile : MonoBehaviour
         {
             _type = value;
             ground.material = BoardManager.instance.Terrains[_type].material;
-            if(value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
+            mesh.mesh = BoardManager.instance.Terrains[_type].mesh;
+            if (value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
             {
                 BoardManager.instance.emptyTiles.Add(pos);
             }
@@ -45,7 +46,10 @@ public class Tile : MonoBehaviour
     [SerializeField]
     MeshRenderer ground;
     [SerializeField]
+    MeshFilter mesh;
+    [SerializeField]
     List<MeshRenderer> occupantSpriteHolder;
+
 }
 
 public enum type
