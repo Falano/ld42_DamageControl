@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
         {
             foreach(MeshRenderer holder in occupantSpriteHolder)
             {
-                holder.material = GrowthManager.instance.Occupants[_state].material;
+                holder.material = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
             }
             _state = value;
         }
