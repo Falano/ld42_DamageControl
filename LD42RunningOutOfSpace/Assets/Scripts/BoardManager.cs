@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class BoardManager: MonoBehaviour
 {
+    public static BoardManager instance;
+
     [Header("base infos")]
     public int length;
     public int width;
 
     public GameObject tilePrefab;
+    public GameObject cameraPivot;
 
     [Header("terrains")]
+    public Terrain empty;
     public Terrain water;
     public Terrain mountain;
     public Terrain field;
-    Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
+    public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
     Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
     List<Vector2> emptyTiles = new List<Vector2>();
 
@@ -23,6 +27,21 @@ public class BoardManager: MonoBehaviour
 
     public void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(this);
+        }
+
+        // we set up the Terrain enums
+        Terrains.Add(empty.Type, empty);
+        Terrains.Add(water.Type, water);
+        Terrains.Add(mountain.Type, mountain);
+        Terrains.Add(field.Type, field);
+
         CreateBoard();
     }
 
@@ -50,11 +69,6 @@ public class BoardManager: MonoBehaviour
     /// </summary>
     public void CreateBoard()
     {
-        // we set up the Terrain enums
-        Terrains.Add(type.water, water);
-        Terrains.Add(type.mountain, mountain);
-        Terrains.Add(type.field, field);
-
         // we create the board
         for (int L = 0; L < length; L++)
         {
@@ -100,6 +114,12 @@ public class BoardManager: MonoBehaviour
                 }
             }
         }
+
+        if(cameraPivot == null)
+        {
+            cameraPivot = new GameObject("cameraPivot");
+        }
+        cameraPivot.transform.position = new Vector3(length/2, width/2, 0);
     }
 
 }
@@ -110,7 +130,7 @@ public class Terrain
     public type Type;
     public int number; // the number of seed of this type of terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
-    public Color color;
+    public Material material;
     public Sprite imageSides;
     public Sprite imageTop;
 }

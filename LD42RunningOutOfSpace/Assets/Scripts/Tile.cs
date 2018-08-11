@@ -2,23 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour
+{
 
-	public type Type;
-	public Vector2 pos;
-	public state State;
-    
+    type _type;
+    public type Type
+    {
+        get
+        {
+            return _type;
+        }
+        set
+        {
+            ground.material = BoardManager.instance.Terrains[_type].material;
+            _type = value;
+        }
+    }
+    public Vector2 pos;
+    state _state;
+    public state State
+    {
+        get { return _state; }
+        set
+        {
+            foreach(MeshRenderer holder in occupantSpriteHolder)
+            {
+                holder.material = GrowthManager.instance.Occupants[_state].material;
+            }
+            _state = value;
+        }
+    }
+    List<MeshRenderer> sides;
+    MeshRenderer ground;
+    List<MeshRenderer> occupantSpriteHolder;
 }
 
-public enum type {
+public enum type
+{
     empty,
-	mountain,
+    mountain,
     water,
     field
 }
 
-public enum state {
-	healthy,
+public enum state
+{
+    healthy,
     plant,
     rabbit,
     cat,
