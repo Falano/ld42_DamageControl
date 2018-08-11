@@ -11,6 +11,7 @@ public class BoardManager: MonoBehaviour
     public int width;
 
     public GameObject tilePrefab;
+    [HideInInspector]
     public GameObject cameraPivot;
 
     [Header("terrains")]
@@ -128,7 +129,7 @@ public class BoardManager: MonoBehaviour
 public class Terrain
 {
     public type Type;
-    public int number; // the number of seed of this type of terrain
+    public int number; // the number of seeds of this type of terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
     public Material material;
     public Sprite imageSides;

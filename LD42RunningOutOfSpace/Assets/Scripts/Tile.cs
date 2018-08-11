@@ -32,8 +32,11 @@ public class Tile : MonoBehaviour
             _state = value;
         }
     }
+    [SerializeField]
     List<MeshRenderer> sides;
+    [SerializeField]
     MeshRenderer ground;
+    [SerializeField]
     List<MeshRenderer> occupantSpriteHolder;
 }
 
