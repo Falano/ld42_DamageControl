@@ -21,7 +21,8 @@ public class BoardManager: MonoBehaviour
     public Terrain field;
     public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
     Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
-    List<Vector2> emptyTiles = new List<Vector2>();
+    [HideInInspector]
+    public List<Vector2> emptyTiles = new List<Vector2>();
 
     List<Vector2> availableNeighbours = new List<Vector2>();
 
@@ -38,10 +39,10 @@ public class BoardManager: MonoBehaviour
         }
 
         // we set up the Terrain enums
-        Terrains.Add(empty.Type, empty);
-        Terrains.Add(water.Type, water);
-        Terrains.Add(mountain.Type, mountain);
-        Terrains.Add(field.Type, field);
+        Terrains.Add(type.empty, empty);
+        Terrains.Add(type.water, water);
+        Terrains.Add(type.mountain, mountain);
+        Terrains.Add(type.field, field);
 
         CreateBoard();
     }
@@ -88,12 +89,22 @@ public class BoardManager: MonoBehaviour
             }
         }
 
+        UpdateTerrainType();
 
+        if(cameraPivot == null)
+        {
+            cameraPivot = new GameObject("cameraPivot");
+        }
+        cameraPivot.transform.position = new Vector3(length/2, width/2, 0);
+    }
+
+    public void UpdateTerrainType()
+    {
         // we change the type of the tiles
         // for each terrain
         foreach (KeyValuePair<type, Terrain> pair in Terrains)
         {
-            type currentType = pair.Value.Type;
+            type currentType = pair.Key;
             // we plant the right number of seeds
             for (int i = 0; i < pair.Value.number; i++)
             {
@@ -112,17 +123,20 @@ public class BoardManager: MonoBehaviour
                     Vector2 chosenNeighbour = availableNeighbours[Random.Range(0, availableNeighbours.Count)];
                     availableNeighbours.Remove(chosenNeighbour);
                     CheckAvailableNeighbours(chosenNeighbour);
+                    Tiles[chosenNeighbour].Type = pair.Key;
                 }
             }
         }
-
-        if(cameraPivot == null)
-        {
-            cameraPivot = new GameObject("cameraPivot");
-        }
-        cameraPivot.transform.position = new Vector3(length/2, width/2, 0);
     }
 
+    public void ResetBoard()
+    {
+        emptyTiles.Clear();
+        foreach(KeyValuePair<Vector2, Tile> tile in Tiles)
+        {
+            tile.Value.Type = type.empty;
+        }
+    }
 }
 
 [System.Serializable]

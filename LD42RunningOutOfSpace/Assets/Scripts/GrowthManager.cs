@@ -29,15 +29,14 @@ public class GrowthManager : MonoBehaviour {
             Destroy(this);
         }
 
-        Occupants.Add(healthy.State, healthy);
-        Occupants.Add(healthy.State, healthy);
-        Occupants.Add(plant.State, plant);
-        Occupants.Add(rabbit.State, rabbit);
-        Occupants.Add(cat.State, cat);
-        Occupants.Add(fox.State, fox);
-        Occupants.Add(eagle.State, eagle);
-        Occupants.Add(hunter.State, hunter);
-        Occupants.Add(ranger.State, ranger);
+        Occupants.Add(state.healthy, healthy);
+        Occupants.Add(state.plant, plant);
+        Occupants.Add(state.rabbit, rabbit);
+        Occupants.Add(state.cat, cat);
+        Occupants.Add(state.fox, fox);
+        Occupants.Add(state.eagle, eagle);
+        Occupants.Add(state.hunter, hunter);
+        Occupants.Add(state.ranger, ranger);
 
 
     }

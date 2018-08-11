@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-
+    [SerializeField]
     type _type;
     public type Type
     {
@@ -14,8 +14,16 @@ public class Tile : MonoBehaviour
         }
         set
         {
-            ground.material = BoardManager.instance.Terrains[_type].material;
             _type = value;
+            ground.material = BoardManager.instance.Terrains[_type].material;
+            if(value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
+            {
+                BoardManager.instance.emptyTiles.Add(pos);
+            }
+            else if(BoardManager.instance.emptyTiles.Contains(pos))
+            {
+                BoardManager.instance.emptyTiles.Remove(pos);
+            }
         }
     }
     public Vector2 pos;
@@ -25,11 +33,11 @@ public class Tile : MonoBehaviour
         get { return _state; }
         set
         {
+            _state = value;
             foreach(MeshRenderer holder in occupantSpriteHolder)
             {
                 holder.material = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
             }
-            _state = value;
         }
     }
     [SerializeField]
