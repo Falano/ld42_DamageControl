@@ -99,6 +99,7 @@ public class BoardManager : MonoBehaviour
         if (cameraPivot == null)
         {
             cameraPivot = new GameObject("cameraPivot");
+            Camera.main.transform.SetParent(cameraPivot.transform);
         }
         cameraPivot.transform.position = new Vector3(length / 2, width / 2, 0);
     }

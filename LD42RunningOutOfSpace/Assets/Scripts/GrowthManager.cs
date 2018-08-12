@@ -145,7 +145,7 @@ public class GrowthManager : MonoBehaviour
 
     public void CreateAtPos(state occupant, Vector2 pos)
     {
-        Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
+        //Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
         BoardManager.instance.Tiles[pos].State = occupant;
     }
 }
