@@ -14,6 +14,7 @@ public class BoardManager: MonoBehaviour
     [HideInInspector]
     public GameObject cameraPivot;
 
+    public List<Material> Materials;
     [Header("terrains")]
     public Terrain empty;
     public Terrain water;
@@ -145,7 +146,7 @@ public class Terrain
     public type Type;
     public int number; // the number of seeds of this type of terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
-    public Material material;
+    //public Material material;
     public Mesh mesh;
    // public Sprite imageSides;
    // public Sprite imageTop;

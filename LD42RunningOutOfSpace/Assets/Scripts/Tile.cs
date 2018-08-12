@@ -15,7 +15,6 @@ public class Tile : MonoBehaviour
         set
         {
             _type = value;
-            ground.material = BoardManager.instance.Terrains[_type].material;
             mesh.mesh = BoardManager.instance.Terrains[_type].mesh;
             if (value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
             {
@@ -51,6 +50,13 @@ public class Tile : MonoBehaviour
     MeshFilter mesh;
     [SerializeField]
     List<MeshRenderer> occupantSpriteHolder;
+
+
+    private void Start()
+    {
+            ground.material = BoardManager.instance.Materials[Random.Range(0, BoardManager.instance.Materials.Count)];
+        
+    }
 
 }
 
