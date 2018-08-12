@@ -7,6 +7,10 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    Vector3 baseCamPivotRot;
+    Vector3 baseCamPivotPos;
+    float baseCamzoom;
+
     GameObject cameraPivot { get { return BoardManager.instance.cameraPivot; } }
     new Camera camera;
     public GameObject buttonsParent;
@@ -41,7 +45,20 @@ public class UIManager : MonoBehaviour
         }
 
         camera = Camera.main;
-        //buttons = buttonsParent.GetComponentsInChildren<Image>();
+    }
+
+    public void SetCameraReset()
+    {
+        baseCamzoom = camera.orthographicSize;
+        baseCamPivotPos = cameraPivot.transform.position;
+        baseCamPivotRot = cameraPivot.transform.rotation.eulerAngles;
+    }
+
+    public void ResetCamera()
+    {
+        camera.orthographicSize = baseCamzoom;
+        cameraPivot.transform.position = baseCamPivotPos;
+        cameraPivot.transform.rotation = Quaternion.Euler(baseCamPivotRot);
     }
 
     public void ToggleNextTurn(bool state)

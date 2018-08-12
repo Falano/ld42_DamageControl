@@ -101,6 +101,7 @@ public class BoardManager : MonoBehaviour
             Camera.main.transform.SetParent(cameraPivot.transform);
         }
         cameraPivot.transform.position = new Vector3(length / 2, width / 2, 0);
+        UIManager.instance.SetCameraReset();
     }
 
     void UpdateTerrainType()
