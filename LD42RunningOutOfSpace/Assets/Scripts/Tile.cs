@@ -53,6 +53,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
+            occupantSpriteHolder.transform.Rotate(0, Random.Range(0, 360), 0);
             ground.material = BoardManager.instance.Materials[Random.Range(0, BoardManager.instance.Materials.Count)];
     }
 
