@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 10
-  width: 10
+  length: 16
+  width: 16
   initialPlantsNumber: 2
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
@@ -181,11 +181,11 @@ MonoBehaviour:
   mountain:
     Type: 1
     number: 5
-    Size: {x: 1, y: 4}
+    Size: {x: 1, y: 2}
     mesh: {fileID: 4300000, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   field:
     Type: 3
     number: 4
-    Size: {x: 1, y: 3}
+    Size: {x: 1, y: 2}
     mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   emptyTiles: []
