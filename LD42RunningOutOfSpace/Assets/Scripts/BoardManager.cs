@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour
     public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
     public Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
     [HideInInspector]
-    public List<Vector2> emptyTiles = new List<Vector2>();
+    public List<Vector2> emptyTiles { get { return GrowthManager.instance.Occupants[state.healthy].listTiles; } }
 
     List<Vector2> availableNeighbours = new List<Vector2>();
 
@@ -88,7 +88,6 @@ public class BoardManager : MonoBehaviour
                     W * tileObj.transform.localScale.y,
                     tileObj.transform.position.z);
                 Tiles.Add(tile.pos, tile);
-                emptyTiles.Add(tile.pos);
             }
         }
 

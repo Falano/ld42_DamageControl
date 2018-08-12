@@ -18,12 +18,10 @@ public class Tile : MonoBehaviour
             mesh.mesh = BoardManager.instance.Terrains[_type].mesh;
             if (value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
             {
-                BoardManager.instance.emptyTiles.Add(pos);
                 GrowthManager.instance.Occupants[state.healthy].listTiles.Add(pos);
             }
             else if(value != type.empty && BoardManager.instance.emptyTiles.Contains(pos))
             {
-                BoardManager.instance.emptyTiles.Remove(pos);
                 GrowthManager.instance.Occupants[state.healthy].listTiles.Remove(pos);
 
             }
