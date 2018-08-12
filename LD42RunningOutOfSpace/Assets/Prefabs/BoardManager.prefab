@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265812036628064}
   - component: {fileID: 114841580218620664}
+  - component: {fileID: 114690462710641026}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -40,6 +41,112 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114690462710641026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1448448536167674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33be47918c603f47b7bd599732b73b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthy:
+    State: 0
+    images:
+    - {fileID: 2100000, guid: e8c0093dda6294225ac6ad269f1b028f, type: 2}
+    preys: 
+    firstApparition: 0
+    cooldown: 0
+    movesNumber: 0
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  plant:
+    State: 1
+    images:
+    - {fileID: 2100000, guid: 250ca0669cf8a4a81a5a7320fcef74ab, type: 2}
+    preys: 00000000
+    firstApparition: 0
+    cooldown: 0
+    movesNumber: 2
+    specialType: 2
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  rabbit:
+    State: 2
+    images:
+    - {fileID: 2100000, guid: 1d088f7cf30b5417a8c40622b0b87296, type: 2}
+    preys: 01000000
+    firstApparition: 0
+    cooldown: 0
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  cat:
+    State: 3
+    images:
+    - {fileID: 2100000, guid: 97a79eecb97ed40a087b4b9f731abcf6, type: 2}
+    preys: 02000000
+    firstApparition: 4
+    cooldown: 1
+    movesNumber: 1
+    specialType: 3
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  fox:
+    State: 4
+    images:
+    - {fileID: 2100000, guid: b42fca7cd325c4ab291af61f85fe2b10, type: 2}
+    preys: 0200000003000000
+    firstApparition: 8
+    cooldown: 3
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  eagle:
+    State: 5
+    images:
+    - {fileID: 2100000, guid: 9d7f4a17fdca54c998e353d1dc41754f, type: 2}
+    preys: 020000000300000004000000
+    firstApparition: 14
+    cooldown: 3
+    movesNumber: 1
+    specialType: 1
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  hunter:
+    State: 6
+    images:
+    - {fileID: 2100000, guid: 0b69ef08343244ef580755841d02da1b, type: 2}
+    preys: 020000000400000005000000
+    firstApparition: 0
+    cooldown: 0
+    movesNumber: 0
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
+  ranger:
+    State: 0
+    images: []
+    preys: 
+    firstApparition: 0
+    cooldown: 0
+    movesNumber: 0
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
 --- !u!114 &114841580218620664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -60,26 +167,23 @@ MonoBehaviour:
     number: 0
     Size: {x: 0, y: 0}
     material: {fileID: 2100000, guid: 250ca0669cf8a4a81a5a7320fcef74ab, type: 2}
-    imageSides: {fileID: 0}
-    imageTop: {fileID: 0}
+    mesh: {fileID: 0}
   water:
     Type: 2
     number: 3
     Size: {x: 1, y: 6}
     material: {fileID: 2100000, guid: b42fca7cd325c4ab291af61f85fe2b10, type: 2}
-    imageSides: {fileID: 0}
-    imageTop: {fileID: 0}
+    mesh: {fileID: 0}
   mountain:
     Type: 1
     number: 5
     Size: {x: 1, y: 4}
     material: {fileID: 2100000, guid: e8c0093dda6294225ac6ad269f1b028f, type: 2}
-    imageSides: {fileID: 0}
-    imageTop: {fileID: 0}
+    mesh: {fileID: 0}
   field:
     Type: 3
     number: 4
     Size: {x: 1, y: 3}
     material: {fileID: 2100000, guid: 1d088f7cf30b5417a8c40622b0b87296, type: 2}
-    imageSides: {fileID: 0}
-    imageTop: {fileID: 0}
+    mesh: {fileID: 0}
+  emptyTiles: []

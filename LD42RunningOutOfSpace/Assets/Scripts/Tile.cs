@@ -34,11 +34,13 @@ public class Tile : MonoBehaviour
         get { return _state; }
         set
         {
+            GrowthManager.instance.Occupants[_state].listTiles.Remove(pos);
             _state = value;
             foreach(MeshRenderer holder in occupantSpriteHolder)
             {
                 holder.material = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
             }
+            GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
         }
     }
     [SerializeField]

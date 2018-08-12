@@ -20,7 +20,7 @@ public class BoardManager: MonoBehaviour
     public Terrain mountain;
     public Terrain field;
     public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
-    Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
+    public Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
     [HideInInspector]
     public List<Vector2> emptyTiles = new List<Vector2>();
 
@@ -132,9 +132,9 @@ public class BoardManager: MonoBehaviour
     public void ResetBoard()
     {
         emptyTiles.Clear();
-        foreach(KeyValuePair<Vector2, Tile> tile in Tiles)
+        foreach(Tile tile in Tiles.Values)
         {
-            tile.Value.Type = type.empty;
+            tile.Type = type.empty;
         }
     }
 }
