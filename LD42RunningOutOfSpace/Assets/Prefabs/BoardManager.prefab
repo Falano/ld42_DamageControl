@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTurn: 0
+  createdSomethingThisTurn: 0
   healthy:
     State: 0
     images:
@@ -62,6 +63,7 @@ MonoBehaviour:
     cooldown: 0
     movesNumber: 0
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -74,6 +76,7 @@ MonoBehaviour:
     cooldown: 0
     movesNumber: 2
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -86,18 +89,20 @@ MonoBehaviour:
     cooldown: 0
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
   cat:
     State: 3
     images:
-    - {fileID: 0}
+    - {fileID: 4300002, guid: be9c00a3edc1f4b6b87452b712d861f4, type: 3}
     preys: 02000000
     firstApparition: 4
     cooldown: 1
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -110,6 +115,7 @@ MonoBehaviour:
     cooldown: 3
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -122,6 +128,7 @@ MonoBehaviour:
     cooldown: 3
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -135,6 +142,7 @@ MonoBehaviour:
     cooldown: 0
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -147,6 +155,7 @@ MonoBehaviour:
     cooldown: 0
     movesNumber: 1
     specialType: 0
+    button: {fileID: 0}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -161,13 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 16
-  width: 16
+  length: 30
+  width: 30
   initialPlantsNumber: 2
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
   Materials:
   - {fileID: 2100000, guid: de8f2e85414ba44b5831f5573c23797b, type: 2}
+  - {fileID: 2100000, guid: 7e26bbc356ee74ecb9dae0d41596723e, type: 2}
+  - {fileID: 2100000, guid: cc476c876c309407a937b2c5138522f9, type: 2}
   empty:
     Type: 0
     number: 0
@@ -188,4 +199,3 @@ MonoBehaviour:
     number: 4
     Size: {x: 1, y: 2}
     mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
-  emptyTiles: []

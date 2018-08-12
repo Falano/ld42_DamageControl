@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrowthManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GrowthManager : MonoBehaviour
     public static GrowthManager instance;
 
     public int currentTurn = 0;
+    public bool createdSomethingThisTurn;
 
     [Header("occupants")]
     public Occupant healthy;
@@ -51,34 +53,40 @@ public class GrowthManager : MonoBehaviour
         // for each state
         foreach (Occupant occupant in Occupants.Values)
         {
-                int total = occupant.listTiles.Count;
-                // for each instance / tile occupied
-                    for (int i = 0; i < total ; i++)
+            int total = occupant.listTiles.Count;
+            // for each instance / tile occupied
+            for (int i = 0; i < total; i++)
+            {
+                //Debug.Log("2-3) tile: " + occupant.listTiles[i].ToString() + " of " + occupant.State.ToString());
+                // we make the special or normal move
+                occupant.updateMoveStats(occupant.listTiles[i]);
+                if (occupant.haveNeighbourhoodTilesASpecialType)
                 {
-                    //Debug.Log("2-3) tile: " + occupant.listTiles[i].ToString() + " of " + occupant.State.ToString());
-                    // we make the special or normal move
-                    occupant.updateMoveStats(occupant.listTiles[i]);
-                    if (occupant.haveNeighbourhoodTilesASpecialType)
+                    occupant.specialMove();
+                }
+                else
+                {
+                    for (int j = 0; j < occupant.movesNumber; j++)
                     {
-                        occupant.specialMove();
+                        occupant.move();
                     }
-                    else
-                    {
-                        for (int j = 0; j < occupant.movesNumber; j++)
-                        {
-                            occupant.move();
-                        }
-                    }
+                }
             }
             // we reset its availibility
-            occupant.isAvailable = null;
+            //occupant.isAvailable = null;
+            if (occupant.button)
+            {
+                occupant.button.interactable = occupant.isAvailable;
+            }
         }
 
-        if(BoardManager.instance.emptyTiles.Count == 0)
+        if (Occupants[state.healthy].listTiles.Count == 0)
         {
-            Debug.Log("YOU LOST THE GAME AT TURN " + currentTurn);
+            UIManager.instance.ToggleNextTurn(false);
         }
         currentTurn++;
+        createdSomethingThisTurn = false;
+
     }
 
     public void CreateOccupant(string occupant)
@@ -116,8 +124,7 @@ public class GrowthManager : MonoBehaviour
                 yield return StartCoroutine(CreatingOccupant(Occupant));
                 break;
         }
-        Occupants[Occupant].lastCall = currentTurn;
-        Occupants[Occupant].isAvailable = null;
+        //Occupants[Occupant].isAvailable = null;
     }
 
     IEnumerator CreatingOccupant(state Occupant)
@@ -147,6 +154,17 @@ public class GrowthManager : MonoBehaviour
     {
         //Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
         BoardManager.instance.Tiles[pos].State = occupant;
+
+        // and we keep the player from adding more
+        createdSomethingThisTurn = true;
+        foreach (Occupant occ in Occupants.Values)
+        {
+            if (occ.button)
+            {
+                occ.button.interactable = occ.isAvailable;
+            }
+        }
+        Occupants[occupant].lastCall = currentTurn;
     }
 }
 
@@ -162,46 +180,56 @@ public class Occupant
     public int cooldown;
     public int movesNumber;
     public type specialType;
+    public Button button;
 
     //[HideInInspector]
     public List<Vector2> listTiles = new List<Vector2>();
     [HideInInspector]
     public int lastCall;
     //[HideInInspector]
-    bool? _isAvailable;
-    public bool? isAvailable
+    //bool? _isAvailable;
+    public bool isAvailable
     {
         get
         {
-            if (_isAvailable == null)
+            /*if (_isAvailable == null)
             {
-                _isAvailable = false;
-                switch (State)
-                {
-                    case state.hunter:
-                        if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count > 1)
-                        {
-                            _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
-                        }
-                        else if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count == 1)
-                        {
-                            _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= 10);
-                        }
-                        break;
-                    case state.ranger:
-                        _isAvailable = (GrowthManager.instance.Occupants[state.hunter].listTiles.Count > 0 && listTiles.Count == 0);
-                        break;
-                    default:
-                        _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= cooldown);
-                        break;
-                }
+                _isAvailable = false;*/
+                if(GrowthManager.instance.currentTurn < firstApparition || GrowthManager.instance.createdSomethingThisTurn)
+            {
+                return false;
             }
+            switch (State)
+            {
+                case state.hunter:
+                    if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count > 1)
+                    {
+                        //    _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
+                        return (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
+                    }
+                    else if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count == 1)
+                    {
+                        //  _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= 10);
+                        return (GrowthManager.instance.currentTurn - lastCall >= 10);
+                    }
+                    break;
+                case state.ranger:
+                    //_isAvailable = (GrowthManager.instance.Occupants[state.hunter].listTiles.Count > 0 && listTiles.Count == 0);
+                    return (GrowthManager.instance.Occupants[state.hunter].listTiles.Count > 0 && listTiles.Count == 0);
+                    break;
+                default:
+                    //_isAvailable = (GrowthManager.instance.currentTurn - lastCall >= cooldown);
+                    return (GrowthManager.instance.currentTurn - lastCall >= cooldown);
+                    break;
+            }
+            return false;
+        }/*
             return _isAvailable;
         }
         set
         {
             _isAvailable = value;
-        }
+        }*/
     }
 
 
