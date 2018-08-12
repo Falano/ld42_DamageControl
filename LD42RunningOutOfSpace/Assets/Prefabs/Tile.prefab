@@ -341,7 +341,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 97a79eecb97ed40a087b4b9f731abcf6, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -551,7 +551,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 97a79eecb97ed40a087b4b9f731abcf6, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -680,7 +680,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a7c79163e134030b4099c8ef535fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
   pos: {x: 0, y: 0}
   sides: []
   ground: {fileID: 23494809298315888}
+  mesh: {fileID: 33849381850837770}
   occupantSpriteHolder: []

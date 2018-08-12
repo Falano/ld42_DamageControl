@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardManager: MonoBehaviour
+public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
 
     [Header("base infos")]
     public int length;
     public int width;
+    public int initialPlantsNumber;
 
     public GameObject tilePrefab;
     [HideInInspector]
@@ -30,7 +31,7 @@ public class BoardManager: MonoBehaviour
 
     public void Start()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -45,14 +46,15 @@ public class BoardManager: MonoBehaviour
         Terrains.Add(type.mountain, mountain);
         Terrains.Add(type.field, field);
 
-        CreateBoard();
+        StartCoroutine(CreateBoard());
+        FirstTurn();
     }
 
     /// <summary>
     /// checks around the current tile all those it can expand into 
     /// </summary>
     /// <param name="currentTilePos"></param>
-    public void CheckAvailableNeighbours (Vector2 currentTilePos)
+    void CheckAvailableNeighbours(Vector2 currentTilePos)
     {
         for (int x = -1; x <= 1; x++)
         {
@@ -70,7 +72,7 @@ public class BoardManager: MonoBehaviour
     /// <summary>
     /// instantiate each tile of the board
     /// </summary>
-    public void CreateBoard()
+    IEnumerator CreateBoard()
     {
         // we create the board
         for (int L = 0; L < length; L++)
@@ -90,17 +92,23 @@ public class BoardManager: MonoBehaviour
             }
         }
 
+        yield return null;
+
         UpdateTerrainType();
 
-        if(cameraPivot == null)
+        if (cameraPivot == null)
         {
             cameraPivot = new GameObject("cameraPivot");
         }
-        cameraPivot.transform.position = new Vector3(length/2, width/2, 0);
+        cameraPivot.transform.position = new Vector3(length / 2, width / 2, 0);
     }
 
-    public void UpdateTerrainType()
+    void UpdateTerrainType()
     {
+        foreach (Tile tile in Tiles.Values)
+        {
+            tile.State = state.healthy;
+        }
         // we change the type of the tiles
         // for each terrain
         foreach (KeyValuePair<type, Terrain> pair in Terrains)
@@ -128,14 +136,48 @@ public class BoardManager: MonoBehaviour
                 }
             }
         }
+
+        GrowthManager.instance.currentTurn = 0;
     }
 
-    public void ResetBoard()
+    void ResetBoard()
     {
         emptyTiles.Clear();
-        foreach(Tile tile in Tiles.Values)
+        foreach (Tile tile in Tiles.Values)
         {
             tile.Type = type.empty;
+        }
+    }
+
+    void DestroyBoard()
+    {
+        foreach (Tile tile in Tiles.Values)
+        {
+            Destroy(tile.gameObject);
+        }
+        Tiles.Clear();
+        emptyTiles.Clear();
+    }
+
+    public void NewGameLight()
+    {
+        ResetBoard();
+        UpdateTerrainType();
+        FirstTurn();
+    }
+
+    public void NewGameHeavy()
+    {
+        DestroyBoard();
+        StartCoroutine(CreateBoard());
+        FirstTurn();
+    }
+
+    public void FirstTurn()
+    {
+        for(int i = 0; i < initialPlantsNumber; i++)
+        {
+            GrowthManager.instance.CreateOccupant(state.plant.ToString());
         }
     }
 }
@@ -148,6 +190,6 @@ public class Terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
     //public Material material;
     public Mesh mesh;
-   // public Sprite imageSides;
-   // public Sprite imageTop;
+    // public Sprite imageSides;
+    // public Sprite imageTop;
 }

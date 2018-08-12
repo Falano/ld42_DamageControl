@@ -47,74 +47,109 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1448448536167674}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a33be47918c603f47b7bd599732b73b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTurn: 0
   healthy:
     State: 0
     images:
-    - {fileID: 2100000, guid: e8c0093dda6294225ac6ad269f1b028f, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 
     firstApparition: 0
     cooldown: 0
+    movesNumber: 0
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   plant:
     State: 1
     images:
-    - {fileID: 2100000, guid: 250ca0669cf8a4a81a5a7320fcef74ab, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 00000000
     firstApparition: 0
     cooldown: 0
+    movesNumber: 2
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   rabbit:
     State: 2
     images:
-    - {fileID: 2100000, guid: 1d088f7cf30b5417a8c40622b0b87296, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 01000000
     firstApparition: 0
     cooldown: 0
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   cat:
     State: 3
     images:
-    - {fileID: 2100000, guid: 97a79eecb97ed40a087b4b9f731abcf6, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 02000000
     firstApparition: 4
     cooldown: 1
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   fox:
     State: 4
     images:
-    - {fileID: 2100000, guid: b42fca7cd325c4ab291af61f85fe2b10, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 0200000003000000
     firstApparition: 8
     cooldown: 3
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   eagle:
     State: 5
     images:
-    - {fileID: 2100000, guid: 9d7f4a17fdca54c998e353d1dc41754f, type: 2}
-    predators: 
+    - {fileID: 0}
     preys: 020000000300000004000000
     firstApparition: 14
     cooldown: 3
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   hunter:
     State: 6
     images:
-    - {fileID: 2100000, guid: 0b69ef08343244ef580755841d02da1b, type: 2}
-    predators: 
+    - {fileID: 0}
+    - {fileID: 0}
     preys: 020000000400000005000000
     firstApparition: 0
     cooldown: 0
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
   ranger:
-    State: 0
-    images: []
-    predators: 
+    State: 7
+    images:
+    - {fileID: 0}
     preys: 
     firstApparition: 0
     cooldown: 0
+    movesNumber: 1
+    specialType: 0
+    listTiles: []
+    lastCall: 0
+    haveNeighbourhoodTilesASpecialType: 0
 --- !u!114 &114841580218620664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,14 +161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 20
+  length: 10
   width: 10
+  initialPlantsNumber: 2
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
   Materials:
   - {fileID: 2100000, guid: de8f2e85414ba44b5831f5573c23797b, type: 2}
-  - {fileID: 2100000, guid: 7e26bbc356ee74ecb9dae0d41596723e, type: 2}
-  - {fileID: 2100000, guid: cc476c876c309407a937b2c5138522f9, type: 2}
   empty:
     Type: 0
     number: 0

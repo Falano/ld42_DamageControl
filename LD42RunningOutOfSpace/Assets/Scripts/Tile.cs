@@ -19,10 +19,13 @@ public class Tile : MonoBehaviour
             if (value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
             {
                 BoardManager.instance.emptyTiles.Add(pos);
+                GrowthManager.instance.Occupants[state.healthy].listTiles.Add(pos);
             }
-            else if(BoardManager.instance.emptyTiles.Contains(pos))
+            else if(value != type.empty && BoardManager.instance.emptyTiles.Contains(pos))
             {
                 BoardManager.instance.emptyTiles.Remove(pos);
+                GrowthManager.instance.Occupants[state.healthy].listTiles.Remove(pos);
+
             }
         }
     }
@@ -35,10 +38,7 @@ public class Tile : MonoBehaviour
         {
             GrowthManager.instance.Occupants[_state].listTiles.Remove(pos);
             _state = value;
-            foreach(MeshRenderer holder in occupantSpriteHolder)
-            {
-                holder.material = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
-            }
+            occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
             GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
         }
     }
@@ -49,13 +49,11 @@ public class Tile : MonoBehaviour
     [SerializeField]
     MeshFilter mesh;
     [SerializeField]
-    List<MeshRenderer> occupantSpriteHolder;
-
+    MeshFilter occupantSpriteHolder;
 
     private void Start()
     {
             ground.material = BoardManager.instance.Materials[Random.Range(0, BoardManager.instance.Materials.Count)];
-        
     }
 
 }
