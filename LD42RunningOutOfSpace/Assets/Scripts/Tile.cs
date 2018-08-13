@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
         {
             GrowthManager.instance.Occupants[_state].listTiles.Remove(pos);
             _state = value;
-            occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].images[Random.Range(0, GrowthManager.instance.Occupants[_state].images.Count)];
+            occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].meshes[Random.Range(0, GrowthManager.instance.Occupants[_state].meshes.Count)];
             GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
         }
     }

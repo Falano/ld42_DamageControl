@@ -33,6 +33,8 @@ public class UIManager : MonoBehaviour
     int introState = 0;
     public List<Sprite> introImages;
 
+    public Text EndGameScreen;
+
 
     //public Image RotateRight;
     //public Image RotateLeft;
@@ -71,6 +73,12 @@ public class UIManager : MonoBehaviour
     {
         NextTurn.raycastTarget = state;
         NextTurn.color = state ? activeColor : inactiveColor;
+    }
+
+    public void ToggleEndGame(bool state)
+    {
+        EndGameScreen.transform.parent.gameObject.SetActive(state);
+        EndGameScreen.text = "Day " + GrowthManager.instance.currentTurn +":";
     }
 
     public void StopMovement()

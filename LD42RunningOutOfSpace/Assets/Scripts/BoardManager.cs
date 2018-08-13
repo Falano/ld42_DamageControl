@@ -183,6 +183,8 @@ public class BoardManager : MonoBehaviour
         {
             GrowthManager.instance.CreateOccupant(state.plant.ToString());
         }
+
+       GrowthManager.instance.ambient.Play();
     }
 }
 

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114841580218620664}
   - component: {fileID: 114690462710641026}
   - component: {fileID: 82098419559398632}
+  - component: {fileID: 82661536990179548}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -51,11 +52,106 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 0f6b75ddfdbd84c7c824b77dc39590a1, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &82661536990179548
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1448448536167674}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -150,9 +246,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTurn: 0
   createdSomethingThisTurn: 0
+  ambient: {fileID: 82098419559398632}
+  sfx: {fileID: 82661536990179548}
   healthy:
     State: 0
-    images:
+    meshes:
     - {fileID: 0}
     preys: 
     firstApparition: 0
@@ -167,7 +265,7 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   plant:
     State: 1
-    images:
+    meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
     preys: 00000000
     firstApparition: 0
@@ -182,7 +280,7 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   rabbit:
     State: 2
-    images:
+    meshes:
     - {fileID: 4300000, guid: 6c2936461bc104eceadea7b0f43c2e5a, type: 3}
     preys: 01000000
     firstApparition: 0
@@ -197,10 +295,10 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   cat:
     State: 3
-    images:
+    meshes:
     - {fileID: 4300002, guid: be9c00a3edc1f4b6b87452b712d861f4, type: 3}
     preys: 02000000
-    firstApparition: 3
+    firstApparition: 5
     cooldown: 1
     movesNumber: 1
     specialType: 3
@@ -212,10 +310,10 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   fox:
     State: 4
-    images:
+    meshes:
     - {fileID: 4300002, guid: def6e73eb236b45129a07643d3c48f06, type: 3}
     preys: 0200000003000000
-    firstApparition: 6
+    firstApparition: 10
     cooldown: 3
     movesNumber: 1
     specialType: 0
@@ -227,11 +325,11 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   eagle:
     State: 5
-    images:
+    meshes:
     - {fileID: 4300002, guid: 00553c5d335f9402b93bea5ec5f4b134, type: 3}
     preys: 020000000300000004000000
-    firstApparition: 10
-    cooldown: 3
+    firstApparition: 15
+    cooldown: 8
     movesNumber: 1
     specialType: 1
     button: {fileID: 0}
@@ -242,8 +340,7 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   hunter:
     State: 6
-    images:
-    - {fileID: 0}
+    meshes:
     - {fileID: 0}
     preys: 020000000400000005000000
     firstApparition: -1
@@ -258,7 +355,7 @@ MonoBehaviour:
     haveNeighbourhoodTilesASpecialType: 0
   ranger:
     State: 7
-    images:
+    meshes:
     - {fileID: 0}
     preys: 
     firstApparition: -1

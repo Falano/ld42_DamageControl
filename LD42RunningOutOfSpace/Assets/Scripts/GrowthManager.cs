@@ -10,6 +10,9 @@ public class GrowthManager : MonoBehaviour
 
     public int currentTurn = 0;
     public bool createdSomethingThisTurn;
+    bool choseToKeepPlaying;
+    public AudioSource ambient;
+    public AudioSource sfx;
 
     [Header("occupants")]
     public Occupant healthy;
@@ -21,6 +24,7 @@ public class GrowthManager : MonoBehaviour
     public Occupant hunter;
     public Occupant ranger;
     public Dictionary<state, Occupant> Occupants = new Dictionary<state, Occupant>();
+
 
 
     // Use this for initialization
@@ -52,10 +56,14 @@ public class GrowthManager : MonoBehaviour
             }
         }
 
+        ambient.loop = true;
+
     }
 
     public void EndOfTurn()
     {
+        createdSomethingThisTurn = false;
+
         //Debug.Log("1) Starting end of turn " + currentTurn);
         // for each state
         foreach (Occupant occupant in Occupants.Values)
@@ -93,15 +101,25 @@ public class GrowthManager : MonoBehaviour
             if(occupant.firstApparition == currentTurn && occupant.introImage)
             {
                 UIManager.instance.ToggleNewAnimal(occupant.introImage);
+                //occupant.button.interactable = true;
             }
+
+            //Debug.Log(occupant.State.ToString() +  " is available? " + occupant.isAvailable + "; last call: " + occupant.lastCall + "; currentTurn: " + currentTurn)
         }
 
-        if (Occupants[state.healthy].listTiles.Count == 0)
+        if (!choseToKeepPlaying && Occupants[state.healthy].listTiles.Count == 0)
         {
-            UIManager.instance.ToggleNextTurn(false);
+            UIManager.instance.ToggleEndGame(true);
+            choseToKeepPlaying = true;
         }
+
         currentTurn++;
-        createdSomethingThisTurn = false;
+        ambient.volume = (Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
+
+    }
+
+    void EndGame()
+    {
 
     }
 
@@ -181,6 +199,9 @@ public class GrowthManager : MonoBehaviour
             }
         }
         Occupants[occupant].lastCall = currentTurn;
+        Debug.Log(Occupants[occupant].State.ToString() + "'s last call (in CreateAtPos): " + Occupants[occupant].lastCall);
+        sfx.clip = Occupants[occupant].sound;
+        sfx.Play();
     }
 }
 
@@ -189,7 +210,7 @@ public class Occupant
 {
 
     public state State;
-    public List<Mesh> images;
+    public List<Mesh> meshes;
     //public List<state> predators;
     public List<state> preys;
     public int firstApparition;
@@ -223,12 +244,12 @@ public class Occupant
                     if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count > 1)
                     {
                         //    _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
-                        return (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
+                        return (GrowthManager.instance.currentTurn - this.lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
                     }
                     else if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count == 1)
                     {
                         //  _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= 10);
-                        return (GrowthManager.instance.currentTurn - lastCall >= 10);
+                        return (GrowthManager.instance.currentTurn - this.lastCall >= 10);
                     }
                     break;
                 case state.ranger:
@@ -237,7 +258,7 @@ public class Occupant
                     break;
                 default:
                     //_isAvailable = (GrowthManager.instance.currentTurn - lastCall >= cooldown);
-                    return (GrowthManager.instance.currentTurn - lastCall >= cooldown);
+                    return (GrowthManager.instance.currentTurn - this.lastCall >= cooldown);
                     break;
             }
             return false;
@@ -376,7 +397,9 @@ public class Occupant
                 break;
 
             case state.eagle: // pulizia
-                BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
+                {
+                //BoardManager.instance.Tiles[currentPos].State = state.healthy;
                 foreach (Vector2 tile in NeighbourhoodTiles)
                 {
                     if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero)
@@ -393,6 +416,7 @@ public class Occupant
                     {
                         currentTile = BoardManager.instance.Tiles[possibleMoves[Random.Range(0, possibleMoves.Count)]];
                     }
+                }
                 }
                 break;
             default:
