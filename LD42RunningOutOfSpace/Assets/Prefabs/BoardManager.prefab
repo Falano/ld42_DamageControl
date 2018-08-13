@@ -109,7 +109,7 @@ MonoBehaviour:
   fox:
     State: 4
     images:
-    - {fileID: 0}
+    - {fileID: 4300002, guid: def6e73eb236b45129a07643d3c48f06, type: 3}
     preys: 0200000003000000
     firstApparition: 6
     cooldown: 3
