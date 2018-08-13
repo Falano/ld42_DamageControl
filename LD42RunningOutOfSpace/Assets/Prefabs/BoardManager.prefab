@@ -75,7 +75,7 @@ MonoBehaviour:
     firstApparition: 0
     cooldown: 0
     movesNumber: 2
-    specialType: 0
+    specialType: 2
     button: {fileID: 0}
     listTiles: []
     lastCall: 0
@@ -98,10 +98,10 @@ MonoBehaviour:
     images:
     - {fileID: 4300002, guid: be9c00a3edc1f4b6b87452b712d861f4, type: 3}
     preys: 02000000
-    firstApparition: 4
+    firstApparition: 3
     cooldown: 1
     movesNumber: 1
-    specialType: 0
+    specialType: 3
     button: {fileID: 0}
     listTiles: []
     lastCall: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
     images:
     - {fileID: 0}
     preys: 0200000003000000
-    firstApparition: 8
+    firstApparition: 6
     cooldown: 3
     movesNumber: 1
     specialType: 0
@@ -124,10 +124,10 @@ MonoBehaviour:
     images:
     - {fileID: 0}
     preys: 020000000300000004000000
-    firstApparition: 14
+    firstApparition: 10
     cooldown: 3
     movesNumber: 1
-    specialType: 0
+    specialType: 1
     button: {fileID: 0}
     listTiles: []
     lastCall: 0

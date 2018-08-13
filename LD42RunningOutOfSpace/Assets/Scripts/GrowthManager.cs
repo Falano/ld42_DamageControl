@@ -53,30 +53,34 @@ public class GrowthManager : MonoBehaviour
         // for each state
         foreach (Occupant occupant in Occupants.Values)
         {
-            int total = occupant.listTiles.Count;
-            // for each instance / tile occupied
-            for (int i = 0; i < total; i++)
+            if (occupant.State != state.healthy)
             {
-                //Debug.Log("2-3) tile: " + occupant.listTiles[i].ToString() + " of " + occupant.State.ToString());
-                // we make the special or normal move
-                occupant.updateMoveStats(occupant.listTiles[i]);
-                if (occupant.haveNeighbourhoodTilesASpecialType)
+
+                int total = occupant.listTiles.Count;
+                // for each instance / tile occupied
+                for (int i = 0; i < total; i++)
                 {
-                    occupant.specialMove();
-                }
-                else
-                {
-                    for (int j = 0; j < occupant.movesNumber; j++)
+                    //Debug.Log("2-3) tile: " + occupant.listTiles[i].ToString() + " of " + occupant.State.ToString());
+                    // we make the special or normal move
+                    occupant.updateMoveStats(occupant.listTiles[i]);
+                    if (occupant.haveNeighbourhoodTilesASpecialType)
                     {
-                        occupant.move();
+                        occupant.specialMove();
+                    }
+                    else
+                    {
+                        for (int j = 0; j < occupant.movesNumber; j++)
+                        {
+                            occupant.move();
+                        }
                     }
                 }
-            }
-            // we reset its availibility
-            //occupant.isAvailable = null;
-            if (occupant.button)
-            {
-                occupant.button.interactable = occupant.isAvailable;
+                // we reset its availibility
+                //occupant.isAvailable = null;
+                if (occupant.button)
+                {
+                    occupant.button.interactable = occupant.isAvailable;
+                }
             }
         }
 
@@ -195,7 +199,7 @@ public class Occupant
             /*if (_isAvailable == null)
             {
                 _isAvailable = false;*/
-                if(GrowthManager.instance.currentTurn < firstApparition || GrowthManager.instance.createdSomethingThisTurn)
+            if (GrowthManager.instance.currentTurn < firstApparition || GrowthManager.instance.createdSomethingThisTurn)
             {
                 return false;
             }
@@ -358,9 +362,23 @@ public class Occupant
                 break;
 
             case state.eagle: // pulizia
+                BoardManager.instance.Tiles[currentPos].State = state.healthy;
                 foreach (Vector2 tile in NeighbourhoodTiles)
                 {
-                    BoardManager.instance.Tiles[tile].State = state.healthy;
+                    if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero)
+                    {
+                        BoardManager.instance.Tiles[currentPos + tile].State = state.healthy;
+                    }
+                }
+                if (preferedMoves.Count > 0)
+                {
+                    currentTile = BoardManager.instance.Tiles[preferedMoves[Random.Range(0, preferedMoves.Count)]];
+                }
+                else if (possibleMoves.Count > 0)
+                {
+                    {
+                        currentTile = BoardManager.instance.Tiles[possibleMoves[Random.Range(0, possibleMoves.Count)]];
+                    }
                 }
                 break;
             default:
@@ -384,11 +402,12 @@ public class Occupant
         canMove = true;
         // are we allowed our special move?
         haveNeighbourhoodTilesASpecialType = false;
+        //Debug.Log("1) are neighbours special (" + specialType.ToString() + ") ? " + haveNeighbourhoodTilesASpecialType.ToString());
         if (specialType != type.empty)
         {
             foreach (Vector2 tile in NeighbourhoodTiles)
             {
-                if (BoardManager.instance.Tiles[tile + currentPos].Type == specialType)
+                if (BoardManager.instance.Tiles.ContainsKey(tile + currentPos) && BoardManager.instance.Tiles[tile + currentPos].Type == specialType)
                 {
                     haveNeighbourhoodTilesASpecialType = true;
                 }
@@ -399,7 +418,6 @@ public class Occupant
         preferedMoves.Clear();
 
         if (State != state.eagle)
-
         {
             foreach (Vector2 move in MovementRange)
             {
@@ -419,22 +437,28 @@ public class Occupant
                 }
             }
         }
-        else // eagle can go anywhere
+        else // eagle can go anywhere // but only each 3 turns
         {
-            foreach (Vector2 position in BoardManager.instance.Tiles.Keys)
+            Debug.Log("eagle; current turn: " + GrowthManager.instance.currentTurn + "; lastCall: " + lastCall + "; modulo 4: " + (GrowthManager.instance.currentTurn - lastCall) % 4);
+
+            if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
             {
-                if (BoardManager.instance.Tiles[position].Type == type.empty)
+                foreach (Vector2 position in BoardManager.instance.Tiles.Keys)
                 {
-                    if (BoardManager.instance.Tiles[position].State == state.healthy)
+                    if (BoardManager.instance.Tiles[position].Type == type.empty)
                     {
-                        possibleMoves.Add(position);
-                    }
-                    else if (preys.Contains(BoardManager.instance.Tiles[position].State))
-                    {
-                        preferedMoves.Add(position);
+                        if (BoardManager.instance.Tiles[position].State == state.healthy)
+                        {
+                            possibleMoves.Add(position);
+                        }
+                        else if (preys.Contains(BoardManager.instance.Tiles[position].State))
+                        {
+                            preferedMoves.Add(position);
+                        }
                     }
                 }
             }
+            else { possibleMoves.Add(currentPos); }
         }
         //Debug.Log("6) possible moves: " + possibleMoves.Count + "; prefered moves: " + preferedMoves.Count + "; can Move? " + canMove.ToString());
 
@@ -461,6 +485,7 @@ public class Occupant
                 move();
                 break;
             case state.eagle:
+                NeighbourhoodTiles.Clear();
                 for (int i = -2; i <= 2; i++)
                 {
                     for (int j = -2; j <= 2; j++)
@@ -471,6 +496,7 @@ public class Occupant
 
                 move();
 
+                NeighbourhoodTiles.Clear();
                 for (int i = -1; i <= 1; i++)
                 {
                     for (int j = -1; j <= 1; j++)
@@ -481,19 +507,34 @@ public class Occupant
                 break;
             case state.plant:
                 List<Vector2> toColonizeTile = new List<Vector2>();
-                foreach (Vector2 tile in NeighbourhoodTiles)
+                List<Vector2> colonizedTile = new List<Vector2>();
+                Vector2 currentTile = currentPos;
+                Vector2 specialPlant;
+                do
                 {
-                    if (BoardManager.instance.Tiles[currentPos + tile].Type == specialType)
+                    specialPlant = Vector2.zero;
+                    foreach (Vector2 tile in NeighbourhoodTiles)
                     {
+                        if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile) && BoardManager.instance.Tiles[currentTile + tile].Type == specialType && !colonizedTile.Contains(currentTile + tile))
+                        {
+                            specialPlant = tile;
+                        }
+                    }
+                    if (specialPlant != Vector2.zero)
+                    {
+                        currentTile += specialPlant;
+                        colonizedTile.Add(currentTile);
+
                         foreach (Vector2 tile2 in NeighbourhoodTiles)
                         {
-                            if (BoardManager.instance.Tiles[tile2].Type == type.empty && BoardManager.instance.Tiles[tile2].State == state.healthy)
+                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == type.empty && !toColonizeTile.Contains(currentTile + tile2))
                             {
-                                toColonizeTile.Add(currentPos + tile + tile2);
+                                toColonizeTile.Add(currentTile + tile2);
                             }
                         }
                     }
                 }
+                while (specialPlant != Vector2.zero);
 
                 foreach (Vector2 tile in toColonizeTile)
                 {
