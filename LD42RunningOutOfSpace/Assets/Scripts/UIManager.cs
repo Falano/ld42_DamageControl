@@ -28,6 +28,12 @@ public class UIManager : MonoBehaviour
     public Image MoveRight;
     public Image MoveDown;
 
+    public Image NewAnimalScreen;
+    public Image IntroScreen;
+    int introState = 0;
+    public List<Sprite> introImages;
+
+
     //public Image RotateRight;
     //public Image RotateLeft;
 
@@ -64,7 +70,7 @@ public class UIManager : MonoBehaviour
     public void ToggleNextTurn(bool state)
     {
         NextTurn.raycastTarget = state;
-        NextTurn.color = state? activeColor: inactiveColor;
+        NextTurn.color = state ? activeColor : inactiveColor;
     }
 
     public void StopMovement()
@@ -89,6 +95,39 @@ public class UIManager : MonoBehaviour
     public void ToggleObj(GameObject obj)
     {
         obj.SetActive(!obj.activeSelf);
+    }
+
+    public void ToggleNewAnimal(Sprite image)
+    {
+        NewAnimalScreen.transform.parent.gameObject.SetActive(true);
+        NewAnimalScreen.sprite = image;
+    }
+
+    /// <summary>
+    /// the tuto story thingy to show at the beginning
+    /// </summary>
+    public void UpdateIntroImages()
+    {
+        if (IntroScreen.transform.parent.gameObject.activeSelf == false)
+        {
+            IntroScreen.transform.parent.gameObject.SetActive(true);
+            IntroScreen.sprite = introImages[introState];
+        }
+
+        else
+        {
+            if (introState >= introImages.Count-1)
+            {
+                IntroScreen.transform.parent.gameObject.SetActive(false);
+                introState = 0;
+            }
+            else
+            {
+                introState++;
+                IntroScreen.sprite = introImages[introState];
+
+            }
+        }
     }
 
     public void StartZoom(float zoom)

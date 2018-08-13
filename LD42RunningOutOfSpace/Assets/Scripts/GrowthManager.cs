@@ -44,6 +44,13 @@ public class GrowthManager : MonoBehaviour
         Occupants.Add(state.hunter, hunter);
         Occupants.Add(state.ranger, ranger);
 
+        foreach(Occupant occupant in Occupants.Values)
+        {
+            if (occupant.button)
+            {
+                occupant.button.interactable = occupant.isAvailable;
+            }
+        }
 
     }
 
@@ -81,6 +88,11 @@ public class GrowthManager : MonoBehaviour
                 {
                     occupant.button.interactable = occupant.isAvailable;
                 }
+            }
+
+            if(occupant.firstApparition == currentTurn && occupant.introImage)
+            {
+                UIManager.instance.ToggleNewAnimal(occupant.introImage);
             }
         }
 
@@ -185,6 +197,8 @@ public class Occupant
     public int movesNumber;
     public type specialType;
     public Button button;
+    public Sprite introImage;
+    public AudioClip sound;
 
     //[HideInInspector]
     public List<Vector2> listTiles = new List<Vector2>();

@@ -40,11 +40,14 @@ public class BoardManager : MonoBehaviour
             Destroy(this);
         }
 
+        UIManager.instance.UpdateIntroImages();
+        
         // we set up the Terrain enums
         Terrains.Add(type.empty, empty);
         Terrains.Add(type.water, water);
         Terrains.Add(type.mountain, mountain);
         Terrains.Add(type.field, field);
+
 
         StartCoroutine(CreateBoard());
         FirstTurn();
