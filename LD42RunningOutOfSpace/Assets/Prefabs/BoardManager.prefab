@@ -341,7 +341,7 @@ MonoBehaviour:
   hunter:
     State: 6
     meshes:
-    - {fileID: 0}
+    - {fileID: 4300002, guid: 61ec4afd63999494690fcf53721946fc, type: 3}
     preys: 020000000400000005000000
     firstApparition: -1
     cooldown: 0
