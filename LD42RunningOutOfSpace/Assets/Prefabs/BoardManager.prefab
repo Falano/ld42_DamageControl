@@ -246,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTurn: 0
   createdSomethingThisTurn: 0
+  choseToKeepPlaying: 0
   ambient: {fileID: 82098419559398632}
   sfx: {fileID: 82661536990179548}
   healthy:
@@ -289,7 +290,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 1d05b96cce97b2d40a0aa05838890dad, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 4a9a06113ca36469fbf4d1f670f7908d, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -304,7 +305,7 @@ MonoBehaviour:
     specialType: 3
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 73b73afe1887710418ae72c373bcf8c3, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 687507abdc5b64b858e28606a792034b, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -319,7 +320,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 9318cd228aa2a2846bda9d36edc64396, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 94449ba7e05d144428bd24cfa4b88fe9, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -329,19 +330,19 @@ MonoBehaviour:
     - {fileID: 4300002, guid: 00553c5d335f9402b93bea5ec5f4b134, type: 3}
     preys: 020000000300000004000000
     firstApparition: 15
-    cooldown: 8
+    cooldown: 5
     movesNumber: 1
     specialType: 1
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: dd731ab0debc5234aac0b3b2b834b7ac, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
   hunter:
     State: 6
     meshes:
-    - {fileID: 0}
+    - {fileID: 4300002, guid: 61ec4afd63999494690fcf53721946fc, type: 3}
     preys: 020000000400000005000000
     firstApparition: -1
     cooldown: 0
@@ -349,22 +350,22 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: ad80087d3f8641e4da3013ddf9c291f9, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 52f241a3a606343ddae9818250b0d990, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
   ranger:
     State: 7
     meshes:
-    - {fileID: 0}
-    preys: 
+    - {fileID: 4300002, guid: c4d9fb64e2888432d830117ccb430655, type: 3}
+    preys: 010000000200000003000000040000000500000006000000
     firstApparition: -1
     cooldown: 0
     movesNumber: 1
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: f229dc91fa697914cba9bf5b0de294de, type: 3}
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: cb5855a22e73b47dfa5d65cb4103b1de, type: 3}
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -379,8 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 35
-  width: 35
+  length: 30
+  width: 30
   initialPlantsNumber: 2
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}

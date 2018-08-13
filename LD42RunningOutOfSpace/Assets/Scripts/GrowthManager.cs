@@ -10,7 +10,7 @@ public class GrowthManager : MonoBehaviour
 
     public int currentTurn = 0;
     public bool createdSomethingThisTurn;
-    bool choseToKeepPlaying;
+    public bool choseToKeepPlaying;
     public AudioSource ambient;
     public AudioSource sfx;
 
@@ -47,14 +47,6 @@ public class GrowthManager : MonoBehaviour
         Occupants.Add(state.eagle, eagle);
         Occupants.Add(state.hunter, hunter);
         Occupants.Add(state.ranger, ranger);
-
-        foreach (Occupant occupant in Occupants.Values)
-        {
-            if (occupant.button)
-            {
-                occupant.button.interactable = occupant.isAvailable;
-            }
-        }
 
         ambient.loop = true;
 
@@ -107,7 +99,7 @@ public class GrowthManager : MonoBehaviour
             //Debug.Log(occupant.State.ToString() +  " is available? " + occupant.isAvailable + "; last call: " + occupant.lastCall + "; currentTurn: " + currentTurn)
         }
 
-        if (!choseToKeepPlaying && Occupants[state.healthy].listTiles.Count == 0)
+        if (!choseToKeepPlaying && Occupants[state.healthy].listTiles.Count < 5 || eagle.listTiles.Count > BoardManager.instance.length)
         {
             UIManager.instance.ToggleEndGame(true);
             choseToKeepPlaying = true;
@@ -355,6 +347,14 @@ public class Occupant
             return;
         }
 
+        /*
+         // farli muorire? dare una variabile (per species) Longevity
+        if(Random.Range(0, 5) == 0)
+        {
+            BoardManager.instance.Tiles[currentPos].State = state.healthy;
+            return;
+        }*/
+
         // actual movement
         switch (State)
         {
@@ -399,7 +399,12 @@ public class Occupant
             case state.eagle: // pulizia
                 if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
                 {
-                    BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                    /*
+                    if (Random.Range(0, 7) != 1)
+                    {
+                        BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                    }
+                    */
                     if (preferedMoves.Count > 0)
                     {
                         currentTile = BoardManager.instance.Tiles[preferedMoves[Random.Range(0, preferedMoves.Count)]];
@@ -565,7 +570,7 @@ public class Occupant
 
                         foreach (Vector2 tile2 in NeighbourhoodTiles)
                         {
-                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == type.empty && !toColonizeTile.Contains(currentTile + tile2))
+                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == type.empty && BoardManager.instance.Tiles[currentTile + tile2].State == state.healthy && !toColonizeTile.Contains(currentTile + tile2))
                             {
                                 toColonizeTile.Add(currentTile + tile2);
                             }
