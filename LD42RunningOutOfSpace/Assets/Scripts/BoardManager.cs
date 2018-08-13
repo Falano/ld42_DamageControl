@@ -177,6 +177,11 @@ public class BoardManager : MonoBehaviour
         FirstTurn();
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public void FirstTurn()
     {
         for(int i = 0; i < initialPlantsNumber; i++)

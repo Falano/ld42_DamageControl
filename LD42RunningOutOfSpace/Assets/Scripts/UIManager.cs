@@ -119,6 +119,7 @@ public class UIManager : MonoBehaviour
         if (IntroScreen.transform.parent.gameObject.activeSelf == false)
         {
             IntroScreen.transform.parent.gameObject.SetActive(true);
+            introState = 0;
             IntroScreen.sprite = introImages[introState];
         }
 
@@ -127,7 +128,6 @@ public class UIManager : MonoBehaviour
             if (introState >= introImages.Count-1)
             {
                 IntroScreen.transform.parent.gameObject.SetActive(false);
-                introState = 0;
             }
             else
             {
