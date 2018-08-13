@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     public List<Sprite> introImages;
 
     public Text EndGameScreen;
+    public GameObject menu;
 
 
     //public Image RotateRight;
@@ -53,6 +54,16 @@ public class UIManager : MonoBehaviour
         }
 
         camera = Camera.main;
+
+        ToggleForStart();
+    }
+
+    void ToggleForStart() {
+        buttonsParent.SetActive(true);
+        NewAnimalScreen.transform.parent.gameObject.SetActive(false);
+        IntroScreen.transform.parent.gameObject.SetActive(false);
+        EndGameScreen.transform.parent.gameObject.SetActive(false);
+        menu.SetActive(false);
     }
 
     public void SetCameraReset()

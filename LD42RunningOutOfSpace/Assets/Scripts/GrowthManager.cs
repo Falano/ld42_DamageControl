@@ -114,7 +114,7 @@ public class GrowthManager : MonoBehaviour
         }
 
         currentTurn++;
-        ambient.volume = (Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
+        ambient.volume = ((float) Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
 
     }
 
