@@ -48,7 +48,7 @@ public class GrowthManager : MonoBehaviour
         Occupants.Add(state.hunter, hunter);
         Occupants.Add(state.ranger, ranger);
 
-        foreach(Occupant occupant in Occupants.Values)
+        foreach (Occupant occupant in Occupants.Values)
         {
             if (occupant.button)
             {
@@ -98,7 +98,7 @@ public class GrowthManager : MonoBehaviour
                 }
             }
 
-            if(occupant.firstApparition == currentTurn && occupant.introImage)
+            if (occupant.firstApparition == currentTurn && occupant.introImage)
             {
                 UIManager.instance.ToggleNewAnimal(occupant.introImage);
                 //occupant.button.interactable = true;
@@ -114,7 +114,7 @@ public class GrowthManager : MonoBehaviour
         }
 
         currentTurn++;
-        ambient.volume = ((float) Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
+        ambient.volume = ((float)Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
 
     }
 
@@ -199,7 +199,7 @@ public class GrowthManager : MonoBehaviour
             }
         }
         Occupants[occupant].lastCall = currentTurn;
-        Debug.Log(Occupants[occupant].State.ToString() + "'s last call (in CreateAtPos): " + Occupants[occupant].lastCall);
+        //Debug.Log(Occupants[occupant].State.ToString() + "'s last call (in CreateAtPos): " + Occupants[occupant].lastCall);
         sfx.clip = Occupants[occupant].sound;
         sfx.Play();
     }
@@ -399,24 +399,24 @@ public class Occupant
             case state.eagle: // pulizia
                 if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
                 {
-                //BoardManager.instance.Tiles[currentPos].State = state.healthy;
-                foreach (Vector2 tile in NeighbourhoodTiles)
-                {
-                    if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero)
+                    BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                    if (preferedMoves.Count > 0)
                     {
-                        BoardManager.instance.Tiles[currentPos + tile].State = state.healthy;
+                        currentTile = BoardManager.instance.Tiles[preferedMoves[Random.Range(0, preferedMoves.Count)]];
                     }
-                }
-                if (preferedMoves.Count > 0)
-                {
-                    currentTile = BoardManager.instance.Tiles[preferedMoves[Random.Range(0, preferedMoves.Count)]];
-                }
-                else if (possibleMoves.Count > 0)
-                {
+                    else if (possibleMoves.Count > 0)
                     {
-                        currentTile = BoardManager.instance.Tiles[possibleMoves[Random.Range(0, possibleMoves.Count)]];
+                        {
+                            currentTile = BoardManager.instance.Tiles[possibleMoves[Random.Range(0, possibleMoves.Count)]];
+                        }
                     }
-                }
+                    foreach (Vector2 tile in NeighbourhoodTiles)
+                    {
+                        if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero)
+                        {
+                            BoardManager.instance.Tiles[currentPos + tile].State = state.healthy;
+                        }
+                    }
                 }
                 break;
             default:
@@ -477,7 +477,7 @@ public class Occupant
         }
         else // eagle can go anywhere // but only each 3 turns
         {
-            Debug.Log("eagle; current turn: " + GrowthManager.instance.currentTurn + "; lastCall: " + lastCall + "; modulo 4: " + (GrowthManager.instance.currentTurn - lastCall) % 4);
+            //Debug.Log("eagle; current turn: " + GrowthManager.instance.currentTurn + "; lastCall: " + lastCall + "; modulo 4: " + (GrowthManager.instance.currentTurn - lastCall) % 4);
 
             if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
             {
