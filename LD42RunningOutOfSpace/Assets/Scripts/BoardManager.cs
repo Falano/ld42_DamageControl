@@ -187,7 +187,7 @@ public class BoardManager : MonoBehaviour
         for(int i = 0; i < initialPlantsNumber; i++)
         {
             // find a way to create it without using CreateOccupant's coroutine so I can StopAllCoroutines() at the beginning of it
-            GrowthManager.instance.CreateOccupant(state.plant.ToString());
+            Invoke("CreatePlant", i * .1f);
         }
 
        GrowthManager.instance.ambient.Play();
@@ -201,6 +201,11 @@ public class BoardManager : MonoBehaviour
                 occupant.button.interactable = occupant.isAvailable;
             }
         }
+    }
+
+    public void CreatePlant()
+    {
+        GrowthManager.instance.CreateOccupant("plant");
     }
 }
 

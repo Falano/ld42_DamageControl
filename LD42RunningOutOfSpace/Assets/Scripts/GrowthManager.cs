@@ -110,14 +110,9 @@ public class GrowthManager : MonoBehaviour
 
     }
 
-    void EndGame()
-    {
-
-    }
-
     public void CreateOccupant(string occupant)
     {
-        //StopAllCoroutines();
+        StopAllCoroutines();
         //Debug.Log("1) creating occupant " + occupant);
         state Occupant = (state)System.Enum.Parse(typeof(state), occupant);
         StartCoroutine(CreateOccupantCoroutine(Occupant));
@@ -125,7 +120,7 @@ public class GrowthManager : MonoBehaviour
 
     IEnumerator CreateOccupantCoroutine(state Occupant)
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 2; i++)
         {
             yield return null;
         }
