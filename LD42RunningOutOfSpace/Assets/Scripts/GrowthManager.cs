@@ -141,7 +141,14 @@ public class GrowthManager : MonoBehaviour
             // the hunter appears at a random point
             case state.hunter:
             case state.plant:
-                CreateAtPos(Occupant, BoardManager.instance.emptyTiles[Random.Range(0, BoardManager.instance.emptyTiles.Count)]);
+                int tmpPos;
+                do
+                {
+                    tmpPos = Random.Range(0, BoardManager.instance.emptyTiles.Count);
+                }
+                while (BoardManager.instance.Tiles[BoardManager.instance.emptyTiles[tmpPos]].Type != type.empty);
+
+                        CreateAtPos(Occupant, BoardManager.instance.emptyTiles[tmpPos]);
                 //Debug.Log("3a) creating hunter at random point");
                 break;
             // all the others appear on the tile clicked
@@ -179,6 +186,7 @@ public class GrowthManager : MonoBehaviour
     public void CreateAtPos(state occupant, Vector2 pos)
     {
         //Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
+
         BoardManager.instance.Tiles[pos].State = occupant;
 
         // and we keep the player from adding more

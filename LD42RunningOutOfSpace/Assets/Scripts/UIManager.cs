@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public Image MoveLeft;
     public Image MoveRight;
     public Image MoveDown;
+    Transform MoveParent;
 
     public Image NewAnimalScreen;
     public Image IntroScreen;
@@ -54,6 +55,7 @@ public class UIManager : MonoBehaviour
         }
 
         camera = Camera.main;
+        MoveParent = MoveDown.transform.parent;
 
         ToggleForStart();
     }
@@ -88,6 +90,7 @@ public class UIManager : MonoBehaviour
         MoveRight.raycastTarget = true;
         MoveUp.raycastTarget = true;
         MoveDown.raycastTarget = true;
+        MoveParent.rotation = Quaternion.Euler(Vector3.zero);
 
         MoveLeft.color = activeColor;
         MoveUp.color = activeColor;
@@ -190,6 +193,7 @@ public class UIManager : MonoBehaviour
         {
             // actual movement
             cameraPivot.transform.Rotate(rot);
+            MoveParent.Rotate(-rot);
             yield return null;
         }
     }
