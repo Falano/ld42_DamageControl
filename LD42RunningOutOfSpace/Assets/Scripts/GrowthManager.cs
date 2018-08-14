@@ -54,6 +54,8 @@ public class GrowthManager : MonoBehaviour
 
     public void EndOfTurn()
     {
+        StartCoroutine(UIManager.instance.rotateTimeHolder());
+
         createdSomethingThisTurn = false;
 
         //Debug.Log("1) Starting end of turn " + currentTurn);
@@ -62,23 +64,27 @@ public class GrowthManager : MonoBehaviour
         {
             if (occupant.State != state.healthy)
             {
-
                 int total = occupant.listTiles.Count;
                 // for each instance / tile occupied
                 for (int i = 0; i < total; i++)
                 {
                     //Debug.Log("2-3) tile: " + occupant.listTiles[i].ToString() + " of " + occupant.State.ToString());
                     // we make the special or normal move
-                    occupant.updateMoveStats(occupant.listTiles[i]);
-                    if (occupant.haveNeighbourhoodTilesASpecialType)
+
+                    // it's fine if we grew new members, but if we lost someone it creates a bug
+                    if (total <= occupant.listTiles.Count)
                     {
-                        occupant.specialMove();
-                    }
-                    else
-                    {
-                        for (int j = 0; j < occupant.movesNumber; j++)
+                        occupant.updateMoveStats(occupant.listTiles[i]);
+                        if (occupant.haveNeighbourhoodTilesASpecialType)
                         {
-                            occupant.move();
+                            occupant.specialMove();
+                        }
+                        else
+                        {
+                            for (int j = 0; j < occupant.movesNumber; j++)
+                            {
+                                occupant.move();
+                            }
                         }
                     }
                 }
@@ -99,7 +105,7 @@ public class GrowthManager : MonoBehaviour
             //Debug.Log(occupant.State.ToString() +  " is available? " + occupant.isAvailable + "; last call: " + occupant.lastCall + "; currentTurn: " + currentTurn)
         }
 
-        if (!choseToKeepPlaying && Occupants[state.healthy].listTiles.Count < 5 || eagle.listTiles.Count > BoardManager.instance.length)
+        if (!choseToKeepPlaying && (Occupants[state.healthy].listTiles.Count < 5 || eagle.listTiles.Count > BoardManager.instance.length))
         {
             UIManager.instance.ToggleEndGame(true);
             choseToKeepPlaying = true;
@@ -143,7 +149,7 @@ public class GrowthManager : MonoBehaviour
                 }
                 while (BoardManager.instance.Tiles[BoardManager.instance.emptyTiles[tmpPos]].Type != type.empty);
 
-                        CreateAtPos(Occupant, BoardManager.instance.emptyTiles[tmpPos]);
+                CreateAtPos(Occupant, BoardManager.instance.emptyTiles[tmpPos]);
                 //Debug.Log("3a) creating hunter at random point");
                 break;
             // all the others appear on the tile clicked
@@ -364,7 +370,10 @@ public class Occupant
             // those that move
             case state.ranger:
             case state.hunter:
-                BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                if (canMove)
+                {
+                    BoardManager.instance.Tiles[currentPos].State = state.healthy;
+                }
                 if (preferedMoves.Count > 0)
                 {
                     // trying to always go to the highest prey; to do later
@@ -399,7 +408,7 @@ public class Occupant
                 }
                 break;
 
-            case state.eagle: // pulizia
+            case state.eagle: // pulizia // tranne le piante
                 if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
                 {
                     /*
@@ -420,7 +429,7 @@ public class Occupant
                     }
                     foreach (Vector2 tile in NeighbourhoodTiles)
                     {
-                        if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero)
+                        if (BoardManager.instance.Tiles.ContainsKey(currentPos + tile) && tile != Vector2.zero && BoardManager.instance.Tiles[currentPos + tile].State != state.plant)
                         {
                             BoardManager.instance.Tiles[currentPos + tile].State = state.healthy;
                         }
@@ -443,7 +452,6 @@ public class Occupant
 
     public void updateMoveStats(Vector2 pos)
     {
-
         currentPos = pos;
         canMove = true;
         // are we allowed our special move?

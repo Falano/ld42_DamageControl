@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     public Text EndGameScreen;
     public GameObject menu;
+    Vector3 NextTurnRotation = new Vector3(0,0,13);
 
 
     //public Image RotateRight;
@@ -102,6 +103,16 @@ public class UIManager : MonoBehaviour
     {
         NextTurn.raycastTarget = state;
         NextTurn.color = state ? activeColor : inactiveColor;
+    }
+
+    public IEnumerator rotateTimeHolder()
+    {
+        while (NextTurn.transform.rotation.z >= 0 || NextTurn.transform.rotation.z < -20)
+        {
+            NextTurn.transform.Rotate(NextTurnRotation);
+            yield return null;
+        }
+        NextTurn.transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     public void ToggleEndGame(bool state)
