@@ -78,6 +78,21 @@ public class UIManager : MonoBehaviour
         camera.orthographicSize = baseCamzoom;
         cameraPivot.transform.position = baseCamPivotPos;
         cameraPivot.transform.rotation = Quaternion.Euler(baseCamPivotRot);
+
+        // reevaluate buttons interactibility
+                        ZoomIn.raycastTarget = true;
+        ZoomOut.raycastTarget = true;
+        ZoomIn.color = activeColor;
+        ZoomOut.color = activeColor;
+        MoveLeft.raycastTarget = true;
+        MoveRight.raycastTarget = true;
+        MoveUp.raycastTarget = true;
+        MoveDown.raycastTarget = true;
+
+        MoveLeft.color = activeColor;
+        MoveUp.color = activeColor;
+        MoveRight.color = activeColor;
+        MoveDown.color = activeColor;
     }
 
     public void ToggleNextTurn(bool state)
