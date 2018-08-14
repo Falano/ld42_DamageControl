@@ -198,6 +198,7 @@ public class BoardManager : MonoBehaviour
         {
             if (occupant.button)
             {
+                occupant.lastCall = 0;
                 occupant.button.interactable = occupant.isAvailable;
             }
         }

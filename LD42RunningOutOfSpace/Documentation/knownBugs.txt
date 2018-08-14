@@ -1,4 +1,4 @@
-bugs boutons addAnimal ne stoppent pas coroutine (fix stuff plants all inizio)
+--DONE-- bugs boutons addAnimal ne stoppent pas coroutine (fix stuff plants all inizio)
 on new game, i pulsanti non ci sono
 bug cacciatore scompare
 --DONE?-- c'è una pianta sull'acqua
