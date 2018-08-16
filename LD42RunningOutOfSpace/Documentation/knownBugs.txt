@@ -1,9 +1,13 @@
---DONE ugly-- bugs boutons addAnimal ne stoppent pas coroutine (fix stuff plants all inizio)
+﻿--DONE ugly-- bugs boutons addAnimal ne stoppent pas coroutine (fix stuff plants all inizio)
 --DONE-- on new game, i pulsanti non ci sono
 --DONE-- bug cacciatore scompare
 --DONE?-- c'è una pianta sull'acqua
 --DONE-- vedi la schermata di fine parecchie volte
+le piante spawnate dell acqua non crescono
 
 TODO:
 fare in modo che il movimento delle animali se posse cambiare dall'inspector
 --DONE-- aggiungere un animazione a bottone next
+
+
+sto sistemando le Occupants per che siano usabili dall editor

@@ -62,7 +62,8 @@ public enum type
     empty,
     mountain,
     water,
-    field
+    field,
+    damaged
 }
 
 public enum state

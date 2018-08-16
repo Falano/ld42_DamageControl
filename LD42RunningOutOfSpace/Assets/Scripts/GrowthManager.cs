@@ -81,7 +81,7 @@ public class GrowthManager : MonoBehaviour
                         }
                         else
                         {
-                            for (int j = 0; j < occupant.movesNumber; j++)
+                            for (int j = 0; j < occupant.ToCleanTilesNumber; j++)
                             {
                                 occupant.move();
                             }
@@ -209,74 +209,132 @@ public class GrowthManager : MonoBehaviour
 [System.Serializable]
 public class Occupant
 {
+    public static Dictionary<state, Occupant> Occs { get { return GrowthManager.instance.Occupants; } }
+    public static Dictionary<Vector2, Tile> Tiles { get { return BoardManager.instance.Tiles; } }
 
     public state State;
     public List<Mesh> meshes;
     //public List<state> predators;
     public List<state> preys;
-    public int firstApparition;
-    public int cooldown;
-    public int movesNumber;
     public type specialType;
     public Button button;
     public Sprite introImage;
     public AudioClip sound;
 
-    //[HideInInspector]
+    [Header("game design stuff")]
+    public int firstApparition;
+
+    [Tooltip("cooldown between two calls from the player to add a new animal of this type")]
+    public int cooldown;
+    [Tooltip("cooldown between two movements of the animals of this type on the map")]
+    public int moveCooldown;
+    [Tooltip("clean all the tiles in cleanable tiles, or choose only a few of those?")]
+    [SerializeField]
+    bool cleanAllAvailableTiles;
+    [Tooltip("Of all the tiles we could clean, how many will we")]
+    [SerializeField]
+    int _toCleanTilesNumber;
+    [HideInInspector]
+    public int ToCleanTilesNumber
+    {
+        get
+        {
+            if (cleanAllAvailableTiles)
+            {
+                return relativeTilesAvailableToBeCleaned.Count;
+            }
+            else
+            {
+                return _toCleanTilesNumber;
+            }
+        }
+    }
+    [Tooltip("position relative to the animal")]
+    [SerializeField]
+    List<Vector2> relativeTilesAvailableToBeCleaned;
+    public int numberOfKids;
+    [Tooltip("and free the space where you were")]
+    public bool shouldMove;
+    public moveType moveType;
+    public List<Vector2> relativeTilesAvailableForMovement;
+    public int longevity;
+    [Tooltip("can this animal end the game if there are too many of them")]
+    public bool canOverrun;
+    public int overrunPercentage;
+
+    public int maxNumberOfInstances;
+    [Tooltip("you need at least one of these on the map to create one of this")]
+    public List<state> necessaryPrecursors;
+
+    bool hasEnoughPrecursors;
+
     public List<Vector2> listTiles = new List<Vector2>();
     [HideInInspector]
     public int lastCall;
-    //[HideInInspector]
-    //bool? _isAvailable;
     public bool isAvailable
     {
         get
         {
-            /*if (_isAvailable == null)
-            {
-                _isAvailable = false;*/
             if (GrowthManager.instance.currentTurn < firstApparition || GrowthManager.instance.createdSomethingThisTurn)
             {
                 return false;
             }
-            switch (State)
+
+            // does it have the precursors it needs to be available in button?
+            hasEnoughPrecursors = false;
+            foreach (state s in necessaryPrecursors)
             {
-                case state.hunter:
-                    if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count > 1)
-                    {
-                        //    _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
-                        return (GrowthManager.instance.currentTurn - this.lastCall >= Mathf.FloorToInt(10 / GrowthManager.instance.Occupants[state.eagle].listTiles.Count));
-                    }
-                    else if (GrowthManager.instance.Occupants[state.eagle].listTiles.Count == 1)
-                    {
-                        //  _isAvailable = (GrowthManager.instance.currentTurn - lastCall >= 10);
-                        return (GrowthManager.instance.currentTurn - this.lastCall >= 10);
-                    }
-                    break;
-                case state.ranger:
-                    //_isAvailable = (GrowthManager.instance.Occupants[state.hunter].listTiles.Count > 0 && listTiles.Count == 0);
-                    return (GrowthManager.instance.Occupants[state.hunter].listTiles.Count > 0 && listTiles.Count == 0);
-                    break;
-                default:
-                    //_isAvailable = (GrowthManager.instance.currentTurn - lastCall >= cooldown);
-                    return (GrowthManager.instance.currentTurn - this.lastCall >= cooldown);
-                    break;
+                if (Occs[s].listTiles.Count > 0)
+                {
+                    hasEnoughPrecursors = true;
+                }
             }
+
+            // if it has one of the precursors it needs and won't be more numerous than allowed
+            if ((necessaryPrecursors.Count == 0 || hasEnoughPrecursors) && listTiles.Count < maxNumberOfInstances)
+            {
+                // it can be spawned when the cooldown is finished
+                return (GrowthManager.instance.currentTurn - this.lastCall >= cooldown);
+            }
+
             return false;
-        }/*
-            return _isAvailable;
         }
-        set
-        {
-            _isAvailable = value;
-        }*/
     }
 
 
+    int tilesCleaned;
     Vector2 currentPos;
     Vector2 currentMove;
     List<Vector2> possibleMoves = new List<Vector2>();
     List<Vector2> preferedMoves = new List<Vector2>();
+    List<Vector2> toCleanAbsolute;
+    List<Vector2> _toMoveAbsolute;
+    List<Vector2> toMoveAbsolute
+    {
+        get
+        {
+            switch (moveType)
+            {
+                case moveType.anywhere:
+                    _toMoveAbsolute = Occs[state.healthy].listTiles;
+                    break;
+                case moveType.cleanTiles:
+                    _toMoveAbsolute = toCleanAbsolute;
+                    break;
+                case moveType.list:
+                    _toMoveAbsolute.Clear();
+                    foreach (Vector2 tile in relativeTilesAvailableForMovement)
+                    {
+                        if (Tiles[(currentPos + tile)].State == state.healthy || preys.Contains(Tiles[(currentPos + tile)].State))
+                        {
+                            _toMoveAbsolute.Add(currentPos + tile);
+                        }
+                    }
+                    break;
+            }
+            return _toMoveAbsolute;
+        }
+    }
     List<Vector2> _neighbourhoodTiles = new List<Vector2>();
     List<Vector2> NeighbourhoodTiles
     {
@@ -300,8 +358,7 @@ public class Occupant
             _neighbourhoodTiles = value;
         }
     }
-    [HideInInspector]
-    public bool haveNeighbourhoodTilesASpecialType;
+    /*
     List<Vector2> _movementRange = new List<Vector2>();
     List<Vector2> MovementRange
     {
@@ -343,7 +400,10 @@ public class Occupant
 
             return _movementRange;
         }
-    }
+    }*/
+
+    [HideInInspector]
+    public bool haveNeighbourhoodTilesASpecialType;
 
     Tile currentTile;
     bool canMove;
@@ -454,6 +514,28 @@ public class Occupant
     {
         currentPos = pos;
         canMove = true;
+
+
+        // check which we can clean
+        toCleanAbsolute.Clear();
+        foreach( Vector2 tile in relativeTilesAvailableToBeCleaned)
+        {
+            if(preys.Contains(Tiles[currentPos + tile].State))
+            {
+                toCleanAbsolute.Add(currentPos + tile);
+            }
+        }
+        // decide which we will clean
+        // we can clean Count tiles
+        int count = toCleanAbsolute.Count;
+        // we need to clean up to ToCleanTilesNumber tiles
+        // so we trim ToCleanAbsolute as needed
+        while(count < ToCleanTilesNumber)
+        {
+            toCleanAbsolute.RemoveAt(Random.Range(0, toCleanAbsolute.Count));
+        }
+
+
         // are we allowed our special move?
         haveNeighbourhoodTilesASpecialType = false;
         //Debug.Log("1) are neighbours special (" + specialType.ToString() + ") ? " + haveNeighbourhoodTilesASpecialType.ToString());
@@ -467,32 +549,28 @@ public class Occupant
                 }
             }
         }
+
+
         // where can we or would we like to go?
         possibleMoves.Clear();
         preferedMoves.Clear();
 
-        if (State != state.eagle)
+        foreach (Vector2 move in toMoveAbsolute)
         {
-            foreach (Vector2 move in MovementRange)
+            currentMove = currentPos + move;
+            if (Tiles.ContainsKey(currentMove) && Tiles[currentMove].Type == type.empty)
             {
-                currentMove = currentPos + move;
-                if (BoardManager.instance.Tiles.ContainsKey(currentMove) && BoardManager.instance.Tiles[currentMove].Type == type.empty)
+                if (Tiles[currentMove].State == state.healthy)
                 {
-                    if (BoardManager.instance.Tiles[currentMove].State == state.healthy)
-                    {
-                        //Debug.Log("5.5aa) Adding tile " + currentMove + " to possible Moves");
-                        possibleMoves.Add(currentMove);
-                    }
-                    else if (preys.Contains(BoardManager.instance.Tiles[currentMove].State))
-                    {
-                        //Debug.Log("5.5ab) Adding tile " + currentMove + " to prefered Moves");
-                        preferedMoves.Add(currentMove);
-                    }
+                    possibleMoves.Add(currentMove);
+                }
+                else if (preys.Contains(BoardManager.instance.Tiles[currentMove].State))
+                {
+                    preferedMoves.Add(currentMove);
                 }
             }
-        }
-        else // eagle can go anywhere // but only each 3 turns
-        {
+
+
             //Debug.Log("eagle; current turn: " + GrowthManager.instance.currentTurn + "; lastCall: " + lastCall + "; modulo 4: " + (GrowthManager.instance.currentTurn - lastCall) % 4);
 
             if ((GrowthManager.instance.currentTurn - lastCall) % 4 == 0)
@@ -598,4 +676,11 @@ public class Occupant
                 break;
         }
     }
+}
+
+public enum moveType
+{
+    cleanTiles,
+    anywhere,
+    list
 }

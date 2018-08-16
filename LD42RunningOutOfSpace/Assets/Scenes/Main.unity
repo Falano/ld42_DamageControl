@@ -236,11 +236,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 20794448691088276, guid: 6b321216dfe81d04f96fba12f2612584,
-        type: 2}
-      propertyPath: far clip plane
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b321216dfe81d04f96fba12f2612584, type: 2}
   m_IsPrefabAsset: 0
@@ -341,36 +336,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114464122473498440, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1134536671}
-    - target: {fileID: 114415265503410236, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
-    - target: {fileID: 114863738784921980, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1134536671}
-    - target: {fileID: 114945472010597288, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1147651249}
-    - target: {fileID: 114837191722320242, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
-    - target: {fileID: 114055388944031044, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
     - target: {fileID: 114290923368958214, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -386,11 +351,41 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
+    - target: {fileID: 114863738784921980, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134536671}
+    - target: {fileID: 114464122473498440, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134536671}
+    - target: {fileID: 114055388944031044, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
+    - target: {fileID: 114945472010597288, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147651249}
     - target: {fileID: 114708116811583204, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
+    - target: {fileID: 114837191722320242, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
+    - target: {fileID: 114415265503410236, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
     - target: {fileID: 114918875914971110, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -401,6 +396,14 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
+    - target: {fileID: 114141425771164934, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_Text
+      value: "A game by Noemie Scherer and Leandro Estrella.\n\nSounds from Freesound
+        users:\n ArcLegend05\n\xB7 timtube\n\xB7 Benbojangles\n\xB7 kabit\n\xB7 HolmesAudio\n\xB7
+        EFlexTheSoundDesigner\n\nRealized in 72 hours during the Ludum Dare 42:\n\"Running
+        out of space\".\n\n\nAugust 2018"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef57b4e3f780df343ab5c0fc58ad1302, type: 2}
   m_IsPrefabAsset: 0
@@ -473,11 +476,6 @@ Prefab:
       propertyPath: ranger.button
       value: 
       objectReference: {fileID: 288567574}
-    - target: {fileID: 114841580218620664, guid: 4c01392ee24a6c647a147a7ebc1d4cee,
-        type: 2}
-      propertyPath: initialPlantsNumber
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c01392ee24a6c647a147a7ebc1d4cee, type: 2}
   m_IsPrefabAsset: 0

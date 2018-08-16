@@ -21,6 +21,7 @@ public class BoardManager : MonoBehaviour
     public Terrain water;
     public Terrain mountain;
     public Terrain field;
+    public Terrain damaged;
     public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
     public Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
     [HideInInspector]
@@ -47,6 +48,7 @@ public class BoardManager : MonoBehaviour
         Terrains.Add(type.water, water);
         Terrains.Add(type.mountain, mountain);
         Terrains.Add(type.field, field);
+        Terrains.Add(type.damaged, damaged);
 
 
         StartCoroutine(CreateBoard());

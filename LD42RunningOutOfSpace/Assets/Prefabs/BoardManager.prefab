@@ -254,13 +254,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 0}
     preys: 
-    firstApparition: 0
-    cooldown: 0
-    movesNumber: 0
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
+    firstApparition: 0
+    cooldown: 0
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -269,13 +280,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
     preys: 00000000
-    firstApparition: 0
-    cooldown: 0
-    movesNumber: 2
     specialType: 2
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
+    firstApparition: 0
+    cooldown: 0
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -284,13 +306,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300000, guid: 6c2936461bc104eceadea7b0f43c2e5a, type: 3}
     preys: 01000000
-    firstApparition: 0
-    cooldown: 0
-    movesNumber: 1
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 1d05b96cce97b2d40a0aa05838890dad, type: 3}
     sound: {fileID: 8300000, guid: 4a9a06113ca36469fbf4d1f670f7908d, type: 3}
+    firstApparition: 0
+    cooldown: 0
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -299,13 +332,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300002, guid: be9c00a3edc1f4b6b87452b712d861f4, type: 3}
     preys: 02000000
-    firstApparition: 5
-    cooldown: 1
-    movesNumber: 1
     specialType: 3
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 73b73afe1887710418ae72c373bcf8c3, type: 3}
     sound: {fileID: 8300000, guid: 687507abdc5b64b858e28606a792034b, type: 3}
+    firstApparition: 5
+    cooldown: 1
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -314,13 +358,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300002, guid: def6e73eb236b45129a07643d3c48f06, type: 3}
     preys: 0200000003000000
-    firstApparition: 10
-    cooldown: 3
-    movesNumber: 1
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 9318cd228aa2a2846bda9d36edc64396, type: 3}
     sound: {fileID: 8300000, guid: 94449ba7e05d144428bd24cfa4b88fe9, type: 3}
+    firstApparition: 10
+    cooldown: 3
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -329,13 +384,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300002, guid: 00553c5d335f9402b93bea5ec5f4b134, type: 3}
     preys: 020000000300000004000000
-    firstApparition: 15
-    cooldown: 5
-    movesNumber: 1
     specialType: 1
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: dd731ab0debc5234aac0b3b2b834b7ac, type: 3}
     sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
+    firstApparition: 15
+    cooldown: 5
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -343,14 +409,25 @@ MonoBehaviour:
     State: 6
     meshes:
     - {fileID: 4300002, guid: 61ec4afd63999494690fcf53721946fc, type: 3}
-    preys: 020000000400000005000000
-    firstApparition: -1
-    cooldown: 0
-    movesNumber: 1
+    preys: 0400000005000000
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: ad80087d3f8641e4da3013ddf9c291f9, type: 3}
     sound: {fileID: 8300000, guid: 52f241a3a606343ddae9818250b0d990, type: 3}
+    firstApparition: -1
+    cooldown: 0
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -359,13 +436,24 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300002, guid: c4d9fb64e2888432d830117ccb430655, type: 3}
     preys: 010000000200000003000000040000000500000006000000
-    firstApparition: -1
-    cooldown: 0
-    movesNumber: 1
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: f229dc91fa697914cba9bf5b0de294de, type: 3}
     sound: {fileID: 8300000, guid: cb5855a22e73b47dfa5d65cb4103b1de, type: 3}
+    firstApparition: -1
+    cooldown: 0
+    moveCooldown: 0
+    cleanAllAvailableTiles: 0
+    _toCleanTilesNumber: 0
+    numberOfKids: 0
+    shouldMove: 0
+    moveType: 0
+    relativeTilesAvailableForMovement: []
+    longevity: 0
+    canOverrun: 0
+    overrunPercentage: 0
+    maxNumberOfInstances: 0
+    necessaryPrecursors: 
     listTiles: []
     lastCall: 0
     haveNeighbourhoodTilesASpecialType: 0
@@ -408,4 +496,9 @@ MonoBehaviour:
     Type: 3
     number: 2
     Size: {x: 10, y: 17}
+    mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+  damaged:
+    Type: 4
+    number: 0
+    Size: {x: 0, y: 0}
     mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
