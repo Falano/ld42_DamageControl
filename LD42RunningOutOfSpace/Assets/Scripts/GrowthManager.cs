@@ -48,6 +48,12 @@ public class GrowthManager : MonoBehaviour
         Occupants.Add(state.hunter, hunter);
         Occupants.Add(state.ranger, ranger);
 
+        foreach(Occupant occ in Occupants.Values)
+        {
+            occ.preys.Sort();
+            occ.preys.Reverse();
+        }
+
         ambient.loop = true;
 
     }
@@ -307,8 +313,9 @@ public class Occupant
     Vector2 currentMove;
     List<Vector2> possibleMoves = new List<Vector2>();
     List<Vector2> preferedMoves = new List<Vector2>();
-    List<Vector2> toCleanAbsolute;
-    List<Vector2> _toMoveAbsolute;
+    List<Vector2> bestMoves = new List<Vector2>();
+    List<Vector2> toCleanAbsolute = new List<Vector2>();
+    List<Vector2> _toMoveAbsolute = new List<Vector2>();
     List<Vector2> toMoveAbsolute
     {
         get
@@ -526,11 +533,9 @@ public class Occupant
             }
         }
         // decide which we will clean
-        // we can clean Count tiles
-        int count = toCleanAbsolute.Count;
         // we need to clean up to ToCleanTilesNumber tiles
         // so we trim ToCleanAbsolute as needed
-        while(count < ToCleanTilesNumber)
+        while (ToCleanTilesNumber < toCleanAbsolute.Count)
         {
             toCleanAbsolute.RemoveAt(Random.Range(0, toCleanAbsolute.Count));
         }
@@ -558,15 +563,19 @@ public class Occupant
         foreach (Vector2 move in toMoveAbsolute)
         {
             currentMove = currentPos + move;
-            if (Tiles.ContainsKey(currentMove) && Tiles[currentMove].Type == type.empty)
+            if (Tiles.ContainsKey(currentMove) && (Tiles[currentMove].Type == type.empty || Tiles[currentMove].Type == type.damaged))
             {
-                if (Tiles[currentMove].State == state.healthy)
+                if((Tiles[currentMove].State) == preys[0])
                 {
-                    possibleMoves.Add(currentMove);
+
                 }
-                else if (preys.Contains(BoardManager.instance.Tiles[currentMove].State))
+                if (preys.Contains(BoardManager.instance.Tiles[currentMove].State))
                 {
                     preferedMoves.Add(currentMove);
+                }
+                else if (Tiles[currentMove].Type == type.empty || Tiles[currentMove].Type == type.damaged)
+                {
+                    possibleMoves.Add(currentMove);
                 }
             }
 

@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     public Text EndGameScreen;
     public GameObject menu;
+    public GameObject CreditsScreen;
     Vector3 NextTurnRotation = new Vector3(0,0,13);
 
 
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
     //public Image RotateLeft;
 
     public Image NextTurn;
+    public GameObject NextTurnPulse;
 
     public void Start()
     {
@@ -66,6 +68,7 @@ public class UIManager : MonoBehaviour
         NewAnimalScreen.transform.parent.gameObject.SetActive(false);
         IntroScreen.transform.parent.gameObject.SetActive(false);
         EndGameScreen.transform.parent.gameObject.SetActive(false);
+        CreditsScreen.SetActive(false);
         menu.SetActive(false);
     }
 
@@ -103,6 +106,16 @@ public class UIManager : MonoBehaviour
     {
         NextTurn.raycastTarget = state;
         NextTurn.color = state ? activeColor : inactiveColor;
+    }
+
+    public IEnumerator PulseNextTurn()
+    {
+        while (GrowthManager.instance.currentTurn == 0)
+        {
+            float scale = 1.5f + (Mathf.Sin(Time.time*3)*.25f);
+            NextTurnPulse.transform.localScale = new Vector3(scale, scale);
+            yield return null;
+        }
     }
 
     public IEnumerator rotateTimeHolder()
@@ -168,6 +181,7 @@ public class UIManager : MonoBehaviour
             if (introState >= introImages.Count-1)
             {
                 IntroScreen.transform.parent.gameObject.SetActive(false);
+                StartCoroutine(PulseNextTurn());
             }
             else
             {
