@@ -16,6 +16,8 @@ ModelImporter:
     100020: //RootNode
     100022: water_bottom
     100024: water_top
+    100026: tile_weak
+    100028: weak_top
     400000: empty_bottom
     400002: empty_top
     400004: field_bottom
@@ -29,6 +31,8 @@ ModelImporter:
     400020: //RootNode
     400022: water_bottom
     400024: water_top
+    400026: tile_weak
+    400028: weak_top
     2100000: lambert1
     2300000: empty_bottom
     2300002: empty_top
@@ -38,6 +42,7 @@ ModelImporter:
     2300010: mountain_top
     2300012: water_bottom
     2300014: water_top
+    2300016: weak_top
     3300000: empty_bottom
     3300002: empty_top
     3300004: field_bottom
@@ -46,6 +51,7 @@ ModelImporter:
     3300010: mountain_top
     3300012: water_bottom
     3300014: water_top
+    3300016: weak_top
     4300000: mountain_top
     4300002: mountain_bottom
     4300004: water_top
@@ -54,6 +60,7 @@ ModelImporter:
     4300010: empty_bottom
     4300012: field_top
     4300014: field_bottom
+    4300016: weak_top
   externalObjects: {}
   materials:
     importMaterials: 0
