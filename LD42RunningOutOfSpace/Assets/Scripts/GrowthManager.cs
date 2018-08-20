@@ -70,9 +70,14 @@ public class GrowthManager : MonoBehaviour
         // for each state
         foreach (OccupantManager occupant in Occupants.Values)
         {
+            // healthy doesn't do anything
+            if(occupant.State != state.healthy)
+            {
+
             // for each of its members, we move
             foreach (Vector2 tile in occupant.listTiles)
             {
+                //Debug.Log("moving " + tile);
                 BoardManager.instance.Tiles[tile].occ.move();
             }
             // we reset its availibility
@@ -93,6 +98,7 @@ public class GrowthManager : MonoBehaviour
             {
                 UIManager.instance.ToggleEndGame(true);
                 choseToKeepPlaying = true;
+            }
             }
         }
 
@@ -297,6 +303,7 @@ public class OccupantInstance
         {
             if (tile.Type == type.damaged)
             {
+                // damaged heals
                 tile.Type = type.empty;
             }
             //Debug.Log("healthy is a victim that can't spread on its own");
@@ -318,7 +325,6 @@ public class OccupantInstance
         }
 
         updateMoveStats();
-
 
         // clean
         foreach (Vector2 tile in toCleanAbsolute)
@@ -357,7 +363,7 @@ public class OccupantInstance
         {
             return;
         }
-
+        /*
         //
         // building toCleanAbsolute
         //
@@ -445,7 +451,7 @@ public class OccupantInstance
         foreach (Vector2 v in bestMoves)
         {
             toSpawnInAbsolute.Add(v);
-        }
+        }*/
     }
 
 
@@ -473,7 +479,7 @@ public class OccupantInstance
                     }
                 }
 
-                move();
+                move(true);
 
                 manager.relativeTilesAvailableToBeCleaned.Clear();
                 for (int i = -1; i <= 1; i++)

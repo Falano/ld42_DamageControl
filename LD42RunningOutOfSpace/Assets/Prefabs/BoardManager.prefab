@@ -614,5 +614,5 @@ MonoBehaviour:
     Type: 4
     number: 0
     Size: {x: 0, y: 0}
-    mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+    mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
   emptyTilesAtStart: 0
