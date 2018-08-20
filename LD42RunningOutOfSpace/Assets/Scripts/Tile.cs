@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public static int SaneTiles;
     [SerializeField]
     type _type;
     public type Type
@@ -16,14 +17,14 @@ public class Tile : MonoBehaviour
         {
             _type = value;
             mesh.mesh = BoardManager.instance.Terrains[_type].mesh;
-            if (value == type.empty && !BoardManager.instance.emptyTiles.Contains(pos))
-            {
-                GrowthManager.instance.Occupants[state.healthy].listTiles.Add(pos);
-            }
-            else if(value != type.empty && BoardManager.instance.emptyTiles.Contains(pos))
-            {
-                GrowthManager.instance.Occupants[state.healthy].listTiles.Remove(pos);
 
+            if (value == type.empty)
+            {
+                SaneTiles++;
+            }
+            else if (value != type.empty)
+            {
+                SaneTiles--;
             }
         }
     }
@@ -38,6 +39,15 @@ public class Tile : MonoBehaviour
             _state = value;
             occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].meshes[Random.Range(0, GrowthManager.instance.Occupants[_state].meshes.Count)];
             GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
+            occ.lastMove = GrowthManager.instance.currentTurn;
+            if (_state != state.plant)
+            {
+                occ.bypassSpecial = false;
+            }
+            else if (_state != state.healthy)
+            {
+                Type = type.damaged;
+            }
         }
     }
     [SerializeField]
@@ -48,11 +58,14 @@ public class Tile : MonoBehaviour
     MeshFilter mesh;
     [SerializeField]
     MeshFilter occupantSpriteHolder;
+    public OccupantInstance occ;
 
     private void Start()
     {
-            occupantSpriteHolder.transform.Rotate(0, Random.Range(0, 360), 0);
-            ground.material = BoardManager.instance.Materials[Random.Range(0, BoardManager.instance.Materials.Count)];
+        occ = new OccupantInstance(this);
+        occupantSpriteHolder.transform.Rotate(0, Random.Range(0, 360), 0);
+        ground.material = BoardManager.instance.Materials[Random.Range(0, BoardManager.instance.Materials.Count)];
+
     }
 
 }

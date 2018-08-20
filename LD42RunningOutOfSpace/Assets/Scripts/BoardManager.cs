@@ -24,8 +24,10 @@ public class BoardManager : MonoBehaviour
     public Terrain damaged;
     public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
     public Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
+    //[HideInInspector]
+    //public List<Vector2> emptyTiles { get { return GrowthManager.instance.Occupants[state.healthy].listTiles; } }
     [HideInInspector]
-    public List<Vector2> emptyTiles { get { return GrowthManager.instance.Occupants[state.healthy].listTiles; } }
+    public int emptyTilesAtStart;
 
     List<Vector2> availableNeighbours = new List<Vector2>();
 
@@ -42,7 +44,7 @@ public class BoardManager : MonoBehaviour
         }
 
         UIManager.instance.UpdateIntroImages();
-        
+
         // we set up the Terrain enums
         Terrains.Add(type.empty, empty);
         Terrains.Add(type.water, water);
@@ -111,6 +113,7 @@ public class BoardManager : MonoBehaviour
 
     void UpdateTerrainType()
     {
+        emptyTilesAtStart = Tiles.Values.Count;
         foreach (Tile tile in Tiles.Values)
         {
             tile.State = state.healthy;
@@ -124,10 +127,11 @@ public class BoardManager : MonoBehaviour
             for (int i = 0; i < pair.Value.number; i++)
             {
                 // we change the first tile
-                Vector2 currentTilePos = emptyTiles[Random.Range(0, emptyTiles.Count)];
+                Vector2 currentTilePos = GrowthManager.instance.Occupants[state.healthy].listTiles[Random.Range(0, GrowthManager.instance.Occupants[state.healthy].listTiles.Count)];
                 Tiles[currentTilePos].Type = pair.Key;
-                emptyTiles.Remove(currentTilePos);
+                GrowthManager.instance.Occupants[state.healthy].listTiles.Remove(currentTilePos);
                 availableNeighbours.Clear();
+                emptyTilesAtStart--;
 
                 // we check where it can grow
                 CheckAvailableNeighbours(currentTilePos);
@@ -139,6 +143,7 @@ public class BoardManager : MonoBehaviour
                     availableNeighbours.Remove(chosenNeighbour);
                     CheckAvailableNeighbours(chosenNeighbour);
                     Tiles[chosenNeighbour].Type = pair.Key;
+                    emptyTilesAtStart--;
                 }
             }
         }
@@ -148,7 +153,7 @@ public class BoardManager : MonoBehaviour
 
     void ResetBoard()
     {
-        emptyTiles.Clear();
+        //emptyTiles.Clear();
         foreach (Tile tile in Tiles.Values)
         {
             tile.Type = type.empty;
@@ -162,7 +167,7 @@ public class BoardManager : MonoBehaviour
             Destroy(tile.gameObject);
         }
         Tiles.Clear();
-        emptyTiles.Clear();
+        //emptyTiles.Clear();
     }
 
     public void NewGameLight()
@@ -186,17 +191,18 @@ public class BoardManager : MonoBehaviour
 
     public void FirstTurn()
     {
-        for(int i = 0; i < initialPlantsNumber; i++)
+        for (int i = 0; i < initialPlantsNumber; i++)
         {
             // find a way to create it without using CreateOccupant's coroutine so I can StopAllCoroutines() at the beginning of it
             Invoke("CreatePlant", i * .1f);
         }
 
-       GrowthManager.instance.ambient.Play();
+        GrowthManager.instance.ambientHealthy.Play();
+        GrowthManager.instance.ambientInvasive.Play();
         GrowthManager.instance.currentTurn = 0;
         GrowthManager.instance.choseToKeepPlaying = false;
 
-        foreach (Occupant occupant in GrowthManager.instance.Occupants.Values)
+        foreach (OccupantManager occupant in GrowthManager.instance.Occupants.Values)
         {
             if (occupant.button)
             {

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114690462710641026}
   - component: {fileID: 82098419559398632}
   - component: {fileID: 82661536990179548}
+  - component: {fileID: 82097798017963814}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -43,6 +44,101 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82097798017963814
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1448448536167674}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: cb5855a22e73b47dfa5d65cb4103b1de, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!82 &82098419559398632
 AudioSource:
   m_ObjectHideFlags: 1
@@ -247,7 +343,8 @@ MonoBehaviour:
   currentTurn: 0
   createdSomethingThisTurn: 0
   choseToKeepPlaying: 0
-  ambient: {fileID: 82098419559398632}
+  ambientHealthy: {fileID: 82098419559398632}
+  ambientInvasive: {fileID: 82097798017963814}
   sfx: {fileID: 82661536990179548}
   healthy:
     State: 0
@@ -263,8 +360,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -272,9 +369,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   plant:
     State: 1
     meshes:
@@ -287,20 +385,29 @@ MonoBehaviour:
     firstApparition: 0
     cooldown: 0
     moveCooldown: 0
-    cleanAllAvailableTiles: 0
+    cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: -1}
+    - {x: 0, y: -1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    - {x: 0, y: 1}
+    - {x: -1, y: 1}
+    _numberOfKids: 8
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
-    canOverrun: 0
-    overrunPercentage: 0
+    canOverrun: 1
+    overrunPercentage: 0.95
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   rabbit:
     State: 2
     meshes:
@@ -315,8 +422,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -324,9 +431,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   cat:
     State: 3
     meshes:
@@ -341,8 +449,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -350,9 +458,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   fox:
     State: 4
     meshes:
@@ -367,8 +476,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -376,9 +485,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   eagle:
     State: 5
     meshes:
@@ -393,8 +503,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -402,9 +512,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   hunter:
     State: 6
     meshes:
@@ -419,8 +530,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -428,9 +539,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
   ranger:
     State: 7
     meshes:
@@ -445,8 +557,8 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 0
-    numberOfKids: 0
-    shouldMove: 0
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 0
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
@@ -454,9 +566,10 @@ MonoBehaviour:
     overrunPercentage: 0
     maxNumberOfInstances: 0
     necessaryPrecursors: 
+    numberOfNecessaryPrecursors: 
     listTiles: []
     lastCall: 0
-    haveNeighbourhoodTilesASpecialType: 0
+    hasShownTuto: 0
 --- !u!114 &114841580218620664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -502,3 +615,4 @@ MonoBehaviour:
     number: 0
     Size: {x: 0, y: 0}
     mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+  emptyTilesAtStart: 0
