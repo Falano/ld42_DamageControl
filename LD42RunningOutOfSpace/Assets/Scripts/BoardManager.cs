@@ -17,6 +17,7 @@ public class BoardManager : MonoBehaviour
     public int initialPlantsNumber;
     [Tooltip("if .2, you lose if you have less than 20% of the available tiles that are sane (mountains and fields and water don't count as available)")]
     public float saneTilesPercentageToLose;
+    [Tooltip("if 20, you lose if you have less than 20 sane tiles (sane are grassy green)")]
     public int minNumberOfSaneTiles;
 
     public GameObject tilePrefab;
