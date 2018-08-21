@@ -22,7 +22,7 @@ public class BoardManager : MonoBehaviour
     public Terrain mountain;
     public Terrain field;
     public Terrain damaged;
-    public Dictionary<type, Terrain> Terrains = new Dictionary<type, Terrain>();
+    public Dictionary<terrainTypeEnum, Terrain> Terrains = new Dictionary<terrainTypeEnum, Terrain>();
     public Dictionary<Vector2, Tile> Tiles = new Dictionary<Vector2, Tile>();
     //[HideInInspector]
     //public List<Vector2> emptyTiles { get { return GrowthManager.instance.Occupants[state.healthy].listTiles; } }
@@ -46,11 +46,11 @@ public class BoardManager : MonoBehaviour
         UIManager.instance.UpdateIntroImages();
 
         // we set up the Terrain enums
-        Terrains.Add(type.empty, empty);
-        Terrains.Add(type.water, water);
-        Terrains.Add(type.mountain, mountain);
-        Terrains.Add(type.field, field);
-        Terrains.Add(type.damaged, damaged);
+        Terrains.Add(terrainTypeEnum.healthy, empty);
+        Terrains.Add(terrainTypeEnum.water, water);
+        Terrains.Add(terrainTypeEnum.mountain, mountain);
+        Terrains.Add(terrainTypeEnum.field, field);
+        Terrains.Add(terrainTypeEnum.damaged, damaged);
 
 
         StartCoroutine(CreateBoard());
@@ -68,7 +68,7 @@ public class BoardManager : MonoBehaviour
             for (int y = -1; y <= 1; y++)
             {
                 Vector2 currentPosModifier = new Vector2(x, y);
-                if (Tiles.ContainsKey(currentTilePos + currentPosModifier) && Tiles[currentTilePos + currentPosModifier].Type == type.empty)
+                if (Tiles.ContainsKey(currentTilePos + currentPosModifier) && Tiles[currentTilePos + currentPosModifier].Type == terrainTypeEnum.healthy)
                 {
                     availableNeighbours.Add(currentTilePos + currentPosModifier);
                 }
@@ -116,20 +116,20 @@ public class BoardManager : MonoBehaviour
         emptyTilesAtStart = Tiles.Values.Count;
         foreach (Tile tile in Tiles.Values)
         {
-            tile.State = state.healthy;
+            tile.State = occupantEnum.empty;
         }
         // we change the type of the tiles
         // for each terrain
-        foreach (KeyValuePair<type, Terrain> pair in Terrains)
+        foreach (KeyValuePair<terrainTypeEnum, Terrain> pair in Terrains)
         {
-            type currentType = pair.Key;
+            terrainTypeEnum currentType = pair.Key;
             // we plant the right number of seeds
             for (int i = 0; i < pair.Value.number; i++)
             {
                 // we change the first tile
-                Vector2 currentTilePos = GrowthManager.instance.Occupants[state.healthy].listTiles[Random.Range(0, GrowthManager.instance.Occupants[state.healthy].listTiles.Count)];
+                Vector2 currentTilePos = GrowthManager.instance.Occupants[occupantEnum.empty].listTiles[Random.Range(0, GrowthManager.instance.Occupants[occupantEnum.empty].listTiles.Count)];
                 Tiles[currentTilePos].Type = pair.Key;
-                GrowthManager.instance.Occupants[state.healthy].listTiles.Remove(currentTilePos);
+                GrowthManager.instance.Occupants[occupantEnum.empty].listTiles.Remove(currentTilePos);
                 availableNeighbours.Clear();
                 emptyTilesAtStart--;
 
@@ -156,7 +156,7 @@ public class BoardManager : MonoBehaviour
         //emptyTiles.Clear();
         foreach (Tile tile in Tiles.Values)
         {
-            tile.Type = type.empty;
+            tile.Type = terrainTypeEnum.healthy;
         }
     }
 
@@ -206,7 +206,7 @@ public class BoardManager : MonoBehaviour
         {
             if (occupant.button)
             {
-                occupant.lastCall = 0;
+                occupant.lastCall = -1;
                 occupant.button.interactable = occupant.isAvailable;
             }
         }
@@ -221,11 +221,11 @@ public class BoardManager : MonoBehaviour
 [System.Serializable]
 public class Terrain
 {
-    public type Type;
+    public terrainTypeEnum Type;
     public int number; // the number of seeds of this type of terrain
     public Vector2 Size; // how big each colony of this type of terrain is (random between x (included) and y (included))
     //public Material material;
-    public Mesh mesh;
+    public List<Mesh> mesh;
     // public Sprite imageSides;
     // public Sprite imageTop;
 }

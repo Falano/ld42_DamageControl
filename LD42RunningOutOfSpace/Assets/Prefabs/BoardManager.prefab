@@ -377,7 +377,7 @@ MonoBehaviour:
     State: 1
     meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
-    preys: 00000000
+    preys: 
     specialType: 2
     button: {fileID: 0}
     introImage: {fileID: 0}
@@ -594,25 +594,30 @@ MonoBehaviour:
     Type: 0
     number: 0
     Size: {x: 0, y: 0}
-    mesh: {fileID: 4300008, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+    mesh:
+    - {fileID: 4300008, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   water:
     Type: 2
     number: 5
     Size: {x: 1, y: 60}
-    mesh: {fileID: 4300004, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+    mesh:
+    - {fileID: 4300004, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   mountain:
     Type: 1
     number: 15
     Size: {x: 1, y: 2}
-    mesh: {fileID: 4300000, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+    mesh:
+    - {fileID: 4300000, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   field:
     Type: 3
     number: 2
     Size: {x: 10, y: 17}
-    mesh: {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
+    mesh:
+    - {fileID: 4300012, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   damaged:
     Type: 4
     number: 0
     Size: {x: 0, y: 0}
-    mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+    mesh:
+    - {fileID: 4300010, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   emptyTilesAtStart: 0

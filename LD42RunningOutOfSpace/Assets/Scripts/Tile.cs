@@ -6,8 +6,8 @@ public class Tile : MonoBehaviour
 {
     public static int SaneTiles;
     [SerializeField]
-    type _type;
-    public type Type
+    terrainTypeEnum _type;
+    public terrainTypeEnum Type
     {
         get
         {
@@ -16,21 +16,21 @@ public class Tile : MonoBehaviour
         set
         {
             _type = value;
-            mesh.mesh = BoardManager.instance.Terrains[_type].mesh;
+            mesh.mesh = BoardManager.instance.Terrains[_type].mesh[Random.Range(0, BoardManager.instance.Terrains[_type].mesh.Count)];
 
-            if (value == type.empty)
+            if (value == terrainTypeEnum.healthy)
             {
                 SaneTiles++;
             }
-            else if (value != type.empty)
+            else if (value != terrainTypeEnum.healthy)
             {
                 SaneTiles--;
             }
         }
     }
     public Vector2 pos;
-    state _state;
-    public state State
+    occupantEnum _state;
+    public occupantEnum State
     {
         get { return _state; }
         set
@@ -40,13 +40,13 @@ public class Tile : MonoBehaviour
             occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].meshes[Random.Range(0, GrowthManager.instance.Occupants[_state].meshes.Count)];
             GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
             occ.lastMove = GrowthManager.instance.currentTurn;
-            if (_state != state.plant)
+            if (_state != occupantEnum.plant)
             {
                 occ.bypassSpecial = false;
             }
-            else if (_state != state.healthy)
+            else if (_state != occupantEnum.empty)
             {
-                Type = type.damaged;
+                Type = terrainTypeEnum.damaged;
             }
         }
     }
@@ -70,18 +70,18 @@ public class Tile : MonoBehaviour
 
 }
 
-public enum type
+public enum terrainTypeEnum
 {
-    empty,
+    healthy,
     mountain,
     water,
     field,
     damaged
 }
 
-public enum state
+public enum occupantEnum
 {
-    healthy,
+    empty,
     plant,
     rabbit,
     cat,

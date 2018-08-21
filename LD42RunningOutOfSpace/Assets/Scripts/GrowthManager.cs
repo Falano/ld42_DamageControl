@@ -24,7 +24,7 @@ public class GrowthManager : MonoBehaviour
     public OccupantManager eagle;
     public OccupantManager hunter;
     public OccupantManager ranger;
-    public Dictionary<state, OccupantManager> Occupants = new Dictionary<state, OccupantManager>();
+    public Dictionary<occupantEnum, OccupantManager> Occupants = new Dictionary<occupantEnum, OccupantManager>();
 
 
 
@@ -40,14 +40,14 @@ public class GrowthManager : MonoBehaviour
             Destroy(this);
         }
 
-        Occupants.Add(state.healthy, healthy);
-        Occupants.Add(state.plant, plant);
-        Occupants.Add(state.rabbit, rabbit);
-        Occupants.Add(state.cat, cat);
-        Occupants.Add(state.fox, fox);
-        Occupants.Add(state.eagle, eagle);
-        Occupants.Add(state.hunter, hunter);
-        Occupants.Add(state.ranger, ranger);
+        Occupants.Add(occupantEnum.empty, healthy);
+        Occupants.Add(occupantEnum.plant, plant);
+        Occupants.Add(occupantEnum.rabbit, rabbit);
+        Occupants.Add(occupantEnum.cat, cat);
+        Occupants.Add(occupantEnum.fox, fox);
+        Occupants.Add(occupantEnum.eagle, eagle);
+        Occupants.Add(occupantEnum.hunter, hunter);
+        Occupants.Add(occupantEnum.ranger, ranger);
 
         foreach (OccupantManager occ in Occupants.Values)
         {
@@ -71,14 +71,16 @@ public class GrowthManager : MonoBehaviour
         foreach (OccupantManager occupant in Occupants.Values)
         {
             // healthy doesn't do anything
-            if(occupant.State != state.healthy)
+            if(occupant.State != global::occupantEnum.empty)
             {
 
-            // for each of its members, we move
-            foreach (Vector2 tile in occupant.listTiles)
-            {
-                //Debug.Log("moving " + tile);
-                BoardManager.instance.Tiles[tile].occ.move();
+                // for each of its members, we move
+                //foreach (Vector2 tile in occupant.listTiles)
+                int max = occupant.listTiles.Count;
+                for(int i = 0; i < max; i++)
+                {
+                    //Debug.Log("moving " + tile);
+                    BoardManager.instance.Tiles[occupant.listTiles[i]].occ.move();
             }
             // we reset its availibility
             if (occupant.button)
@@ -88,7 +90,7 @@ public class GrowthManager : MonoBehaviour
 
             if (occupant.isAvailable && !occupant.hasShownTuto && occupant.introImage)
             {
-                UIManager.instance.ToggleNewAnimal(occupant.introImage);
+                    UIManager.instance.ToggleNewAnimal(occupant.introImage);
                 occupant.hasShownTuto = true;
             }
 
@@ -96,20 +98,20 @@ public class GrowthManager : MonoBehaviour
 
             if (!choseToKeepPlaying && occupant.canOverrun && occupant.listTiles.Count >= BoardManager.instance.emptyTilesAtStart * occupant.overrunPercentage)
             {
-                UIManager.instance.ToggleEndGame(true);
-                choseToKeepPlaying = true;
+                    UIManager.instance.ToggleEndGame(true);
+                    choseToKeepPlaying = true;
             }
             }
         }
 
-        if (!choseToKeepPlaying && (Occupants[state.healthy].listTiles.Count < 5))
+        if (!choseToKeepPlaying && (Occupants[occupantEnum.empty].listTiles.Count < 5))
         {
             UIManager.instance.ToggleEndGame(true);
             choseToKeepPlaying = true;
         }
 
         currentTurn++;
-        float currentVolume = ((float)Occupants[state.healthy].listTiles.Count / BoardManager.instance.Tiles.Count);
+        float currentVolume = ((float)Occupants[occupantEnum.empty].listTiles.Count / BoardManager.instance.Tiles.Count);
         ambientHealthy.volume = currentVolume;
         ambientInvasive.volume = 1 - currentVolume;
 
@@ -119,11 +121,11 @@ public class GrowthManager : MonoBehaviour
     {
         StopAllCoroutines();
         //Debug.Log("1) creating occupant " + occupant);
-        state Occupant = (state)System.Enum.Parse(typeof(state), occupant);
+        occupantEnum Occupant = (occupantEnum)System.Enum.Parse(typeof(occupantEnum), occupant);
         StartCoroutine(CreateOccupantCoroutine(Occupant));
     }
 
-    IEnumerator CreateOccupantCoroutine(state Occupant)
+    IEnumerator CreateOccupantCoroutine(occupantEnum Occupant)
     {
         for (int i = 0; i < 2; i++)
         {
@@ -139,16 +141,16 @@ public class GrowthManager : MonoBehaviour
         switch (Occupant)
         {
             // the hunter appears at a random point
-            case state.hunter:
-            case state.plant:
+            case occupantEnum.hunter:
+            case occupantEnum.plant:
                 int tmpPos;
                 do
                 {
-                    tmpPos = Random.Range(0, Occupants[state.healthy].listTiles.Count);
+                    tmpPos = Random.Range(0, Occupants[occupantEnum.empty].listTiles.Count);
                 }
-                while (BoardManager.instance.Tiles[Occupants[state.healthy].listTiles[tmpPos]].Type != type.empty);
+                while (BoardManager.instance.Tiles[Occupants[occupantEnum.empty].listTiles[tmpPos]].Type != terrainTypeEnum.healthy);
 
-                CreateAtPos(Occupant, Occupants[state.healthy].listTiles[tmpPos]);
+                CreateAtPos(Occupant, Occupants[occupantEnum.empty].listTiles[tmpPos]);
                 //Debug.Log("3a) creating hunter at random point");
                 break;
             // all the others appear on the tile clicked
@@ -160,7 +162,7 @@ public class GrowthManager : MonoBehaviour
         //Occupants[Occupant].isAvailable = null;
     }
 
-    IEnumerator CreatingOccupant(state Occupant)
+    IEnumerator CreatingOccupant(occupantEnum Occupant)
     {
         Vector2 pos = new Vector2(0, 0);
         // wait until someone clicked a tile empty in a healthy or prey state
@@ -169,7 +171,7 @@ public class GrowthManager : MonoBehaviour
             RaycastHit hit;
             if (Input.GetMouseButtonDown(0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
             {
-                if (BoardManager.instance.Tiles[hit.transform.position].Type == type.empty && (BoardManager.instance.Tiles[hit.transform.position].State == state.healthy || Occupants[Occupant].preys.Contains(BoardManager.instance.Tiles[hit.transform.position].State)))
+                if (BoardManager.instance.Tiles[hit.transform.position].Type == terrainTypeEnum.healthy && (BoardManager.instance.Tiles[hit.transform.position].State == occupantEnum.empty || Occupants[Occupant].preys.Contains(BoardManager.instance.Tiles[hit.transform.position].State)))
                 {
                     pos = hit.transform.position;
                     return true;
@@ -183,7 +185,7 @@ public class GrowthManager : MonoBehaviour
 
     }
 
-    public void CreateAtPos(state occupant, Vector2 pos)
+    public void CreateAtPos(occupantEnum occupant, Vector2 pos)
     {
         //Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
 
@@ -205,12 +207,13 @@ public class GrowthManager : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class OccupantInstance
 {
-    public static Dictionary<state, OccupantManager> Occs { get { return GrowthManager.instance.Occupants; } }
+    public static Dictionary<occupantEnum, OccupantManager> Occs { get { return GrowthManager.instance.Occupants; } }
     public static Dictionary<Vector2, Tile> Tiles { get { return BoardManager.instance.Tiles; } }
 
-    public state State { get { return tile.State; } }
+    public occupantEnum State { get { return tile.State; } }
     public Vector2 pos;
     public Tile tile;
     public OccupantManager manager { get { return Occs[tile.State]; } }
@@ -238,7 +241,7 @@ public class OccupantInstance
             switch (manager.moveType)
             {
                 case moveType.anywhere:
-                    _toMoveAbsoluteRaw = Occs[state.healthy].listTiles;
+                    _toMoveAbsoluteRaw = Occs[occupantEnum.empty].listTiles;
                     break;
                 case moveType.cleanTiles:
                     _toMoveAbsoluteRaw = toCleanAbsolute;
@@ -247,10 +250,7 @@ public class OccupantInstance
                     _toMoveAbsoluteRaw.Clear();
                     foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
                     {
-                        if (Tiles[(pos + tile)].State == state.healthy || manager.preys.Contains(Tiles[(pos + tile)].State))
-                        {
-                            _toMoveAbsoluteRaw.Add(pos + tile);
-                        }
+                        _toMoveAbsoluteRaw.Add(pos + tile);
                     }
                     break;
             }
@@ -264,7 +264,7 @@ public class OccupantInstance
     {
         get
         {
-            if (manager.specialType != type.empty)
+            if (manager.specialType != terrainTypeEnum.healthy)
             {
                 foreach (Vector2 tile in manager.NeighbourhoodTiles)
                 {
@@ -285,7 +285,6 @@ public class OccupantInstance
         }
     }
 
-
     public OccupantInstance(Tile _tile)
     {
         tile = _tile;
@@ -299,12 +298,12 @@ public class OccupantInstance
     public void move(bool bypassSpecial = false)
     {
         // healthy doesn't move nor clean
-        if (tile.State == state.healthy)
+        if (tile.State == occupantEnum.empty)
         {
-            if (tile.Type == type.damaged)
+            if (tile.Type == terrainTypeEnum.damaged)
             {
                 // damaged heals
-                tile.Type = type.empty;
+                tile.Type = terrainTypeEnum.healthy;
             }
             //Debug.Log("healthy is a victim that can't spread on its own");
             return;
@@ -313,7 +312,7 @@ public class OccupantInstance
         // if you're too old you die
         if (manager.longevity != 0 && Random.Range(0, manager.longevity) == 0)
         {
-            BoardManager.instance.Tiles[pos].State = state.healthy;
+            BoardManager.instance.Tiles[pos].State = occupantEnum.empty;
             return;
         }
 
@@ -329,7 +328,7 @@ public class OccupantInstance
         // clean
         foreach (Vector2 tile in toCleanAbsolute)
         {
-            Tiles[tile].State = state.healthy;
+            Tiles[tile].State = occupantEnum.empty;
         }
 
         // check before move
@@ -347,7 +346,7 @@ public class OccupantInstance
         // you moved and left the place you were at empty
         if (manager.shouldParentDie)
         {
-            tile.State = state.healthy;
+            tile.State = occupantEnum.empty;
         }
     }
 
@@ -361,9 +360,10 @@ public class OccupantInstance
 
         if (manager.moveCooldown != 0 && GrowthManager.instance.currentTurn % manager.moveCooldown != 0)
         {
+            Debug.Log("returning!");
             return;
         }
-        /*
+        
         //
         // building toCleanAbsolute
         //
@@ -371,7 +371,7 @@ public class OccupantInstance
         //check which we can clean
         foreach (Vector2 tile in manager.relativeTilesAvailableToBeCleaned)
         {
-            if (manager.preys.Contains(Tiles[pos + tile].State))
+            if (Tiles.ContainsKey(pos + tile) && manager.preys.Contains(Tiles[pos + tile].State))
             {
                 toCleanAbsolute.Add(pos + tile);
             }
@@ -384,6 +384,12 @@ public class OccupantInstance
             toCleanAbsolute.RemoveAt(Random.Range(0, toCleanAbsolute.Count));
         }
 
+
+        foreach(Vector2 v in toCleanAbsolute)
+        {
+            Debug.Log("to cleqn qbsolute: " + toCleanAbsolute);
+        }
+
         //
         // building toSpawnInAbsolute
         //
@@ -393,7 +399,7 @@ public class OccupantInstance
         {
             return;
         }
-
+        
         // where can we or would we like to go?
         possibleMoves.Clear();
         preferedMoves.Clear();
@@ -402,10 +408,10 @@ public class OccupantInstance
         // we get all the moves available
         foreach (Vector2 move in toMoveAbsoluteRaw)
         {
-            currentMove = pos + move;
-            if (Tiles.ContainsKey(currentMove) && (Tiles[currentMove].Type == type.empty || Tiles[currentMove].Type == type.damaged))
+            //currentMove = pos + move;
+            if (Tiles.ContainsKey(move) && (Tiles[move].Type == terrainTypeEnum.healthy || Tiles[move].Type == terrainTypeEnum.damaged))
             {
-                // we like highesst-ranked prey best
+                // we like highest-ranked prey best
                 if ((Tiles[currentMove].State) == manager.preys[0])
                 {
                     bestMoves.Add(currentMove);
@@ -415,15 +421,15 @@ public class OccupantInstance
                     preferedMoves.Add(currentMove);
                 }
                 // but we can also spread on empty tiles if there's nothing better around
-                else if (Tiles[currentMove].State == state.healthy)
+                else if (Tiles[currentMove].State == occupantEnum.empty)
                 {
                     possibleMoves.Add(currentMove);
                 }
             }
         }
 
-        // we trim the excess (ina separate step so it's kinda random)
-        while (currentNumberOfKids < manager.NumberOfKids)
+        // we trim the excess (in a separate step so it's kinda random)
+        while (currentNumberOfKids >= manager.NumberOfKids)
         {
             if (possibleMoves.Count > 0)
             {
@@ -438,26 +444,29 @@ public class OccupantInstance
                 bestMoves.RemoveAt(Random.Range(0, bestMoves.Count));
             }
         }
-
+        
         // we merge the lists into a new one
         foreach (Vector2 v in possibleMoves)
         {
+            Debug.Log("tospawinInAbsolute possible: " + v);
             toSpawnInAbsolute.Add(v);
         }
         foreach (Vector2 v in preferedMoves)
         {
+            Debug.Log("tospawinInAbsolute prefered: " + v);
             toSpawnInAbsolute.Add(v);
         }
         foreach (Vector2 v in bestMoves)
         {
+            Debug.Log("tospawinInAbsolute best: " + v);
             toSpawnInAbsolute.Add(v);
-        }*/
+        }
     }
 
 
     public void specialMove()
     {
-        if (State == state.healthy)
+        if (State == occupantEnum.empty)
         {
             //Debug.Log("healthy is a victim that can't spread on its own");
             return;
@@ -465,11 +474,11 @@ public class OccupantInstance
 
         switch (State)
         {
-            case state.cat:
+            case occupantEnum.cat:
                 move(true);
                 move(true);
                 break;
-            case state.eagle:
+            case occupantEnum.eagle:
                 manager.relativeTilesAvailableToBeCleaned.Clear();
                 for (int i = -2; i <= 2; i++)
                 {
@@ -490,7 +499,7 @@ public class OccupantInstance
                     }
                 }
                 break;
-            case state.plant:
+            case occupantEnum.plant:
                 List<Vector2> toColonizeTile = new List<Vector2>();
                 List<Vector2> colonizedTile = new List<Vector2>();
                 Vector2 specialPlant;
@@ -512,7 +521,7 @@ public class OccupantInstance
 
                         foreach (Vector2 tile2 in manager.NeighbourhoodTiles)
                         {
-                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == type.empty && BoardManager.instance.Tiles[currentTile + tile2].State == state.healthy && !toColonizeTile.Contains(currentTile + tile2))
+                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == terrainTypeEnum.healthy && BoardManager.instance.Tiles[currentTile + tile2].State == occupantEnum.empty && !toColonizeTile.Contains(currentTile + tile2))
                             {
                                 toColonizeTile.Add(currentTile + tile2);
                             }
@@ -523,7 +532,7 @@ public class OccupantInstance
 
                 foreach (Vector2 tile in toColonizeTile)
                 {
-                    BoardManager.instance.Tiles[tile].State = state.plant;
+                    BoardManager.instance.Tiles[tile].State = occupantEnum.plant;
                     BoardManager.instance.Tiles[tile].occ.bypassSpecial = true;
                 }
 
@@ -537,11 +546,11 @@ public class OccupantInstance
 public class OccupantManager
 {
 
-    public state State;
+    public occupantEnum State;
     public List<Mesh> meshes;
     //public List<state> predators;
-    public List<state> preys;
-    public type specialType;
+    public List<occupantEnum> preys;
+    public terrainTypeEnum specialType;
     public Button button;
     public Sprite introImage;
     public AudioClip sound;
@@ -613,7 +622,7 @@ public class OccupantManager
             }
         }
     } // eagles: 1; bushes: 8;
-    public bool shouldParentDie { get { return longevity == 0; } } // bushes: no; eagles: yes
+    public bool shouldParentDie { get { return longevity != 0; } } // bushes: no (longevity 0); eagles: yes; rangers yes (longevity 1: moves every turn, so dies every turn with one child)
     public moveType moveType; // list, all clean (bushes), anywhere (eagles)
     public List<Vector2> relativeTilesAvailableForMovement;
     [Tooltip("if 0, never dies, if 1, dies at every turn; if 2, dies once out of 2, if 3, dies once out of 3, etc.; if longevity 1 e numberOfKids 1, si sposta ogni torno")]
@@ -625,7 +634,7 @@ public class OccupantManager
 
     public int maxNumberOfInstances;
     [Tooltip("for necessary precursors[X], you need a number Number of necessary precursors[X] of them; the button will only show if there are enough necessary precursors")]
-    public List<state> necessaryPrecursors;
+    public List<occupantEnum> necessaryPrecursors;
     [Tooltip("for necessary precursors[X], you need a number Number of necessary precursors[X] of them; the button will only show if there are enough necessary precursors")]
     public List<int> numberOfNecessaryPrecursors;
     public bool hasEnoughPrecursors
@@ -650,7 +659,7 @@ public class OccupantManager
     public List<Vector2> listTiles = new List<Vector2>();
 
     [HideInInspector]
-    public int lastCall;
+    public int lastCall = -1;
     public bool isAvailable // is the button available (the ones already there grow even if the button is hidden)
     {
         get
