@@ -5,11 +5,19 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
+    [SerializeField]
+    bool showIntro;
+    [HideInInspector]
+    public bool settingTheBoard = true;
+
 
     [Header("base infos")]
     public int length;
     public int width;
     public int initialPlantsNumber;
+    [Tooltip("if .2, you lose if you have less than 20% of the available tiles that are sane (mountains and fields and water don't count as available)")]
+    public float saneTilesPercentageToLose;
+    public int minNumberOfSaneTiles;
 
     public GameObject tilePrefab;
     [HideInInspector]
@@ -28,6 +36,7 @@ public class BoardManager : MonoBehaviour
     //public List<Vector2> emptyTiles { get { return GrowthManager.instance.Occupants[state.healthy].listTiles; } }
     [HideInInspector]
     public int emptyTilesAtStart;
+    public int SaneTiles;
 
     List<Vector2> availableNeighbours = new List<Vector2>();
 
@@ -43,7 +52,10 @@ public class BoardManager : MonoBehaviour
             Destroy(this);
         }
 
-        UIManager.instance.UpdateIntroImages();
+        if (showIntro)
+        {
+            UIManager.instance.UpdateIntroImages();
+        }
 
         // we set up the Terrain enums
         Terrains.Add(terrainTypeEnum.healthy, empty);
@@ -54,7 +66,6 @@ public class BoardManager : MonoBehaviour
 
 
         StartCoroutine(CreateBoard());
-        FirstTurn();
     }
 
     /// <summary>
@@ -81,6 +92,7 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     IEnumerator CreateBoard()
     {
+        settingTheBoard = true;
         // we create the board
         for (int L = 0; L < length; L++)
         {
@@ -109,6 +121,8 @@ public class BoardManager : MonoBehaviour
         }
         cameraPivot.transform.position = new Vector3(length / 2, width / 2, 0);
         UIManager.instance.SetCameraReset();
+
+        FirstTurn();
     }
 
     void UpdateTerrainType()
@@ -149,10 +163,13 @@ public class BoardManager : MonoBehaviour
         }
 
         GrowthManager.instance.currentTurn = 0;
+        SaneTiles = emptyTilesAtStart;
+
     }
 
     void ResetBoard()
     {
+        settingTheBoard = true;
         //emptyTiles.Clear();
         foreach (Tile tile in Tiles.Values)
         {
@@ -162,6 +179,7 @@ public class BoardManager : MonoBehaviour
 
     void DestroyBoard()
     {
+        settingTheBoard = true;
         foreach (Tile tile in Tiles.Values)
         {
             Destroy(tile.gameObject);
@@ -191,6 +209,8 @@ public class BoardManager : MonoBehaviour
 
     public void FirstTurn()
     {
+        SaneTiles = emptyTilesAtStart;
+        settingTheBoard = false;
         for (int i = 0; i < initialPlantsNumber; i++)
         {
             // find a way to create it without using CreateOccupant's coroutine so I can StopAllCoroutines() at the beginning of it

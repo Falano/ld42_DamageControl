@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public static int SaneTiles;
     [SerializeField]
     terrainTypeEnum _type;
     public terrainTypeEnum Type
@@ -15,20 +14,21 @@ public class Tile : MonoBehaviour
         }
         set
         {
+            if (_type != terrainTypeEnum.healthy && value == terrainTypeEnum.healthy && !BoardManager.instance.settingTheBoard)
+            {
+                BoardManager.instance.SaneTiles++;
+            }
+            else if (_type == terrainTypeEnum.healthy && value != terrainTypeEnum.healthy && !BoardManager.instance.settingTheBoard)
+            {
+                BoardManager.instance.SaneTiles--;
+            }
             _type = value;
             mesh.mesh = BoardManager.instance.Terrains[_type].mesh[Random.Range(0, BoardManager.instance.Terrains[_type].mesh.Count)];
 
-            if (value == terrainTypeEnum.healthy)
-            {
-                SaneTiles++;
-            }
-            else if (value != terrainTypeEnum.healthy)
-            {
-                SaneTiles--;
-            }
         }
     }
     public Vector2 pos;
+    [SerializeField]
     occupantEnum _state;
     public occupantEnum State
     {
@@ -44,7 +44,7 @@ public class Tile : MonoBehaviour
             {
                 occ.bypassSpecial = false;
             }
-            else if (_state != occupantEnum.empty)
+            if (!BoardManager.instance.settingTheBoard && Type != terrainTypeEnum.damaged)
             {
                 Type = terrainTypeEnum.damaged;
             }

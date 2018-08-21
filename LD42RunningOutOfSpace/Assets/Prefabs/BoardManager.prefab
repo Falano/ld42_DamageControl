@@ -378,7 +378,7 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
     preys: 
-    specialType: 2
+    specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
@@ -420,15 +420,19 @@ MonoBehaviour:
     firstApparition: 0
     cooldown: 0
     moveCooldown: 0
-    cleanAllAvailableTiles: 0
+    cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: -1}
+    - {x: 0, y: 1}
+    _numberOfKids: 4
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
-    canOverrun: 0
-    overrunPercentage: 0
+    canOverrun: 1
+    overrunPercentage: 0.95
     maxNumberOfInstances: 0
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
@@ -447,15 +451,19 @@ MonoBehaviour:
     firstApparition: 5
     cooldown: 1
     moveCooldown: 0
-    cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
+    cleanAllAvailableTiles: 1
+    _toCleanTilesNumber: 4
+    relativeTilesAvailableToBeCleaned:
+    - {x: 1, y: 1}
+    - {x: -1, y: -1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 1}
+    _numberOfKids: 3
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 0
-    canOverrun: 0
-    overrunPercentage: 0
+    canOverrun: 1
+    overrunPercentage: 0.95
     maxNumberOfInstances: 0
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
@@ -475,14 +483,30 @@ MonoBehaviour:
     cooldown: 3
     moveCooldown: 0
     cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
+    _toCleanTilesNumber: 12
+    relativeTilesAvailableToBeCleaned:
+    - {x: -2, y: -2}
+    - {x: -1, y: -2}
+    - {x: 0, y: -2}
+    - {x: 1, y: -2}
+    - {x: 2, y: -2}
+    - {x: -2, y: -1}
+    - {x: -2, y: 0}
+    - {x: -2, y: 1}
+    - {x: -2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: -1}
+    - {x: 2, y: 0}
+    - {x: 2, y: 1}
+    - {x: -1, y: 2}
+    - {x: 0, y: 2}
+    - {x: 1, y: 2}
+    _numberOfKids: 2.3
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 0
-    canOverrun: 0
-    overrunPercentage: 0
+    longevity: 1
+    canOverrun: 1
+    overrunPercentage: 0.95
     maxNumberOfInstances: 0
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
@@ -500,16 +524,24 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
     firstApparition: 15
     cooldown: 5
-    moveCooldown: 0
-    cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
-    moveType: 0
+    moveCooldown: 4
+    cleanAllAvailableTiles: 1
+    _toCleanTilesNumber: 8
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: -1, y: -1}
+    - {x: 0, y: -1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    _numberOfKids: 1.2
+    moveType: 1
     relativeTilesAvailableForMovement: []
-    longevity: 0
-    canOverrun: 0
-    overrunPercentage: 0
+    longevity: 1
+    canOverrun: 1
+    overrunPercentage: 0.3
     maxNumberOfInstances: 0
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
@@ -529,17 +561,37 @@ MonoBehaviour:
     cooldown: 0
     moveCooldown: 0
     cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
-    moveType: 0
-    relativeTilesAvailableForMovement: []
-    longevity: 0
+    _toCleanTilesNumber: 3
+    relativeTilesAvailableToBeCleaned:
+    - {x: -2, y: -2}
+    - {x: 0, y: -2}
+    - {x: -2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 0, y: 2}
+    - {x: 2, y: -2}
+    - {x: -2, y: 0}
+    - {x: 2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: -1, y: -1}
+    - {x: 0, y: -1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    _numberOfKids: 1.1
+    moveType: 2
+    relativeTilesAvailableForMovement:
+    - {x: -1, y: 0}
+    - {x: 0, y: -1}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 0
-    necessaryPrecursors: 
-    numberOfNecessaryPrecursors: 
+    maxNumberOfInstances: 30
+    necessaryPrecursors: 05000000
+    numberOfNecessaryPrecursors: 03000000
     listTiles: []
     lastCall: 0
     hasShownTuto: 0
@@ -555,18 +607,26 @@ MonoBehaviour:
     firstApparition: -1
     cooldown: 0
     moveCooldown: 0
-    cleanAllAvailableTiles: 0
+    cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
-    _numberOfKids: 0
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: -1}
+    - {x: 0, y: -1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    _numberOfKids: 1
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 0
+    longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 0
-    necessaryPrecursors: 
-    numberOfNecessaryPrecursors: 
+    maxNumberOfInstances: 1
+    necessaryPrecursors: 06000000
+    numberOfNecessaryPrecursors: 04000000
     listTiles: []
     lastCall: 0
     hasShownTuto: 0
@@ -581,9 +641,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showIntro: 0
+  settingTheBoard: 1
   length: 30
   width: 30
   initialPlantsNumber: 2
+  saneTilesPercentageToLose: 0.1
+  minNumberOfSaneTiles: 20
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
   Materials:
@@ -621,3 +685,4 @@ MonoBehaviour:
     mesh:
     - {fileID: 4300010, guid: 80820b8fc13cc4d92b4baabeadfa4fa2, type: 3}
   emptyTilesAtStart: 0
+  SaneTiles: 0
