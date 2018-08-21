@@ -99,7 +99,7 @@ public class GrowthManager : MonoBehaviour
 
                 //Debug.Log(occupant.State.ToString() +  " is available? " + occupant.isAvailable + "; last call: " + occupant.lastCall + "; currentTurn: " + currentTurn)
 
-                if (!choseToKeepPlaying && ((occupant.canOverrun && occupant.listTiles.Count >= BoardManager.instance.emptyTilesAtStart * occupant.overrunPercentage) || ((float) BoardManager.instance.SaneTiles / (float) BoardManager.instance.emptyTilesAtStart < BoardManager.instance.saneTilesPercentageToLose) || BoardManager.instance.SaneTiles < BoardManager.instance.minNumberOfSaneTiles))
+                if (!choseToKeepPlaying && ((occupant.canOverrun && occupant.listTiles.Count >= BoardManager.instance.emptyTilesAtStart * occupant.overrunPercentage) || ((float)BoardManager.instance.SaneTiles / (float)BoardManager.instance.emptyTilesAtStart < BoardManager.instance.saneTilesPercentageToLose) || BoardManager.instance.SaneTiles < BoardManager.instance.minNumberOfSaneTiles))
                 {
                     UIManager.instance.ToggleEndGame(true);
                     choseToKeepPlaying = true;
@@ -221,7 +221,7 @@ public class OccupantInstance
     public Tile tile;
     public OccupantManager manager { get { return Occs[tile.State]; } }
     public int lastMove;
-    public bool bypassSpecial = false; // otherwise a plant born close to water will never leave and grow
+    public bool BypassSpecial = false; // otherwise a plant born close to water will never leave and grow
 
     int currentNumberOfKids
     {
@@ -297,7 +297,7 @@ public class OccupantInstance
 
 
 
-    public void move(bool bypassSpecial = false)
+    public void move(bool bypassSpec = false)
     {
         // healthy doesn't move nor clean
         if (tile.State == occupantEnum.empty)
@@ -319,7 +319,8 @@ public class OccupantInstance
         }
 
         // can special move?
-        if (haveNeighbourhoodTilesASpecialType && !bypassSpecial)
+        bypassSpec = bypassSpec || BypassSpecial;
+        if (haveNeighbourhoodTilesASpecialType && !bypassSpec)
         {
             specialMove();
             return;
@@ -330,7 +331,7 @@ public class OccupantInstance
         // clean
         foreach (Vector2 tile in toCleanAbsolute)
         {
-            if(Tiles[tile].State != occupantEnum.empty && Tiles[tile].State != occupantEnum.empty) //// TODO UNFINISHED 
+            if (Tiles[tile].State != occupantEnum.empty && Tiles[tile].State != occupantEnum.empty) //// TODO UNFINISHED 
             {
                 Tiles[tile].State = occupantEnum.empty;
             }
@@ -467,12 +468,19 @@ public class OccupantInstance
             //Debug.Log("healthy is a victim that can't spread on its own");
             return;
         }
+        Debug.Log("special move from " + State);
 
         switch (State)
         {
             case occupantEnum.cat:
                 move(true);
-                move(true);
+                foreach(Vector2 v in manager.NeighbourhoodTiles)
+                {
+                    if (Tiles.ContainsKey(pos + v) && (Tiles[pos+v].Type == terrainTypeEnum.healthy || Tiles[pos + v].Type == terrainTypeEnum.damaged) && Tiles[pos+v].State == occupantEnum.empty)
+                    {
+                        Tiles[pos + v].State = occupantEnum.cat;
+                    }
+                }
                 break;
             case occupantEnum.eagle:
                 manager.relativeTilesAvailableToBeCleaned.Clear();
@@ -497,41 +505,43 @@ public class OccupantInstance
                 break;
             case occupantEnum.plant:
                 List<Vector2> toColonizeTile = new List<Vector2>();
-                List<Vector2> colonizedTile = new List<Vector2>();
-                Vector2 specialPlant;
+                List<Vector2> waterTile = new List<Vector2>();
+                Vector2 specialPlant = Vector2.zero;
                 Vector2 currentTile = pos;
+                bool foundWater = true;
                 do
                 {
-                    specialPlant = Vector2.zero;
-                    foreach (Vector2 tile in manager.NeighbourhoodTiles)
+                    foundWater = false;
+                    //foreach (Vector2 tile in manager.NeighbourhoodTiles)
+                    for (int i = 0; i < manager.NeighbourhoodTiles.Count && foundWater == false; i++)
                     {
-                        if (BoardManager.instance.Tiles.ContainsKey(pos + tile) && BoardManager.instance.Tiles[pos + tile].Type == manager.specialType && !colonizedTile.Contains(pos + tile))
+                        if (BoardManager.instance.Tiles.ContainsKey(currentTile + manager.NeighbourhoodTiles[i]) && BoardManager.instance.Tiles[currentTile + manager.NeighbourhoodTiles[i]].Type == manager.specialType && !waterTile.Contains(currentTile + manager.NeighbourhoodTiles[i]))
                         {
-                            specialPlant = tile;
+                            specialPlant = manager.NeighbourhoodTiles[i];
+                            foundWater = true;
                         }
                     }
-                    if (specialPlant != Vector2.zero)
+                    if (foundWater)
                     {
                         currentTile += specialPlant;
-                        colonizedTile.Add(currentTile);
+                        waterTile.Add(currentTile);
 
                         foreach (Vector2 tile2 in manager.NeighbourhoodTiles)
                         {
-                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && BoardManager.instance.Tiles[currentTile + tile2].Type == terrainTypeEnum.healthy && BoardManager.instance.Tiles[currentTile + tile2].State == occupantEnum.empty && !toColonizeTile.Contains(currentTile + tile2))
+                            if (BoardManager.instance.Tiles.ContainsKey(currentTile + tile2) && (BoardManager.instance.Tiles[currentTile + tile2].Type == terrainTypeEnum.healthy || BoardManager.instance.Tiles[currentTile + tile2].Type == terrainTypeEnum.damaged) && BoardManager.instance.Tiles[currentTile + tile2].State == occupantEnum.empty && !toColonizeTile.Contains(currentTile + tile2))
                             {
                                 toColonizeTile.Add(currentTile + tile2);
                             }
                         }
                     }
                 }
-                while (specialPlant != Vector2.zero);
+                while (foundWater);
 
                 foreach (Vector2 tile in toColonizeTile)
                 {
                     BoardManager.instance.Tiles[tile].State = occupantEnum.plant;
-                    BoardManager.instance.Tiles[tile].occ.bypassSpecial = true;
+                    BoardManager.instance.Tiles[tile].occ.BypassSpecial = true;
                 }
-
                 break;
         }
     }
@@ -692,7 +702,10 @@ public class OccupantManager
                 {
                     for (int j = -1; j <= 1; j++)
                     {
-                        _neighbourhoodTiles.Add(new Vector2(i, j));
+                        if (!(i == 0 && j == 0))
+                        {
+                            _neighbourhoodTiles.Add(new Vector2(i, j));
+                        }
                     }
                 }
             }

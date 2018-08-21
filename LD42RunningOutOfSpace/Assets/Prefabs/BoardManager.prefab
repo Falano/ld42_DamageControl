@@ -378,7 +378,7 @@ MonoBehaviour:
     meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
     preys: 
-    specialType: 0
+    specialType: 2
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
