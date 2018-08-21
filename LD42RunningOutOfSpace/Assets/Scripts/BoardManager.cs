@@ -214,8 +214,7 @@ public class BoardManager : MonoBehaviour
         settingTheBoard = false;
         for (int i = 0; i < initialPlantsNumber; i++)
         {
-            // find a way to create it without using CreateOccupant's coroutine so I can StopAllCoroutines() at the beginning of it
-            Invoke("CreatePlant", i * .1f);
+            GrowthManager.instance.CreateAtRandomPosition(occupantEnum.plant);
         }
 
         GrowthManager.instance.ambientHealthy.Play();
@@ -233,10 +232,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void CreatePlant()
-    {
-        GrowthManager.instance.CreateOccupant("plant");
-    }
+
 }
 
 [System.Serializable]

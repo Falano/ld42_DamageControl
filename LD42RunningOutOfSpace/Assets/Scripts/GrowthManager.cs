@@ -188,6 +188,17 @@ public class GrowthManager : MonoBehaviour
 
     }
 
+    public void CreateAtRandomPosition(occupantEnum occupant)
+    {
+        int tmpPos;
+        do
+        {
+            tmpPos = Random.Range(0, Occupants[occupantEnum.empty].listTiles.Count);
+        }
+        while (BoardManager.instance.Tiles[Occupants[occupantEnum.empty].listTiles[tmpPos]].Type != terrainTypeEnum.healthy && BoardManager.instance.Tiles[Occupants[occupantEnum.empty].listTiles[tmpPos]].Type != terrainTypeEnum.damaged);
+        CreateAtPos(occupant, Occupants[occupantEnum.empty].listTiles[tmpPos]);
+    }
+
     public void CreateAtPos(occupantEnum occupant, Vector2 pos)
     {
         //Debug.Log("4) actually creating occupant " + occupant.ToString() + " at pos " + pos.ToString());
@@ -468,7 +479,6 @@ public class OccupantInstance
             //Debug.Log("healthy is a victim that can't spread on its own");
             return;
         }
-        Debug.Log("special move from " + State);
 
         switch (State)
         {
