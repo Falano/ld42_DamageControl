@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 114841580218620664}
   - component: {fileID: 114690462710641026}
   - component: {fileID: 82098419559398632}
-  - component: {fileID: 82661536990179548}
   - component: {fileID: 82097798017963814}
+  - component: {fileID: 82661536990179548}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -55,7 +55,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e16c355d8072e4ab385045fdb7e0f973, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
