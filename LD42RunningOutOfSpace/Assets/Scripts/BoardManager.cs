@@ -214,7 +214,7 @@ public class BoardManager : MonoBehaviour
         settingTheBoard = false;
         for (int i = 0; i < initialPlantsNumber; i++)
         {
-            GrowthManager.instance.CreateAtRandomPosition(occupantEnum.plant);
+            GrowthManager.instance.CreateAtRandomPosition("plant");
         }
 
         GrowthManager.instance.ambientHealthy.Play();

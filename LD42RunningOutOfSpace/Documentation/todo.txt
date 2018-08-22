@@ -7,10 +7,8 @@
 --DONE-- le piante spawnate dell acqua non crescono
 
 TODO:
-fare in modo che il movimento delle animali se posse cambiare dall'inspector
+--DONE-- fare in modo che il movimento delle animali se posse cambiare dall'inspector
 --DONE-- aggiungere un animazione a bottone next
-fare in modo che il bottone next sia più visibile al primo torno
+--DONE-- fare in modo che il bottone next sia più visibile al primo torno
 immagine-tuto del rete alimentare forse
 un menu per cambiare lingua
-
-sto sistemando le Occupants per che siano usabili dall editor

@@ -40,11 +40,9 @@ public class Tile : MonoBehaviour
             occupantSpriteHolder.mesh = GrowthManager.instance.Occupants[_state].meshes[Random.Range(0, GrowthManager.instance.Occupants[_state].meshes.Count)];
             GrowthManager.instance.Occupants[_state].listTiles.Add(pos);
             occ.lastMove = GrowthManager.instance.currentTurn;
-            //if (_state != occupantEnum.plant)
-            //{
-                occ.BypassSpecial = false;
-            //}
-            if (!BoardManager.instance.settingTheBoard && Type != terrainTypeEnum.damaged)
+            occ.BypassSpecial = false;
+            occ.lastMove = GrowthManager.instance.currentTurn + Random.Range(0, occ.manager.moveCooldown);
+            if (!BoardManager.instance.settingTheBoard && Type != terrainTypeEnum.damaged && State != occupantEnum.empty)
             {
                 Type = terrainTypeEnum.damaged;
             }
