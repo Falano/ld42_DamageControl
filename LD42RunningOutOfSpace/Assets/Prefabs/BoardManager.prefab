@@ -355,6 +355,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 0
     cooldown: 0
     moveCooldown: 0
@@ -382,12 +383,16 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 0}
     sound: {fileID: 0}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 0
     cooldown: 0
     moveCooldown: 0
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned:
+    relativeTilesAvailableToBeCleaned: []
+    _numberOfKids: 8
+    moveType: 2
+    relativeTilesAvailableForMovement:
     - {x: -1, y: -1}
     - {x: 0, y: -1}
     - {x: 1, y: -1}
@@ -396,9 +401,6 @@ MonoBehaviour:
     - {x: 1, y: 1}
     - {x: 0, y: 1}
     - {x: -1, y: 1}
-    _numberOfKids: 8
-    moveType: 0
-    relativeTilesAvailableForMovement: []
     longevity: 0
     canOverrun: 1
     overrunPercentage: 0.95
@@ -417,6 +419,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 1d05b96cce97b2d40a0aa05838890dad, type: 3}
     sound: {fileID: 8300000, guid: 4a9a06113ca36469fbf4d1f670f7908d, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 0
     cooldown: 0
     moveCooldown: 0
@@ -448,6 +451,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 73b73afe1887710418ae72c373bcf8c3, type: 3}
     sound: {fileID: 8300000, guid: 687507abdc5b64b858e28606a792034b, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 5
     cooldown: 1
     moveCooldown: 0
@@ -479,6 +483,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 9318cd228aa2a2846bda9d36edc64396, type: 3}
     sound: {fileID: 8300000, guid: 94449ba7e05d144428bd24cfa4b88fe9, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 10
     cooldown: 3
     moveCooldown: 0
@@ -522,11 +527,12 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: dd731ab0debc5234aac0b3b2b834b7ac, type: 3}
     sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: 15
     cooldown: 5
     moveCooldown: 4
     cleanAllAvailableTiles: 1
-    _toCleanTilesNumber: 8
+    _toCleanTilesNumber: 0
     relativeTilesAvailableToBeCleaned:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
@@ -536,7 +542,7 @@ MonoBehaviour:
     - {x: 1, y: -1}
     - {x: -1, y: 0}
     - {x: 1, y: 0}
-    _numberOfKids: 1.2
+    _numberOfKids: 1
     moveType: 1
     relativeTilesAvailableForMovement: []
     longevity: 1
@@ -557,6 +563,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: ad80087d3f8641e4da3013ddf9c291f9, type: 3}
     sound: {fileID: 8300000, guid: 52f241a3a606343ddae9818250b0d990, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: -1
     cooldown: 0
     moveCooldown: 0
@@ -604,6 +611,7 @@ MonoBehaviour:
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: f229dc91fa697914cba9bf5b0de294de, type: 3}
     sound: {fileID: 8300000, guid: cb5855a22e73b47dfa5d65cb4103b1de, type: 3}
+    LastTurnCheckedAnywhereMoveAvailibility: 0
     firstApparition: -1
     cooldown: 0
     moveCooldown: 0
@@ -619,12 +627,28 @@ MonoBehaviour:
     - {x: 0, y: 1}
     - {x: 1, y: 1}
     _numberOfKids: 1
-    moveType: 0
-    relativeTilesAvailableForMovement: []
+    moveType: 2
+    relativeTilesAvailableForMovement:
+    - {x: -2, y: -2}
+    - {x: -2, y: -1}
+    - {x: -2, y: 0}
+    - {x: -2, y: 1}
+    - {x: -2, y: 2}
+    - {x: -1, y: -2}
+    - {x: -1, y: 2}
+    - {x: 0, y: -2}
+    - {x: 0, y: 2}
+    - {x: 1, y: -2}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}
+    - {x: 1, y: 2}
+    - {x: 0, y: 2}
+    - {x: -1, y: 2}
+    - {x: 2, y: 2}
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 1
+    maxNumberOfInstances: 2
     necessaryPrecursors: 06000000
     numberOfNecessaryPrecursors: 04000000
     listTiles: []
@@ -642,6 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showIntro: 0
+  canAlwaysSpawn: 1
   settingTheBoard: 1
   length: 30
   width: 30

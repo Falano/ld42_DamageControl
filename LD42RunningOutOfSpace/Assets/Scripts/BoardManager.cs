@@ -5,12 +5,16 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
+    [Space]
+    [Header("Cheat options")]
     [SerializeField]
     bool showIntro;
+    public bool canAlwaysSpawn;
     [HideInInspector]
     public bool settingTheBoard = true;
 
-
+    [Space]
+    [Space]
     [Header("base infos")]
     public int length;
     public int width;
