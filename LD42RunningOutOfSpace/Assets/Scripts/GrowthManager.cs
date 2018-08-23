@@ -120,9 +120,10 @@ public class GrowthManager : MonoBehaviour
         StopAllCoroutines();
         //Debug.Log("1) creating occupant " + occupant);
         occupantEnum Occupant = (occupantEnum)System.Enum.Parse(typeof(occupantEnum), occupant);
-        StartCoroutine(CreateOccupantCoroutine(Occupant));
+        StartCoroutine(CreatingOccupant(Occupant));
     }
 
+    /*
     IEnumerator CreateOccupantCoroutine(occupantEnum Occupant)
     {
         for (int i = 0; i < 2; i++)
@@ -138,11 +139,56 @@ public class GrowthManager : MonoBehaviour
         // create the occupant on the tile clicked
         yield return StartCoroutine(CreatingOccupant(Occupant));
         //Occupants[Occupant].isAvailable = null;
-    }
+    }*/
 
     IEnumerator CreatingOccupant(occupantEnum Occupant)
     {
+        RaycastHit hit;
+        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(true);
+        UIManager.instance.ActiveAnimalImage.sprite = Occupants[Occupant].mouseImageOnButtonClicked;
+
+        while (true)
+        {
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+            {
+                if ((BoardManager.instance.Tiles[hit.transform.position].Type == terrainTypeEnum.healthy || BoardManager.instance.Tiles[hit.transform.position].Type == terrainTypeEnum.damaged) && (BoardManager.instance.Tiles[hit.transform.position].State == occupantEnum.empty || Occupants[Occupant].preys.Contains(BoardManager.instance.Tiles[hit.transform.position].State)))
+                {
+                    UIManager.instance.ActiveAnimalImage.color = UIManager.instance.freeTileColor;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        CreateAtPos(Occupants[Occupant].State, hit.transform.position);
+                        // attenzione che ActiveAnimalImage potrebbe rimanere cosi se la coroutine è stopped dall'esterno
+                        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
+                        StopCoroutine(CreatingOccupant(Occupant));
+                    }
+                }
+                else
+                {
+                    UIManager.instance.ActiveAnimalImage.color = UIManager.instance.unusableTileColor;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
+                        StopCoroutine(CreatingOccupant(Occupant));
+                    }
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
+                    StopCoroutine(CreatingOccupant(Occupant));
+                }
+            }
+            yield return null;
+        }
+
+        /*
         Vector2 pos = new Vector2(0, 0);
+
+        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(true);
+        UIManager.instance.ActiveAnimalImage.sprite = Occupants[Occupant].mouseImageOnButtonClicked;
+
         // wait until someone clicked a tile empty in a healthy or prey state
         yield return new WaitUntil(delegate
         {
@@ -159,8 +205,7 @@ public class GrowthManager : MonoBehaviour
         });
 
         //Debug.Log("3.5b) tile clicked!");
-        CreateAtPos(Occupant, pos);
-
+        CreateAtPos(Occupant, pos);*/
     }
 
     public void CreateAtRandomPosition(string occupant)
@@ -241,7 +286,7 @@ public class OccupantInstance
                         {
                             Debug.Log("To Move Absolute Raw is empty");
                         }
-                            if (Occs[occupantEnum.empty].listTiles.Count != 0)
+                        if (Occs[occupantEnum.empty].listTiles.Count != 0)
                         {
                             foreach (Vector2 v in Occs[occupantEnum.empty].listTiles)
                             {
@@ -349,9 +394,9 @@ public class OccupantInstance
         {
             if (manager.State == occupantEnum.eagle)
             {
-                Debug.Log(" pas can move: possible moves " + possibleMoves.Count + "; prefered moves: " + preferedMoves.Count + "; best moves: " + bestMoves.Count );
+                Debug.Log(" pas can move: possible moves " + possibleMoves.Count + "; prefered moves: " + preferedMoves.Count + "; best moves: " + bestMoves.Count);
             }
-                return;
+            return;
         }
 
         // spawn kids (which is a Move really)
@@ -360,7 +405,7 @@ public class OccupantInstance
             Tiles[tile].State = State;
         }
 
-        if(manager.State == occupantEnum.eagle)
+        if (manager.State == occupantEnum.eagle)
         {
             Debug.Log("died?");
         }
@@ -404,7 +449,7 @@ public class OccupantInstance
                 toCleanAbsolute.Add(pos + tile);
             }
         }
-        
+
 
         // decide which we will clean
         // we need to clean up to ToCleanTilesNumber tiles
@@ -425,7 +470,7 @@ public class OccupantInstance
         {
             if (manager.State == occupantEnum.eagle)
             {
-            Debug.Log("interdiction de spawner");
+                Debug.Log("interdiction de spawner");
             }
             return;
         }
@@ -451,7 +496,7 @@ public class OccupantInstance
         // we get all the moves available
         foreach (Vector2 move in toMoveAbsoluteRaw)
         {
-            if(manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
             {
                 Debug.Log("3.5) to clean absolute: " + toCleanAbsolute.Count);
                 Debug.Log("3.5) possible moves: " + possibleMoves.Count);
@@ -507,7 +552,7 @@ public class OccupantInstance
                 bestMoves.RemoveAt(Random.Range(0, bestMoves.Count));
             }
         }
-        
+
 
         // we merge the lists into a new one
         foreach (Vector2 v in possibleMoves)
@@ -627,6 +672,7 @@ public class OccupantManager
     public Button button;
     public Sprite introImage;
     public AudioClip sound;
+    public Sprite mouseImageOnButtonClicked;
 
     [HideInInspector]
     public int LastTurnCheckedAnywhereMoveAvailibility = -1;

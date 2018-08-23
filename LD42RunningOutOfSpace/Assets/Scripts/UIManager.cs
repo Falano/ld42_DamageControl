@@ -43,8 +43,11 @@ public class UIManager : MonoBehaviour
     //public Image RotateRight;
     //public Image RotateLeft;
 
+    public Image ActiveAnimalImage;
     public Image NextTurn;
     public GameObject NextTurnPulse;
+    public Color freeTileColor;
+    public Color unusableTileColor;
 
     public void Start()
     {
@@ -70,6 +73,7 @@ public class UIManager : MonoBehaviour
         EndGameScreen.transform.parent.gameObject.SetActive(false);
         CreditsScreen.SetActive(false);
         menu.SetActive(false);
+        ActiveAnimalImage.gameObject.SetActive(false);
     }
 
     public void SetCameraReset()
