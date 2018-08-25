@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GrowthManager : MonoBehaviour
 {
@@ -117,6 +118,7 @@ public class GrowthManager : MonoBehaviour
 
     public void CreateOccupant(string occupant)
     {
+        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
         StopAllCoroutines();
         //Debug.Log("1) creating occupant " + occupant);
         occupantEnum Occupant = (occupantEnum)System.Enum.Parse(typeof(occupantEnum), occupant);
@@ -147,19 +149,23 @@ public class GrowthManager : MonoBehaviour
         UIManager.instance.ActiveAnimalImage.gameObject.SetActive(true);
         UIManager.instance.ActiveAnimalImage.sprite = Occupants[Occupant].mouseImageOnButtonClicked;
 
-        while (true)
+        yield return null;
+        yield return null;
+
+        bool x = true;
+        while (x == true)
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
             {
                 if ((BoardManager.instance.Tiles[hit.transform.position].Type == terrainTypeEnum.healthy || BoardManager.instance.Tiles[hit.transform.position].Type == terrainTypeEnum.damaged) && (BoardManager.instance.Tiles[hit.transform.position].State == occupantEnum.empty || Occupants[Occupant].preys.Contains(BoardManager.instance.Tiles[hit.transform.position].State)))
                 {
                     UIManager.instance.ActiveAnimalImage.color = UIManager.instance.freeTileColor;
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && (!EventSystem.current.IsPointerOverGameObject(-1) && !EventSystem.current.IsPointerOverGameObject(0) && !EventSystem.current.IsPointerOverGameObject(1)))
                     {
                         CreateAtPos(Occupants[Occupant].State, hit.transform.position);
                         // attenzione che ActiveAnimalImage potrebbe rimanere cosi se la coroutine è stopped dall'esterno
                         UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
-                        StopCoroutine(CreatingOccupant(Occupant));
+                        x = false;
                     }
                 }
                 else
@@ -168,7 +174,7 @@ public class GrowthManager : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
-                        StopCoroutine(CreatingOccupant(Occupant));
+                        x = false;
                     }
                 }
             }
@@ -177,7 +183,7 @@ public class GrowthManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
-                    StopCoroutine(CreatingOccupant(Occupant));
+                    x = false;
                 }
             }
             yield return null;
@@ -210,6 +216,7 @@ public class GrowthManager : MonoBehaviour
 
     public void CreateAtRandomPosition(string occupant)
     {
+        UIManager.instance.ActiveAnimalImage.gameObject.SetActive(false);
         int tmpPos;
         do
         {
