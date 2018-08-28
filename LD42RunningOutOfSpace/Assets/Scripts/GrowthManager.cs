@@ -468,21 +468,11 @@ public class OccupantInstance
 
     public void updateMoveStats()
     {
-
-        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-        {
-            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-        }
-
+        
         if (manager.moveCooldown != 0 && GrowthManager.instance.currentTurn % PersonalCooldown != 0)
         {
             return;
         }
-        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-        {
-            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-        }
-
         //
         // building toCleanAbsolute
         //
@@ -492,94 +482,57 @@ public class OccupantInstance
         // clear all
         toCleanAbsolute.Clear();
 
-        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-        {
-            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-        }
         //check which we can clean
         foreach (Vector2 tile in manager.relativeTilesAvailableToBeCleaned)
         {
-
-            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-            {
-                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-            }
             if (Tiles.ContainsKey(pos + tile) &&
                 (manager.preys.Contains(Tiles[pos + tile].State) || Tiles[pos + tile].State == occupantEnum.empty))
             {
                 toCleanAbsolute.Add(pos + tile);
             }
         }
-
-        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-        {
-            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-        }
-
+        
 
         // decide which we will clean
         // we need to clean up to ToCleanTilesNumber tiles
         // so we trim ToCleanAbsolute as needed
         while (toCleanAbsolute.Count > manager.ToCleanTilesNumber)
         {
-
-            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-            {
-                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-            }
             toCleanAbsolute.RemoveAt(Random.Range(0, toCleanAbsolute.Count));
-        }
-
-        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-        {
-            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
         }
         if (!ExemptFromCalculatingToSpawnIn)
         {
-
             //
             // building toSpawnInAbsolute
             //
             toSpawnInAbsolute.Clear();
-
-            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-            {
-                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-            }
-
+            
             // we leave it void if we don't want to spawn anything
             if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) < manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
                 return;
             }
 
-            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-            {
-                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-            }
             // where can we or would we like to go?
             possibleMoves.Clear();
             preferedMoves.Clear();
             bestMoves.Clear();
 
 
-
-            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
-            {
-                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
-            }
-
             /*
             // per qualsiasi ragione, questo lo fa impazzire; tenuto qui per la scienza
             if (manager.State == occupantEnum.eagle)
             {
                 Debug.Log("2) number of toMoveAbsoluteRaw: " + toMoveAbsoluteRaw.Count);
-            }*/
+            }
+            
+            // the bug is caused by toMoveAbsoluteRaw around this place
+            // at some random point in space
+             
+             */
 
             bool goOn = true;
             // we get all the moves available
-            // TODO TO DO UNFINISHED:
-            // should do something like: if bestMoves.Count > NumberOfKids, stop loop; it'll be faster and in this case we know we won't ever use possible or prefered moves anyway
             //foreach (Vector2 move in toMoveAbsoluteRaw)
             int x = toMoveAbsoluteRaw.Count;
             for (int i = 0; i < x && goOn; i++)
