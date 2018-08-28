@@ -85,7 +85,8 @@ public class GrowthManager : MonoBehaviour
             // we reset its availibility
             if (occupant.button)
             {
-                occupant.button.interactable = occupant.isAvailable;
+                //occupant.button.interactable = occupant.isAvailable;
+                occupant.button.gameObject.SetActive(occupant.isAvailable);
             }
 
             if (occupant.isAvailable && !occupant.hasShownTuto && occupant.introImage)
@@ -238,7 +239,7 @@ public class GrowthManager : MonoBehaviour
         {
             if (occ.button)
             {
-                occ.button.interactable = occ.isAvailable;
+                occ.button.gameObject.SetActive(occ.isAvailable);
             }
         }
         Occupants[occupant].lastCall = currentTurn;

@@ -232,7 +232,7 @@ public class BoardManager : MonoBehaviour
             if (occupant.button)
             {
                 occupant.lastCall = -1;
-                occupant.button.interactable = occupant.isAvailable;
+                occupant.button.gameObject.SetActive(occupant.isAvailable);
             }
         }
     }

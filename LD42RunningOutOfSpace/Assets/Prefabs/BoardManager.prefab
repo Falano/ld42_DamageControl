@@ -655,11 +655,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a04166bb602c2142b510d7fd042777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showIntro: 0
-  canAlwaysSpawn: 1
+  showIntro: 1
+  canAlwaysSpawn: 0
   length: 30
   width: 30
-  initialPlantsNumber: 0
+  initialPlantsNumber: 2
   saneTilesPercentageToLose: 0.1
   minNumberOfSaneTiles: 20
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
