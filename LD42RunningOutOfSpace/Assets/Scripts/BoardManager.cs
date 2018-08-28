@@ -5,12 +5,17 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
+    [Space]
+    [Header("Cheat options")]
     [SerializeField]
     bool showIntro;
-    [HideInInspector]
-    public bool settingTheBoard = true;
+    public bool canAlwaysSpawn;
 
+    bool _settingTheBoard = true;
+    public bool settingTheBoard { get { return _settingTheBoard; } set { _settingTheBoard = value; } }
 
+    [Space]
+    [Space]
     [Header("base infos")]
     public int length;
     public int width;
@@ -214,7 +219,7 @@ public class BoardManager : MonoBehaviour
         settingTheBoard = false;
         for (int i = 0; i < initialPlantsNumber; i++)
         {
-            GrowthManager.instance.CreateAtRandomPosition(occupantEnum.plant);
+            GrowthManager.instance.CreateAtRandomPosition("plant");
         }
 
         GrowthManager.instance.ambientHealthy.Play();
@@ -227,7 +232,7 @@ public class BoardManager : MonoBehaviour
             if (occupant.button)
             {
                 occupant.lastCall = -1;
-                occupant.button.interactable = occupant.isAvailable;
+                occupant.button.gameObject.SetActive(occupant.isAvailable);
             }
         }
     }

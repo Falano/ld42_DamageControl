@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -336,6 +336,36 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114415265503410236, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
+    - target: {fileID: 114837191722320242, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
+    - target: {fileID: 114945472010597288, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147651249}
+    - target: {fileID: 114055388944031044, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1134536672}
+    - target: {fileID: 114464122473498440, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134536671}
+    - target: {fileID: 114863738784921980, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134536671}
     - target: {fileID: 114290923368958214, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -346,27 +376,12 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
-    - target: {fileID: 114618484715062418, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+    - target: {fileID: 114164556335931504, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1147651249}
-    - target: {fileID: 114863738784921980, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1134536671}
-    - target: {fileID: 114464122473498440, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1134536671}
-    - target: {fileID: 114055388944031044, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
-    - target: {fileID: 114945472010597288, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+    - target: {fileID: 114618484715062418, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -376,16 +391,6 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
-    - target: {fileID: 114837191722320242, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
-    - target: {fileID: 114415265503410236, guid: ef57b4e3f780df343ab5c0fc58ad1302,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1134536672}
     - target: {fileID: 114918875914971110, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -396,13 +401,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147651249}
-    - target: {fileID: 114141425771164934, guid: ef57b4e3f780df343ab5c0fc58ad1302,
+    - target: {fileID: 224277443730970814, guid: ef57b4e3f780df343ab5c0fc58ad1302,
         type: 2}
-      propertyPath: m_Text
-      value: "A game by Noemie Scherer and Leandro Estrella.\n\nSounds from Freesound
-        users:\n ArcLegend05\n\xB7 timtube\n\xB7 Benbojangles\n\xB7 kabit\n\xB7 HolmesAudio\n\xB7
-        EFlexTheSoundDesigner\n\nRealized in 72 hours during the Ludum Dare 42:\n\"Running
-        out of space\".\n\n\nAugust 2018"
+      propertyPath: m_AnchoredPosition.y
+      value: -25.00003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef57b4e3f780df343ab5c0fc58ad1302, type: 2}
