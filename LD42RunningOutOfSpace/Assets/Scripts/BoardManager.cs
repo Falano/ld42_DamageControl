@@ -10,8 +10,9 @@ public class BoardManager : MonoBehaviour
     [SerializeField]
     bool showIntro;
     public bool canAlwaysSpawn;
-    [HideInInspector]
-    public bool settingTheBoard = true;
+
+    bool _settingTheBoard = true;
+    public bool settingTheBoard { get { return _settingTheBoard; } set { _settingTheBoard = value; } }
 
     [Space]
     [Space]

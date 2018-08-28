@@ -76,7 +76,7 @@ public class GrowthManager : MonoBehaviour
             if (occupant.listTiles.Count != 0)
             {
                 int max = occupant.listTiles.Count;
-                for (int i = 0; i < max; i++)
+                for (int i = 0; i < max && i < occupant.listTiles.Count; i++)
                 {
                     //Debug.Log("moving " + tile);
                     BoardManager.instance.Tiles[occupant.listTiles[i]].occ.move();
@@ -258,6 +258,33 @@ public class OccupantInstance
     public static Dictionary<occupantEnum, OccupantManager> Occs { get { return GrowthManager.instance.Occupants; } }
     public static Dictionary<Vector2, Tile> Tiles { get { return BoardManager.instance.Tiles; } }
 
+    public int _personalCooldown = -1;
+    int PersonalCooldown
+    {
+        get
+        {
+            if (_personalCooldown == -1)
+            {
+                if (manager.moveCooldown == 0)
+                {
+                    _personalCooldown = 0;
+                }
+                else if (manager.moveCooldown <= 2)
+                {
+                    _personalCooldown = manager.moveCooldown + Random.Range(0, 1);
+                }
+                else
+                {
+                    _personalCooldown = manager.moveCooldown + Random.Range(-1, 1);
+                }
+
+            }
+            return _personalCooldown;
+        }
+    }
+    public int lastTurnActive;
+
+
     public occupantEnum State { get { return tile.State; } }
     public Vector2 pos;
     public Tile tile;
@@ -265,13 +292,6 @@ public class OccupantInstance
     public int lastMove;
     public bool BypassSpecial = false; // otherwise a plant born close to water will never leave and grow
 
-    int currentNumberOfKids
-    {
-        get
-        {
-            return (bestMoves.Count + preferedMoves.Count + possibleMoves.Count);
-        }
-    }
     List<Vector2> possibleMoves = new List<Vector2>();
     List<Vector2> preferedMoves = new List<Vector2>();
     List<Vector2> bestMoves = new List<Vector2>();
@@ -286,25 +306,47 @@ public class OccupantInstance
             switch (manager.moveType)
             {
                 case moveType.anywhere:
+
+                    /*
                     if (manager.LastTurnCheckedAnywhereMoveAvailibility != GrowthManager.instance.currentTurn)
                     {
-                        _toMoveAbsoluteRaw.Clear();
-                        if (Occs[occupantEnum.empty].listTiles.Count == 0)
+                        manager.relativeTilesAvailableForMovement.Clear();
+                        for(int i = -4; i < 4; i++)
                         {
-                            Debug.Log("To Move Absolute Raw is empty");
+                            for (int j = -4; j < 4; j++)
+                            {
+                                manager.relativeTilesAvailableForMovement.Add(new Vector2(i,j));
+                            }
                         }
-                        if (Occs[occupantEnum.empty].listTiles.Count != 0)
+
+
+                        _toMoveAbsoluteRaw.Clear();
+                        foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
+                        {
+                            _toMoveAbsoluteRaw.Add(pos + tile);
+                        }
+
+                        manager.LastTurnCheckedAnywhereMoveAvailibility = GrowthManager.instance.currentTurn;
+                    }*/
+
+
+
+                    if (manager.LastTurnCheckedAnywhereMoveAvailibility != GrowthManager.instance.currentTurn && !ExemptFromCalculatingToSpawnIn)
+                    {
+                        _toMoveAbsoluteRaw.Clear();
+
+                        foreach (occupantEnum prey in manager.preys)
+                        {
+                            foreach (Vector2 v in Occs[prey].listTiles)
+                            {
+                                _toMoveAbsoluteRaw.Add(v);
+                            }
+                        }
+                        if (_toMoveAbsoluteRaw.Count < manager.NumberOfKids)
                         {
                             foreach (Vector2 v in Occs[occupantEnum.empty].listTiles)
                             {
                                 _toMoveAbsoluteRaw.Add(v);
-                            }
-                            foreach (occupantEnum prey in manager.preys)
-                            {
-                                foreach (Vector2 v in Occs[prey].listTiles)
-                                {
-                                    _toMoveAbsoluteRaw.Add(v);
-                                }
                             }
                         }
                         manager.LastTurnCheckedAnywhereMoveAvailibility = GrowthManager.instance.currentTurn;
@@ -314,10 +356,17 @@ public class OccupantInstance
                     _toMoveAbsoluteRaw = toCleanAbsolute;
                     break;
                 case moveType.list:
-                    _toMoveAbsoluteRaw.Clear();
-                    foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
+
+                    if (manager.LastTurnCheckedAnywhereMoveAvailibility != GrowthManager.instance.currentTurn)
                     {
-                        _toMoveAbsoluteRaw.Add(pos + tile);
+
+                        _toMoveAbsoluteRaw.Clear();
+                        foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
+                        {
+                            _toMoveAbsoluteRaw.Add(pos + tile);
+                        }
+
+                        manager.LastTurnCheckedAnywhereMoveAvailibility = GrowthManager.instance.currentTurn;
                     }
                     break;
             }
@@ -325,8 +374,7 @@ public class OccupantInstance
         }
     }
 
-
-    [HideInInspector]
+    public bool ExemptFromCalculatingToSpawnIn;
     public bool haveNeighbourhoodTilesASpecialType
     {
         get
@@ -348,7 +396,7 @@ public class OccupantInstance
     {
         get
         {
-            return /*((GrowthManager.instance.currentTurn - lastMove != 0 && (GrowthManager.instance.currentTurn - lastMove) % manager.moveCooldown == 0)) || */ !(possibleMoves.Count == 0 && preferedMoves.Count == 0 && bestMoves.Count == 0);
+            return toSpawnInAbsolute.Count != 0;
         }
     }
 
@@ -386,7 +434,7 @@ public class OccupantInstance
         }
 
         updateMoveStats();
-
+        ExemptFromCalculatingToSpawnIn = false;
         // clean
         foreach (Vector2 tile in toCleanAbsolute)
         {
@@ -399,10 +447,6 @@ public class OccupantInstance
         // check before move
         if (!canMove)
         {
-            if (manager.State == occupantEnum.eagle)
-            {
-                Debug.Log(" pas can move: possible moves " + possibleMoves.Count + "; prefered moves: " + preferedMoves.Count + "; best moves: " + bestMoves.Count);
-            }
             return;
         }
 
@@ -412,17 +456,9 @@ public class OccupantInstance
             Tiles[tile].State = State;
         }
 
-        if (manager.State == occupantEnum.eagle)
-        {
-            Debug.Log("died?");
-        }
         // if you're too old you die
         if (manager.longevity != 0 && Random.Range(0, manager.longevity) == 0)
         {
-            if (manager.State == occupantEnum.eagle)
-            {
-                Debug.Log("DIED");
-            }
             BoardManager.instance.Tiles[pos].State = occupantEnum.empty;
             return;
         }
@@ -433,28 +469,51 @@ public class OccupantInstance
     public void updateMoveStats()
     {
 
-
-        if (manager.moveCooldown != 0 && GrowthManager.instance.currentTurn % manager.moveCooldown != 0)
+        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
         {
-            Debug.Log("it's not time yet");
+            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+        }
+
+        if (manager.moveCooldown != 0 && GrowthManager.instance.currentTurn % PersonalCooldown != 0)
+        {
             return;
+        }
+        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+        {
+            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
         }
 
         //
         // building toCleanAbsolute
         //
 
+
+
         // clear all
         toCleanAbsolute.Clear();
 
+        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+        {
+            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+        }
         //check which we can clean
         foreach (Vector2 tile in manager.relativeTilesAvailableToBeCleaned)
         {
+
+            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+            {
+                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+            }
             if (Tiles.ContainsKey(pos + tile) &&
                 (manager.preys.Contains(Tiles[pos + tile].State) || Tiles[pos + tile].State == occupantEnum.empty))
             {
                 toCleanAbsolute.Add(pos + tile);
             }
+        }
+
+        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+        {
+            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
         }
 
 
@@ -463,116 +522,173 @@ public class OccupantInstance
         // so we trim ToCleanAbsolute as needed
         while (toCleanAbsolute.Count > manager.ToCleanTilesNumber)
         {
+
+            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+            {
+                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+            }
             toCleanAbsolute.RemoveAt(Random.Range(0, toCleanAbsolute.Count));
         }
 
-
-        //
-        // building toSpawnInAbsolute
-        //
-
-        toSpawnInAbsolute.Clear();
-        // we leave it void if we don't want to spawn anything
-        if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) < manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
+        if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
         {
-            if (manager.State == occupantEnum.eagle)
-            {
-                Debug.Log("interdiction de spawner");
-            }
-            return;
+            Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
         }
-        /*
-        if (State == occupantEnum.eagle)
+        if (!ExemptFromCalculatingToSpawnIn)
         {
-            Debug.Log("3) to spawn in absolute: " + toSpawnInAbsolute.Count);
-            Debug.Log("3) to move absolute raw: " + toMoveAbsoluteRaw.Count);
-        }
 
-        // toCLeanAbsolute gets corrupted here; hopefully the save will be enough to undo it
-        toCleanAbsoluteSave.Clear();
-        foreach (Vector2 v in toCleanAbsolute)
-        {
-            toCleanAbsoluteSave.Add(v);
-        }*/
+            //
+            // building toSpawnInAbsolute
+            //
+            toSpawnInAbsolute.Clear();
 
-        // where can we or would we like to go?
-        possibleMoves.Clear();
-        preferedMoves.Clear();
-        bestMoves.Clear();
-
-        // we get all the moves available
-        foreach (Vector2 move in toMoveAbsoluteRaw)
-        {
             if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
             {
-                Debug.Log("3.5) to clean absolute: " + toCleanAbsolute.Count);
-                Debug.Log("3.5) possible moves: " + possibleMoves.Count);
-                Debug.Log("3.5) prefered moves: " + preferedMoves.Count);
-                Debug.Log("3.5) best moves: " + bestMoves.Count);
+                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
             }
-            if (Tiles.ContainsKey(move) && (Tiles[move].Type == terrainTypeEnum.healthy || Tiles[move].Type == terrainTypeEnum.damaged))
+
+            // we leave it void if we don't want to spawn anything
+            if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) < manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
-                // we like highest-ranked prey best
-                if (manager.preys.Count != 0 && (Tiles[move].State) == manager.preys[0])
+                return;
+            }
+
+            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+            {
+                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+            }
+            // where can we or would we like to go?
+            possibleMoves.Clear();
+            preferedMoves.Clear();
+            bestMoves.Clear();
+
+
+
+            if (manager.State == occupantEnum.eagle && toCleanAbsolute.Count > 30)
+            {
+                Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+            }
+
+            /*
+            // per qualsiasi ragione, questo lo fa impazzire; tenuto qui per la scienza
+            if (manager.State == occupantEnum.eagle)
+            {
+                Debug.Log("2) number of toMoveAbsoluteRaw: " + toMoveAbsoluteRaw.Count);
+            }*/
+
+            bool goOn = true;
+            // we get all the moves available
+            // TODO TO DO UNFINISHED:
+            // should do something like: if bestMoves.Count > NumberOfKids, stop loop; it'll be faster and in this case we know we won't ever use possible or prefered moves anyway
+            //foreach (Vector2 move in toMoveAbsoluteRaw)
+            int x = toMoveAbsoluteRaw.Count;
+            for (int i = 0; i < x && goOn; i++)
+            {
+                if (manager.State == occupantEnum.eagle && x > 30)
                 {
-                    bestMoves.Add(move);
+                    //Debug.Log("0) i: " + i);
+                    //Debug.Log("999) to clean absolute: " + toCleanAbsolute.Count);
+
+                    // MUTANT EAGLES !!!!!
+                    // toggle mutant eagles ending
+
                 }
-                else if (manager.preys.Contains(BoardManager.instance.Tiles[move].State))
+                if (Tiles.ContainsKey(toMoveAbsoluteRaw[i]) && (Tiles[toMoveAbsoluteRaw[i]].Type == terrainTypeEnum.healthy || Tiles[toMoveAbsoluteRaw[i]].Type == terrainTypeEnum.damaged))
                 {
-                    preferedMoves.Add(move);
+                    // if it's the first prey
+                    if (manager.preys.Count != 0 && (Tiles[toMoveAbsoluteRaw[i]].State) == manager.preys[0])
+                    {
+                        bestMoves.Add(toMoveAbsoluteRaw[i]);
+                    }
+                    // if we already have enough fine prey don't bother with rabble
+                    else if (bestMoves.Count < manager.NumberOfKids)
+                    {
+                        // or any prey really
+                        if (manager.preys.Contains(BoardManager.instance.Tiles[toMoveAbsoluteRaw[i]].State))
+                        {
+                            preferedMoves.Add(toMoveAbsoluteRaw[i]);
+                        }
+                        // but we can also spread on empty tiles if there's nothing better around
+                        else if (Tiles[toMoveAbsoluteRaw[i]].State == occupantEnum.empty)
+                        {
+                            possibleMoves.Add(toMoveAbsoluteRaw[i]);
+                        }
+                    }
                 }
-                // but we can also spread on empty tiles if there's nothing better around
-                else if (Tiles[move].State == occupantEnum.empty)
+            }
+            
+            if (manager.moveType == moveType.anywhere)
+            {
+                goOn = true;
+                // we trim the excess (in a separate step so it's kinda random) and
+                // we merge the lists into a new one
+                while (toSpawnInAbsolute.Count < manager.NumberOfKids && goOn)
                 {
-                    possibleMoves.Add(move);
+                    if (bestMoves.Count != 0)
+                    {
+                        int random = Random.Range(0, bestMoves.Count);
+                        toSpawnInAbsolute.Add(bestMoves[random]);
+                        bestMoves.RemoveAt(random);
+                    }
+                    else if (preferedMoves.Count != 0)
+                    {
+                        int random = Random.Range(0, preferedMoves.Count);
+                        toSpawnInAbsolute.Add(preferedMoves[random]);
+                        preferedMoves.RemoveAt(random);
+                    }
+                    else if (possibleMoves.Count != 0)
+                    {
+                        int random = Random.Range(0, possibleMoves.Count);
+                        toSpawnInAbsolute.Add(possibleMoves[random]);
+                        possibleMoves.RemoveAt(random);
+                    }
+                    else
+                    {
+                        goOn = false;
+                    }
+                }
+
+                foreach (Vector2 v in manager.listTiles)
+                {
+                    Tiles[v].occ.toSpawnInAbsolute = toSpawnInAbsolute;
+                    Tiles[v].occ.ExemptFromCalculatingToSpawnIn = true;
+                }
+
+            }
+
+            else
+            {
+                // we trim the excess (in a separate step so it's kinda random)
+                while (possibleMoves.Count + preferedMoves.Count + bestMoves.Count > manager.NumberOfKids)
+                {
+                    if (possibleMoves.Count > 0)
+                    {
+                        possibleMoves.RemoveAt(Random.Range(0, possibleMoves.Count));
+                    }
+                    else if (preferedMoves.Count > 0)
+                    {
+                        preferedMoves.RemoveAt(Random.Range(0, preferedMoves.Count));
+                    }
+                    else if (bestMoves.Count > 0)
+                    {
+                        bestMoves.RemoveAt(Random.Range(0, bestMoves.Count));
+                    }
+                }
+
+                // we merge the lists into a new one
+                foreach (Vector2 v in possibleMoves)
+                {
+                    toSpawnInAbsolute.Add(v);
+                }
+                foreach (Vector2 v in preferedMoves)
+                {
+                    toSpawnInAbsolute.Add(v);
+                }
+                foreach (Vector2 v in bestMoves)
+                {
+                    toSpawnInAbsolute.Add(v);
                 }
             }
-        }
-        /*
-        if (State == occupantEnum.eagle)
-        {
-            Debug.Log("4) to spawn in absolute: " + toSpawnInAbsolute.Count);
-            Debug.Log("4) to clean absolute: " + toCleanAbsolute.Count);
-            Debug.Log("4) to move absolute raw: " + toMoveAbsoluteRaw.Count);
-        }
-
-        // putting the saved data (hopefully uncorrupted back into the base variable)
-        toCleanAbsolute.Clear();
-        foreach(Vector2 v in toCleanAbsoluteSave)
-        {
-            toCleanAbsolute.Add(v);
-        }*/
-
-        // we trim the excess (in a separate step so it's kinda random)
-        while (currentNumberOfKids >= manager.NumberOfKids)
-        {
-            if (possibleMoves.Count > 0)
-            {
-                possibleMoves.RemoveAt(Random.Range(0, possibleMoves.Count));
-            }
-            else if (preferedMoves.Count > 0)
-            {
-                preferedMoves.RemoveAt(Random.Range(0, preferedMoves.Count));
-            }
-            else if (bestMoves.Count > 0)
-            {
-                bestMoves.RemoveAt(Random.Range(0, bestMoves.Count));
-            }
-        }
-
-
-        // we merge the lists into a new one
-        foreach (Vector2 v in possibleMoves)
-        {
-            toSpawnInAbsolute.Add(v);
-        }
-        foreach (Vector2 v in preferedMoves)
-        {
-            toSpawnInAbsolute.Add(v);
-        }
-        foreach (Vector2 v in bestMoves)
-        {
-            toSpawnInAbsolute.Add(v);
         }
     }
 
@@ -681,8 +797,8 @@ public class OccupantManager
     public AudioClip sound;
     public Sprite mouseImageOnButtonClicked;
 
-    [HideInInspector]
-    public int LastTurnCheckedAnywhereMoveAvailibility = -1;
+    int _lastTurnCheckedAnywhereMoveAvailablility = -1;
+    public int LastTurnCheckedAnywhereMoveAvailibility { get { return _lastTurnCheckedAnywhereMoveAvailablility; } set { _lastTurnCheckedAnywhereMoveAvailablility = value; } }
 
     [Header("game design stuff")]
     public int firstApparition;
@@ -697,7 +813,6 @@ public class OccupantManager
     [Tooltip("Of all the tiles we could clean, how many will we")]
     [SerializeField]
     int _toCleanTilesNumber;
-    [HideInInspector]
     public int ToCleanTilesNumber
     {
         get
@@ -786,8 +901,9 @@ public class OccupantManager
 
     public List<Vector2> listTiles = new List<Vector2>();
 
-    [HideInInspector]
-    public int lastCall = -1;
+
+    int _lastCall = -1;
+    public int lastCall { get { return _lastCall; } set { _lastCall = value; } }
     public bool isAvailable // is the button available (the ones already there grow even if the button is hidden)
     {
         get
@@ -813,8 +929,9 @@ public class OccupantManager
         }
     }
 
-    [HideInInspector]
-    public bool hasShownTuto = false;
+
+    bool _hasShownTuto = false;
+    public bool hasShownTuto { get { return _hasShownTuto; } set { _hasShownTuto = value; } }
 
     //    int tilesCleaned;
     List<Vector2> _neighbourhoodTiles = new List<Vector2>();

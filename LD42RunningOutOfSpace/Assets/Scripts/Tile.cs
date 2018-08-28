@@ -42,6 +42,12 @@ public class Tile : MonoBehaviour
             occ.lastMove = GrowthManager.instance.currentTurn;
             occ.BypassSpecial = false;
             occ.lastMove = GrowthManager.instance.currentTurn + Random.Range(0, occ.manager.moveCooldown);
+
+            // we reset the personal cooldown so it can match the new state
+            occ._personalCooldown = -1;
+
+            occ.lastTurnActive = GrowthManager.instance.currentTurn;
+
             if (!BoardManager.instance.settingTheBoard && Type != terrainTypeEnum.damaged && State != occupantEnum.empty)
             {
                 Type = terrainTypeEnum.damaged;
