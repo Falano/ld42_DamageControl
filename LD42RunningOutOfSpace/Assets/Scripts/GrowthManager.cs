@@ -358,17 +358,11 @@ public class OccupantInstance
                     break;
                 case moveType.list:
 
-                    if (manager.LastTurnCheckedAnywhereMoveAvailibility != GrowthManager.instance.currentTurn)
-                    {
-
                         _toMoveAbsoluteRaw.Clear();
                         foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
                         {
                             _toMoveAbsoluteRaw.Add(pos + tile);
                         }
-
-                        manager.LastTurnCheckedAnywhereMoveAvailibility = GrowthManager.instance.currentTurn;
-                    }
                     break;
             }
             return _toMoveAbsoluteRaw;
