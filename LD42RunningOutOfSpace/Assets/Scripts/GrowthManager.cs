@@ -503,7 +503,7 @@ public class OccupantInstance
             toSpawnInAbsolute.Clear();
             
             // we leave it void if we don't want to spawn anything
-            if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) < manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
+            if (manager.ChanceToSpawnKids == 0 || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
                 return;
             }
@@ -803,6 +803,7 @@ public class OccupantManager
     [Tooltip("if more than 1, spawns every turn; if less decimal, has a probability to spawn a kid (.2: a probability of 20% of one kid; 1.2: always spawns one, 20% chance to spawn another)")]
     [SerializeField]
     float _numberOfKids; // eagles: 1; bushes: 8;
+    int _numberOfKidsInt;
     public int NumberOfKids
     {
         get
@@ -810,7 +811,18 @@ public class OccupantManager
             if (_numberOfKids < 1) { return 1; }
             else
             {
-                return (int)_numberOfKids;
+                if(_numberOfKids % 1 != 0)
+                {
+                    if(Random.Range(0, 100) > ChanceToSpawnKids)
+                    {
+                        _numberOfKidsInt = (int) _numberOfKids;
+                    }
+                    else
+                    {
+                        _numberOfKidsInt = (int) _numberOfKids + 1;
+                    }
+                }
+                return (int)_numberOfKidsInt;
             }
         }
     } // eagles: 1; bushes: 8;

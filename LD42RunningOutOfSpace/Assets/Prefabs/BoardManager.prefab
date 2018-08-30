@@ -387,9 +387,17 @@ MonoBehaviour:
     moveCooldown: 2
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: -1}
+    - {x: -1, y: 0}
+    - {x: -1, y: 1}
+    - {x: 0, y: -1}
+    - {x: 0, y: 1}
+    - {x: 1, y: -1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
     _numberOfKids: 8
-    moveType: 2
+    moveType: 0
     relativeTilesAvailableForMovement:
     - {x: -1, y: -1}
     - {x: 0, y: -1}
@@ -501,7 +509,7 @@ MonoBehaviour:
     - {x: -1, y: 2}
     - {x: 0, y: 2}
     - {x: 1, y: 2}
-    _numberOfKids: 2
+    _numberOfKids: 1.2
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 1
@@ -536,7 +544,7 @@ MonoBehaviour:
     - {x: 1, y: -1}
     - {x: -1, y: 0}
     - {x: 1, y: 0}
-    _numberOfKids: 1.5
+    _numberOfKids: 1.05
     moveType: 2
     relativeTilesAvailableForMovement:
     - {x: -5, y: 5}
@@ -567,7 +575,7 @@ MonoBehaviour:
     longevity: 1
     canOverrun: 1
     overrunPercentage: 0.3
-    maxNumberOfInstances: 5
+    maxNumberOfInstances: 7
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
     listTiles: []
