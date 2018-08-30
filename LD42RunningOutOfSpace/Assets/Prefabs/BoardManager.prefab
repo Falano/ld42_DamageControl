@@ -525,7 +525,7 @@ MonoBehaviour:
     firstApparition: 15
     cooldown: 5
     moveCooldown: 4
-    cleanAllAvailableTiles: 0
+    cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 16
     relativeTilesAvailableToBeCleaned:
     - {x: -1, y: 1}
@@ -537,8 +537,33 @@ MonoBehaviour:
     - {x: -1, y: 0}
     - {x: 1, y: 0}
     _numberOfKids: 1.1
-    moveType: 1
-    relativeTilesAvailableForMovement: []
+    moveType: 2
+    relativeTilesAvailableForMovement:
+    - {x: -5, y: 5}
+    - {x: -5, y: -5}
+    - {x: 5, y: 5}
+    - {x: 5, y: -5}
+    - {x: -5, y: 2}
+    - {x: -5, y: -2}
+    - {x: 5, y: 2}
+    - {x: 5, y: -2}
+    - {x: -5, y: 3}
+    - {x: -5, y: -1}
+    - {x: 5, y: 0}
+    - {x: -5, y: -3}
+    - {x: 5, y: 3}
+    - {x: 5, y: -3}
+    - {x: 5, y: 1}
+    - {x: -5, y: 1}
+    - {x: 4, y: 2}
+    - {x: 4, y: -4}
+    - {x: 4, y: -1}
+    - {x: -4, y: 1}
+    - {x: -4, y: 2}
+    - {x: -4, y: -1}
+    - {x: -4, y: -2}
+    - {x: -4, y: -4}
+    - {x: -3, y: 3}
     longevity: 1
     canOverrun: 1
     overrunPercentage: 0.3
