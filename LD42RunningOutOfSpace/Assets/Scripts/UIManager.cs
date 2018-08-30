@@ -49,6 +49,9 @@ public class UIManager : MonoBehaviour
     public Color freeTileColor;
     public Color unusableTileColor;
 
+    public Text DaysText;
+    public Text SaneText;
+
     public void Start()
     {
         if (instance == null)

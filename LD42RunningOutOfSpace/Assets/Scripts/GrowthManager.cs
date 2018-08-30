@@ -111,6 +111,8 @@ public class GrowthManager : MonoBehaviour
         }
 
         currentTurn++;
+        UIManager.instance.DaysText.text = "Day " + currentTurn;
+        UIManager.instance.SaneText.text = "Healthy acres of land: " + BoardManager.instance.SaneTiles;
         float currentVolume = ((float)Occupants[occupantEnum.empty].listTiles.Count / BoardManager.instance.Tiles.Count);
         ambientHealthy.volume = currentVolume;
         ambientInvasive.volume = 1 - currentVolume;
@@ -503,8 +505,9 @@ public class OccupantInstance
             toSpawnInAbsolute.Clear();
             
             // we leave it void if we don't want to spawn anything
-            if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) < manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
+            if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) > manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
+                toSpawnInAbsolute.Clear();
                 return;
             }
 
@@ -786,7 +789,7 @@ public class OccupantManager
             {
                 if (_numberOfKids % 1 == 0)
                 {
-                    _chanceToSpawnKids = 1;
+                    _chanceToSpawnKids = 100;
                 }
                 else if (_numberOfKids == 0)
                 {

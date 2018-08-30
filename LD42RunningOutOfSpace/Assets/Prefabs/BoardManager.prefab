@@ -458,7 +458,7 @@ MonoBehaviour:
     - {x: -1, y: -1}
     - {x: 1, y: -1}
     - {x: -1, y: 1}
-    _numberOfKids: 1
+    _numberOfKids: 1.7
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 3
@@ -501,7 +501,7 @@ MonoBehaviour:
     - {x: -1, y: 2}
     - {x: 0, y: 2}
     - {x: 1, y: 2}
-    _numberOfKids: 1
+    _numberOfKids: 1.3
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 2
@@ -583,10 +583,10 @@ MonoBehaviour:
     mouseImageOnButtonClicked: {fileID: 21300000, guid: d9e0b0cf3ddc4994ebc9d495ed98e1c2,
       type: 3}
     firstApparition: -1
-    cooldown: 0
-    moveCooldown: 0
+    cooldown: 5
+    moveCooldown: 1
     cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 3
+    _toCleanTilesNumber: 12
     relativeTilesAvailableToBeCleaned:
     - {x: -2, y: -2}
     - {x: 0, y: -2}
@@ -607,14 +607,18 @@ MonoBehaviour:
     _numberOfKids: 1.1
     moveType: 2
     relativeTilesAvailableForMovement:
-    - {x: -1, y: 0}
-    - {x: 0, y: -1}
-    - {x: 1, y: 0}
-    - {x: 0, y: 1}
+    - {x: -3, y: 3}
+    - {x: -3, y: 0}
+    - {x: -3, y: -3}
+    - {x: 3, y: -3}
+    - {x: 3, y: 0}
+    - {x: 3, y: 3}
+    - {x: 0, y: 3}
+    - {x: 0, y: -3}
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 50
+    maxNumberOfInstances: 30
     necessaryPrecursors: 05000000
     numberOfNecessaryPrecursors: 02000000
     listTiles: []

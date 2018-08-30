@@ -216,6 +216,9 @@ public class BoardManager : MonoBehaviour
     public void FirstTurn()
     {
         SaneTiles = emptyTilesAtStart;
+
+        UIManager.instance.DaysText.text = "Day 0";
+        UIManager.instance.SaneText.text = "Healthy acres of land: " + SaneTiles;
         settingTheBoard = false;
         for (int i = 0; i < initialPlantsNumber; i++)
         {
