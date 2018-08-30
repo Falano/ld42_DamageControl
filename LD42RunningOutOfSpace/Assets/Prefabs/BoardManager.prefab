@@ -376,7 +376,7 @@ MonoBehaviour:
     State: 1
     meshes:
     - {fileID: 4300000, guid: 5abc52e51f0da4693b647ee4843394c9, type: 3}
-    preys: 
+    preys: 00000000
     specialType: 2
     button: {fileID: 0}
     introImage: {fileID: 0}
@@ -387,9 +387,17 @@ MonoBehaviour:
     moveCooldown: 0
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
-    relativeTilesAvailableToBeCleaned: []
+    relativeTilesAvailableToBeCleaned:
+    - {x: -1, y: -1}
+    - {x: -1, y: 0}
+    - {x: -1, y: 1}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: -1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
     _numberOfKids: 8
-    moveType: 2
+    moveType: 0
     relativeTilesAvailableForMovement:
     - {x: -1, y: -1}
     - {x: 0, y: -1}
@@ -524,7 +532,7 @@ MonoBehaviour:
       type: 3}
     firstApparition: 15
     cooldown: 5
-    moveCooldown: 4
+    moveCooldown: 2
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 16
     relativeTilesAvailableToBeCleaned:
