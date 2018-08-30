@@ -458,10 +458,10 @@ MonoBehaviour:
     - {x: -1, y: -1}
     - {x: 1, y: -1}
     - {x: -1, y: 1}
-    _numberOfKids: 2
+    _numberOfKids: 1
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 0
+    longevity: 3
     canOverrun: 1
     overrunPercentage: 0.95
     maxNumberOfInstances: 0
@@ -501,10 +501,10 @@ MonoBehaviour:
     - {x: -1, y: 2}
     - {x: 0, y: 2}
     - {x: 1, y: 2}
-    _numberOfKids: 2
+    _numberOfKids: 1
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 1
+    longevity: 2
     canOverrun: 1
     overrunPercentage: 0.95
     maxNumberOfInstances: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 7b3142494503c054e9ab114701f9b6b1,
       type: 3}
     firstApparition: 15
-    cooldown: 5
+    cooldown: 4
     moveCooldown: 2
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 16
@@ -567,7 +567,7 @@ MonoBehaviour:
     longevity: 1
     canOverrun: 1
     overrunPercentage: 0.3
-    maxNumberOfInstances: 5
+    maxNumberOfInstances: 15
     necessaryPrecursors: 
     numberOfNecessaryPrecursors: 
     listTiles: []
@@ -614,9 +614,9 @@ MonoBehaviour:
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 30
+    maxNumberOfInstances: 50
     necessaryPrecursors: 05000000
-    numberOfNecessaryPrecursors: 03000000
+    numberOfNecessaryPrecursors: 02000000
     listTiles: []
   ranger:
     State: 7
@@ -682,10 +682,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showIntro: 1
   canAlwaysSpawn: 0
-  length: 30
-  width: 30
+  length: 40
+  width: 40
   initialPlantsNumber: 2
-  saneTilesPercentageToLose: 0.1
+  saneTilesPercentageToLose: 0
   minNumberOfSaneTiles: 20
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
