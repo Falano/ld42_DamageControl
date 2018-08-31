@@ -206,6 +206,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        {
+            zoom(Input.GetAxis("Mouse ScrollWheel"));
+        }
+    }
+
     public void StartZoom(float zoom)
     {
         StartCoroutine(ZoomCamera(zoom));
@@ -276,27 +284,33 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator ZoomCamera(float zoom)
+    IEnumerator ZoomCamera(float zoomFactor)
     {
         while (true)
         {
-            // actual zoom
-            camera.orthographicSize += camera.orthographicSize * zoom;
+            zoom(zoomFactor);
 
-            // reevaluate buttons interactibility
-            ZoomIn.raycastTarget = camera.orthographicSize > cameraZoomLimits.x;
-            ZoomOut.raycastTarget = camera.orthographicSize < cameraZoomLimits.y;
-            ZoomIn.color = ZoomIn.raycastTarget ? activeColor : inactiveColor;
-            ZoomOut.color = ZoomOut.raycastTarget ? activeColor : inactiveColor;
-            if (zoom > 0 && !ZoomOut.raycastTarget)
+            if (zoomFactor > 0 && !ZoomOut.raycastTarget)
             {
                 StopMovement();
             }
-            else if (zoom < 0 && !ZoomIn.raycastTarget)
+            else if (zoomFactor < 0 && !ZoomIn.raycastTarget)
             {
                 StopMovement();
             }
             yield return null;
         }
+    }
+
+    public void zoom(float zoomFactor)
+    {
+        // actual zoom
+        camera.orthographicSize += camera.orthographicSize * zoomFactor;
+
+        // reevaluate buttons interactibility
+        ZoomIn.raycastTarget = camera.orthographicSize > cameraZoomLimits.x;
+        ZoomOut.raycastTarget = camera.orthographicSize < cameraZoomLimits.y;
+        ZoomIn.color = ZoomIn.raycastTarget ? activeColor : inactiveColor;
+        ZoomOut.color = ZoomOut.raycastTarget ? activeColor : inactiveColor;
     }
 }
