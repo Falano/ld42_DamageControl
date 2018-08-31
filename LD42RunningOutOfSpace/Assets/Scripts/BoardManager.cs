@@ -217,6 +217,8 @@ public class BoardManager : MonoBehaviour
     {
         SaneTiles = emptyTilesAtStart;
 
+
+        UIManager.instance.ChangeTutoImage(GrowthManager.instance.Occupants[occupantEnum.plant].menuTutoImage);
         UIManager.instance.DaysText.text = "Day 0";
         UIManager.instance.SaneText.text = "Healthy acres of land: " + SaneTiles;
         settingTheBoard = false;

@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     public Image NewAnimalScreen;
     public Image IntroScreen;
+    public Image MenuChainFoodTuto;
     int introState = 0;
     public List<Sprite> introImages;
 
@@ -169,6 +170,12 @@ public class UIManager : MonoBehaviour
     {
         NewAnimalScreen.transform.parent.gameObject.SetActive(true);
         NewAnimalScreen.sprite = image;
+    }
+
+
+    public void ChangeTutoImage(Sprite image)
+    {
+        MenuChainFoodTuto.sprite = image;
     }
 
     /// <summary>

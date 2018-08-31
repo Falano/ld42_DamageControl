@@ -354,6 +354,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 0}
+    menuTutoImage: {fileID: 0}
     sound: {fileID: 0}
     mouseImageOnButtonClicked: {fileID: 0}
     firstApparition: 0
@@ -380,6 +381,7 @@ MonoBehaviour:
     specialType: 2
     button: {fileID: 0}
     introImage: {fileID: 0}
+    menuTutoImage: {fileID: 21300000, guid: 08c6b420520cba540a4ce77e7baca7f0, type: 3}
     sound: {fileID: 0}
     mouseImageOnButtonClicked: {fileID: 0}
     firstApparition: 0
@@ -414,6 +416,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 1d05b96cce97b2d40a0aa05838890dad, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: 4970c960cba9554459506946298aa423, type: 3}
     sound: {fileID: 8300000, guid: 4a9a06113ca36469fbf4d1f670f7908d, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 483276520eb00f244bf20c08d44df457,
       type: 3}
@@ -445,6 +448,7 @@ MonoBehaviour:
     specialType: 3
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 73b73afe1887710418ae72c373bcf8c3, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: fe1f6ee680512814d99feb66bee617d0, type: 3}
     sound: {fileID: 8300000, guid: 687507abdc5b64b858e28606a792034b, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: fd2da21e4ef48884db79c9ccff9e4b28,
       type: 3}
@@ -476,6 +480,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: 9318cd228aa2a2846bda9d36edc64396, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: d36f95fcacd15aa47a87e43d0cbe7df7, type: 3}
     sound: {fileID: 8300000, guid: 94449ba7e05d144428bd24cfa4b88fe9, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 62e46c327ff08b548a163a7d135bae32,
       type: 3}
@@ -519,6 +524,7 @@ MonoBehaviour:
     specialType: 1
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: dd731ab0debc5234aac0b3b2b834b7ac, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: ebc6e0dcd9fad9f4c954185af4292e3e, type: 3}
     sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 7b3142494503c054e9ab114701f9b6b1,
       type: 3}
@@ -579,6 +585,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: ad80087d3f8641e4da3013ddf9c291f9, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: 180f8b6392409e7449509bdc4a6bd792, type: 3}
     sound: {fileID: 8300000, guid: 52f241a3a606343ddae9818250b0d990, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: d9e0b0cf3ddc4994ebc9d495ed98e1c2,
       type: 3}
@@ -638,6 +645,7 @@ MonoBehaviour:
     specialType: 0
     button: {fileID: 0}
     introImage: {fileID: 21300000, guid: f229dc91fa697914cba9bf5b0de294de, type: 3}
+    menuTutoImage: {fileID: 21300000, guid: 4ff9cbfda1a5cdd4ea96b8e77bac367e, type: 3}
     sound: {fileID: 8300000, guid: cb5855a22e73b47dfa5d65cb4103b1de, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: e8d392e0f65358a44b680639c695f917,
       type: 3}

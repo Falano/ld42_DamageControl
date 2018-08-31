@@ -93,6 +93,7 @@ public class GrowthManager : MonoBehaviour
             {
                 UIManager.instance.ToggleNewAnimal(occupant.introImage);
                 occupant.hasShownTuto = true;
+                UIManager.instance.ChangeTutoImage(occupant.menuTutoImage);
             }
 
             //Debug.Log(occupant.State.ToString() +  " is available? " + occupant.isAvailable + "; last call: " + occupant.lastCall + "; currentTurn: " + currentTurn)
@@ -745,6 +746,7 @@ public class OccupantManager
     public terrainTypeEnum specialType;
     public Button button;
     public Sprite introImage;
+    public Sprite menuTutoImage;
     public AudioClip sound;
     public Sprite mouseImageOnButtonClicked;
 
