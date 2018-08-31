@@ -506,7 +506,7 @@ MonoBehaviour:
     - {x: -1, y: 2}
     - {x: 0, y: 2}
     - {x: 1, y: 2}
-    _numberOfKids: 1.3
+    _numberOfKids: 1.2
     moveType: 0
     relativeTilesAvailableForMovement: []
     longevity: 1
@@ -593,7 +593,7 @@ MonoBehaviour:
     cooldown: 5
     moveCooldown: 1
     cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 12
+    _toCleanTilesNumber: 6
     relativeTilesAvailableToBeCleaned:
     - {x: -2, y: -2}
     - {x: 0, y: -2}
@@ -611,7 +611,7 @@ MonoBehaviour:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
     - {x: 1, y: 1}
-    _numberOfKids: 2.9
+    _numberOfKids: 1.1
     moveType: 2
     relativeTilesAvailableForMovement:
     - {x: -3, y: 3}
@@ -706,7 +706,7 @@ MonoBehaviour:
   width: 30
   initialPlantsNumber: 2
   saneTilesPercentageToLose: 0.1
-  minNumberOfSaneTiles: 50
+  minNumberOfSaneTiles: 100
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
   Materials:
