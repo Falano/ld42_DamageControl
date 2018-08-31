@@ -451,6 +451,7 @@ public class OccupantInstance
         // spawn kids (which is a Move really)
         foreach (Vector2 tile in toSpawnInAbsolute)
         {
+            if(Tiles[tile].State == occupantEnum.empty || manager.preys.Contains(Tiles[tile].State) )
             Tiles[tile].State = State;
         }
 
@@ -506,7 +507,7 @@ public class OccupantInstance
             toSpawnInAbsolute.Clear();
             
             // we leave it void if we don't want to spawn anything
-            if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) > manager.ChanceToSpawnKids || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
+            if (manager.ChanceToSpawnKids == 0 /*|| Random.Range(0, 100) > manager.ChanceToSpawnKids */ || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
                 toSpawnInAbsolute.Clear();
                 return;
@@ -553,7 +554,7 @@ public class OccupantInstance
                         bestMoves.Add(toMoveAbsoluteRaw[i]);
                     }
                     // if we already have enough fine prey don't bother with rabble
-                    else if (bestMoves.Count < manager.NumberOfKids)
+                    else if (bestMoves.Count <= manager.NumberOfKids)
                     {
                         // or any prey really
                         if (manager.preys.Contains(BoardManager.instance.Tiles[toMoveAbsoluteRaw[i]].State))
@@ -610,8 +611,14 @@ public class OccupantInstance
 
             else
             {
+                int numOfKidsSpecial = manager.NumberOfKids;
+                if(manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) > manager.ChanceToSpawnKids)
+                {
+                    numOfKidsSpecial++;
+                }
+
                 // we trim the excess (in a separate step so it's kinda random)
-                while (possibleMoves.Count + preferedMoves.Count + bestMoves.Count > manager.NumberOfKids)
+                while (possibleMoves.Count + preferedMoves.Count + bestMoves.Count > numOfKidsSpecial)
                 {
                     if (possibleMoves.Count > 0)
                     {

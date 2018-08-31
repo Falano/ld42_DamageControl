@@ -509,7 +509,7 @@ MonoBehaviour:
     _numberOfKids: 1.3
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 2
+    longevity: 1
     canOverrun: 1
     overrunPercentage: 0.95
     maxNumberOfInstances: 0
