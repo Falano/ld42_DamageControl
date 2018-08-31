@@ -479,8 +479,8 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: 94449ba7e05d144428bd24cfa4b88fe9, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 62e46c327ff08b548a163a7d135bae32,
       type: 3}
-    firstApparition: 10
-    cooldown: 3
+    firstApparition: 13
+    cooldown: 1
     moveCooldown: 0
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 12
@@ -522,8 +522,8 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: d5c22a87e8fc44796ac6008563daa61b, type: 3}
     mouseImageOnButtonClicked: {fileID: 21300000, guid: 7b3142494503c054e9ab114701f9b6b1,
       type: 3}
-    firstApparition: 15
-    cooldown: 4
+    firstApparition: 17
+    cooldown: 2
     moveCooldown: 2
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 16
@@ -604,7 +604,7 @@ MonoBehaviour:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
     - {x: 1, y: 1}
-    _numberOfKids: 1.1
+    _numberOfKids: 2.9
     moveType: 2
     relativeTilesAvailableForMovement:
     - {x: -3, y: 3}
@@ -615,6 +615,14 @@ MonoBehaviour:
     - {x: 3, y: 3}
     - {x: 0, y: 3}
     - {x: 0, y: -3}
+    - {x: -3, y: 1}
+    - {x: -3, y: -2}
+    - {x: 3, y: 1}
+    - {x: 3, y: -2}
+    - {x: -3, y: 2}
+    - {x: 3, y: -1}
+    - {x: 2, y: -3}
+    - {x: -1, y: 3}
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
@@ -686,11 +694,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showIntro: 1
   canAlwaysSpawn: 0
-  length: 40
-  width: 40
+  length: 30
+  width: 30
   initialPlantsNumber: 2
-  saneTilesPercentageToLose: 0
-  minNumberOfSaneTiles: 20
+  saneTilesPercentageToLose: 0.1
+  minNumberOfSaneTiles: 50
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
   cameraPivot: {fileID: 0}
   Materials:
