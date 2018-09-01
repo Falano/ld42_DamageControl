@@ -1,0 +1,17 @@
+Key Bindings, commands and instructions:
+
+Protect the island from invasive plants (at least for 100 days).
+
+use the buttons (left click) on the screen or:
+
+left click-and-drag to move the view
+right click to rotate; if on the right half of the screen, towards the right, if on the left half, towards the left
+mouse wheel to scroll (hasn't actually been tested, might need speed adjustments)
+
+0: end of turn
+1: create rabbit (you need to click to choose its place on the board)
+2: create cat
+3: create fox
+4: create eagle
+5: create hunter
+6: create ranger

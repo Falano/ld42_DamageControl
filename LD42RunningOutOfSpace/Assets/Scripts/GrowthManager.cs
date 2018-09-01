@@ -126,7 +126,10 @@ public class GrowthManager : MonoBehaviour
         StopAllCoroutines();
         //Debug.Log("1) creating occupant " + occupant);
         occupantEnum Occupant = (occupantEnum)System.Enum.Parse(typeof(occupantEnum), occupant);
-        StartCoroutine(CreatingOccupant(Occupant));
+        if (Occupants[Occupant].isAvailable)
+        {
+            StartCoroutine(CreatingOccupant(Occupant));
+        }
     }
 
     /*
@@ -254,6 +257,44 @@ public class GrowthManager : MonoBehaviour
             EndOfTurn();
         }
     }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            CreateOccupant("rabbit");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            CreateOccupant("cat");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            CreateOccupant("fox");
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            CreateOccupant("eagle");
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            CreateOccupant("hunter");
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            CreateOccupant("ranger");
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            EndOfTurn();
+        }
+
+    }
 }
 
 [System.Serializable]
@@ -361,11 +402,11 @@ public class OccupantInstance
                     break;
                 case moveType.list:
 
-                        _toMoveAbsoluteRaw.Clear();
-                        foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
-                        {
-                            _toMoveAbsoluteRaw.Add(pos + tile);
-                        }
+                    _toMoveAbsoluteRaw.Clear();
+                    foreach (Vector2 tile in manager.relativeTilesAvailableForMovement)
+                    {
+                        _toMoveAbsoluteRaw.Add(pos + tile);
+                    }
                     break;
             }
             return _toMoveAbsoluteRaw;
@@ -451,8 +492,8 @@ public class OccupantInstance
         // spawn kids (which is a Move really)
         foreach (Vector2 tile in toSpawnInAbsolute)
         {
-            if(Tiles[tile].State == occupantEnum.empty || manager.preys.Contains(Tiles[tile].State) )
-            Tiles[tile].State = State;
+            if (Tiles[tile].State == occupantEnum.empty || manager.preys.Contains(Tiles[tile].State))
+                Tiles[tile].State = State;
         }
 
         // if you're too old you die
@@ -467,7 +508,7 @@ public class OccupantInstance
 
     public void updateMoveStats()
     {
-        
+
         if (manager.moveCooldown != 0 && GrowthManager.instance.currentTurn % PersonalCooldown != 0)
         {
             return;
@@ -490,7 +531,7 @@ public class OccupantInstance
                 toCleanAbsolute.Add(pos + tile);
             }
         }
-        
+
 
         // decide which we will clean
         // we need to clean up to ToCleanTilesNumber tiles
@@ -505,7 +546,7 @@ public class OccupantInstance
             // building toSpawnInAbsolute
             //
             toSpawnInAbsolute.Clear();
-            
+
             // we leave it void if we don't want to spawn anything
             if (manager.ChanceToSpawnKids == 0 /*|| Random.Range(0, 100) > manager.ChanceToSpawnKids */ || (manager.maxNumberOfInstances != 0 && manager.listTiles.Count >= manager.maxNumberOfInstances))
             {
@@ -569,7 +610,7 @@ public class OccupantInstance
                     }
                 }
             }
-            
+
             if (manager.moveType == moveType.anywhere)
             {
                 goOn = true;
@@ -612,7 +653,7 @@ public class OccupantInstance
             else
             {
                 int numOfKidsSpecial = manager.NumberOfKids;
-                if(manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) > manager.ChanceToSpawnKids)
+                if (manager.ChanceToSpawnKids == 0 || Random.Range(0, 100) > manager.ChanceToSpawnKids)
                 {
                     numOfKidsSpecial++;
                 }

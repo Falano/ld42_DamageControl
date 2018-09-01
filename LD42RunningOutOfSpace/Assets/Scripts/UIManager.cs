@@ -247,8 +247,8 @@ public class UIManager : MonoBehaviour
 
             // reevaluate buttons interactibility
             MoveLeft.raycastTarget = cameraPivot.transform.position.x > 0;
-            MoveRight.raycastTarget = cameraPivot.transform.position.x < BoardManager.instance.length;
-            MoveUp.raycastTarget = cameraPivot.transform.position.y < BoardManager.instance.width;
+            MoveRight.raycastTarget = cameraPivot.transform.position.x < BoardManager.instance.width;
+            MoveUp.raycastTarget = cameraPivot.transform.position.y < BoardManager.instance.length;
             MoveDown.raycastTarget = cameraPivot.transform.position.y > 0;
 
             MoveLeft.color = MoveLeft.raycastTarget ? activeColor : inactiveColor;
