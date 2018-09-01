@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     public List<Sprite> introImages;
 
     public Text EndGameScreen;
+    public GameObject EndGame100Screen;
     public GameObject menu;
     public GameObject CreditsScreen;
     Vector3 NextTurnRotation = new Vector3(0,0,13);

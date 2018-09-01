@@ -110,6 +110,11 @@ public class GrowthManager : MonoBehaviour
             UIManager.instance.ToggleEndGame(true);
             choseToKeepPlaying = true;
         }
+        else if (!choseToKeepPlaying && currentTurn == 100)
+        {
+            UIManager.instance.EndGame100Screen.SetActive(true);
+            choseToKeepPlaying = true;
+        }
 
         currentTurn++;
         UIManager.instance.DaysText.text = "Day " + currentTurn;
