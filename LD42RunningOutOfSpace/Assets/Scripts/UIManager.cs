@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -206,14 +207,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
-        {
-            zoom(Input.GetAxis("Mouse ScrollWheel"));
-        }
-    }
-
     public void StartZoom(float zoom)
     {
         StartCoroutine(ZoomCamera(zoom));
@@ -250,7 +243,7 @@ public class UIManager : MonoBehaviour
         while (true)
         {
             // actual movement
-            cameraPivot.transform.position += pos;
+            cameraPivot.transform.position += pos * camera.orthographicSize * .1f;
 
             // reevaluate buttons interactibility
             MoveLeft.raycastTarget = cameraPivot.transform.position.x > 0;
@@ -305,12 +298,63 @@ public class UIManager : MonoBehaviour
     public void zoom(float zoomFactor)
     {
         // actual zoom
-        camera.orthographicSize += camera.orthographicSize * zoomFactor;
+        camera.orthographicSize += camera.orthographicSize * zoomFactor ;
 
         // reevaluate buttons interactibility
         ZoomIn.raycastTarget = camera.orthographicSize > cameraZoomLimits.x;
         ZoomOut.raycastTarget = camera.orthographicSize < cameraZoomLimits.y;
         ZoomIn.color = ZoomIn.raycastTarget ? activeColor : inactiveColor;
         ZoomOut.color = ZoomOut.raycastTarget ? activeColor : inactiveColor;
+    }
+
+
+    private Vector3 mouseOrigin;
+
+    private void Update()
+    {
+        // stop rotation
+        if (Input.GetMouseButtonUp(1))
+        {
+            StopMovement();
+        }
+
+
+        if(EventSystem.current.IsPointerOverGameObject(-1))
+        {
+            return;
+        }
+
+
+        // zoom on wheel
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        {
+            zoom(Input.GetAxis("Mouse ScrollWheel"));
+        }
+
+        // start rotation on right click
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Input.mousePosition.x < Screen.width * .5f)
+            {
+                StartRotation(-0.4f);
+            }
+            else
+            {
+                StartRotation(0.4f);
+            }
+        }
+
+
+        // click drag move
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        else if(Input.GetMouseButton(0))
+        {
+            Vector3 pos = (cameraPivot.transform.position + (Camera.main.ScreenToWorldPoint(Input.mousePosition) - mouseOrigin) * camera.orthographicSize * -0.01f);
+
+            cameraPivot.transform.position = pos;
+        }
     }
 }
