@@ -1,6 +1,6 @@
 Key Bindings, commands and instructions:
 
-Protect the island from invasive plants (at least for 100 days).
+Protect the island from invasive plants (at least for 75 days).
 
 use the buttons (left click) on the screen or:
 
@@ -15,3 +15,6 @@ mouse wheel to scroll (hasn't actually been tested, might need speed adjustments
 4: create eagle
 5: create hunter
 6: create ranger
+
+
+space to toggle animals info screen

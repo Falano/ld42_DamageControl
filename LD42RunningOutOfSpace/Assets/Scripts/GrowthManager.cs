@@ -110,16 +110,26 @@ public class GrowthManager : MonoBehaviour
             UIManager.instance.ToggleEndGame(true);
             choseToKeepPlaying = true;
         }
-        else if (!choseToKeepPlaying && currentTurn == 100)
+        else if (!choseToKeepPlaying && currentTurn == 75)
         {
             UIManager.instance.EndGame100Screen.SetActive(true);
             choseToKeepPlaying = true;
+        }
+        else if (Occupants[occupantEnum.rabbit].listTiles.Count == 0 &&
+            Occupants[occupantEnum.cat].listTiles.Count == 0 &&
+            Occupants[occupantEnum.fox].listTiles.Count == 0 &&
+            Occupants[occupantEnum.eagle].listTiles.Count == 0 &&
+            Occupants[occupantEnum.hunter].listTiles.Count == 0 &&
+            Occupants[occupantEnum.plant].listTiles.Count == 0
+            )
+        {
+            UIManager.instance.EndGame999Screen.SetActive(true);
         }
 
         currentTurn++;
         UIManager.instance.DaysText.text = "Day " + currentTurn;
         UIManager.instance.SaneText.text = "Healthy acres of land: " + BoardManager.instance.SaneTiles;
-        float currentVolume = ((float)Occupants[occupantEnum.empty].listTiles.Count / BoardManager.instance.Tiles.Count);
+        float currentVolume = (((float)Occupants[occupantEnum.empty].listTiles.Count - BoardManager.instance.minNumberOfSaneTiles * 2) / (BoardManager.instance.Tiles.Count));
         ambientHealthy.volume = currentVolume;
         ambientInvasive.volume = 1 - currentVolume;
 
@@ -297,6 +307,18 @@ public class GrowthManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
         {
             EndOfTurn();
+        }
+
+
+        // hide new animal screen on space
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            UIManager.instance.NewAnimalScreen.transform.parent.gameObject.SetActive(false);
+
+            if (UIManager.instance.IntroScreen.transform.parent.gameObject.activeSelf)
+            {
+                UIManager.instance.UpdateIntroImages();
+            }
         }
 
     }
@@ -489,16 +511,14 @@ public class OccupantInstance
         }
 
         // check before move
-        if (!canMove)
+        if (canMove)
         {
-            return;
-        }
-
-        // spawn kids (which is a Move really)
-        foreach (Vector2 tile in toSpawnInAbsolute)
-        {
-            if (Tiles[tile].State == occupantEnum.empty || manager.preys.Contains(Tiles[tile].State))
-                Tiles[tile].State = State;
+            // spawn kids (which is a Move really)
+            foreach (Vector2 tile in toSpawnInAbsolute)
+            {
+                if (Tiles[tile].State == occupantEnum.empty || manager.preys.Contains(Tiles[tile].State))
+                    Tiles[tile].State = State;
+            }
         }
 
         // if you're too old you die
@@ -700,10 +720,6 @@ public class OccupantInstance
 
     public void specialMove()
     {
-        if (manager.State == occupantEnum.eagle)
-        {
-            Debug.Log(" special move!");
-        }
         if (State == occupantEnum.empty)
         {
             //Debug.Log("healthy is a victim that can't spread on its own");

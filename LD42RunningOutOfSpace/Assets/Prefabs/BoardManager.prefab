@@ -650,7 +650,7 @@ MonoBehaviour:
     mouseImageOnButtonClicked: {fileID: 21300000, guid: e8d392e0f65358a44b680639c695f917,
       type: 3}
     firstApparition: -1
-    cooldown: 0
+    cooldown: 7
     moveCooldown: 0
     cleanAllAvailableTiles: 1
     _toCleanTilesNumber: 0
@@ -693,7 +693,7 @@ MonoBehaviour:
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
-    maxNumberOfInstances: 2
+    maxNumberOfInstances: 4
     necessaryPrecursors: 06000000
     numberOfNecessaryPrecursors: 04000000
     listTiles: []

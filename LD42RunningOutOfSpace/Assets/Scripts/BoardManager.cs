@@ -215,6 +215,7 @@ public class BoardManager : MonoBehaviour
 
     public void FirstTurn()
     {
+        UIManager.instance.ToggleForNewGame();
         SaneTiles = emptyTilesAtStart;
 
 
@@ -231,6 +232,7 @@ public class BoardManager : MonoBehaviour
         GrowthManager.instance.ambientInvasive.Play();
         GrowthManager.instance.currentTurn = 0;
         GrowthManager.instance.choseToKeepPlaying = false;
+        StartCoroutine(UIManager.instance.PulseNextTurn());
 
         foreach (OccupantManager occupant in GrowthManager.instance.Occupants.Values)
         {

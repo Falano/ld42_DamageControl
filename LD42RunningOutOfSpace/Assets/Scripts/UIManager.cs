@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     public Text EndGameScreen;
     public GameObject EndGame100Screen;
+    public GameObject EndGame999Screen;
     public GameObject menu;
     public GameObject CreditsScreen;
     Vector3 NextTurnRotation = new Vector3(0,0,13);
@@ -72,15 +73,23 @@ public class UIManager : MonoBehaviour
         ToggleForStart();
     }
 
-    void ToggleForStart() {
-        buttonsParent.SetActive(true);
-        NewAnimalScreen.transform.parent.gameObject.SetActive(false);
+    public void ToggleForStart() {
+        ToggleForNewGame();
+        buttonsParent.SetActive(false);
         IntroScreen.transform.parent.gameObject.SetActive(false);
-        EndGameScreen.transform.parent.gameObject.SetActive(false);
         CreditsScreen.SetActive(false);
         menu.SetActive(false);
+    }
+
+    public void ToggleForNewGame()
+    {
+        NewAnimalScreen.transform.parent.gameObject.SetActive(false);
+        EndGameScreen.transform.parent.gameObject.SetActive(false);
+        EndGame100Screen.SetActive(false);
+        EndGame999Screen.SetActive(false);
         ActiveAnimalImage.gameObject.SetActive(false);
     }
+
 
     public void SetCameraReset()
     {
