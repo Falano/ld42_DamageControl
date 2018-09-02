@@ -234,6 +234,7 @@ public class BoardManager : MonoBehaviour
 
         foreach (OccupantManager occupant in GrowthManager.instance.Occupants.Values)
         {
+            occupant.hasShownTuto = false;
             if (occupant.button)
             {
                 occupant.lastCall = -1;
