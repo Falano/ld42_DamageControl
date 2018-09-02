@@ -2859,10 +2859,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "A game by Noemie Scherer and Leandro Estrella.\n\nSounds from Freesound
-    users:\n ArcLegend05\n\xB7 timtube\n\xB7 Benbojangles\n\xB7 kabit\n\xB7 HolmesAudio\n\xB7
-    EFlexTheSoundDesigner\n\nRealized in 72 hours during the Ludum Dare 42:\n\"Running
-    out of space\".\n\n\nAugust 2018"
+  m_Text: "<size=40>Damage Control</size>\r\n\r\n<size=36><i>A game by Noemie Scherer
+    and Leandro Estrella.</i></size>\r\n\r\n\rStock Sounds by Freesound users\r\n\r<i>ArcLegend05
+    / timtube / Benbojangles / kabit / HolmesAudio / EFlexTheSoundDesigner</i>\r\n\r\n\rFont
+    <i>Crayon Hand</i> by Ursula Hitz\r\n\r\n\rRealized in 72 hours during the <b>Ludum
+    Dare 42</b>:\r\n\r<i>Running out of space</i>.\r\n\r\nAugust 2018"
 --- !u!114 &114153974083775322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6132,7 +6133,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: key bindings
+  m_Text: Key Bindings
 --- !u!114 &114754183194798460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8836,7 +8837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.00003}
+  m_AnchoredPosition: {x: 0, y: -25.000061}
   m_SizeDelta: {x: 0, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224221596041687162
@@ -9004,7 +9005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.00003}
+  m_AnchoredPosition: {x: 0, y: -25.000061}
   m_SizeDelta: {x: -400, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224281697865061070
@@ -10258,7 +10259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.00003}
+  m_AnchoredPosition: {x: 0, y: -25.000061}
   m_SizeDelta: {x: -400, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224725157514880952
