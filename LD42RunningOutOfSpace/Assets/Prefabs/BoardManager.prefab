@@ -486,7 +486,7 @@ MonoBehaviour:
       type: 3}
     firstApparition: 13
     cooldown: 1
-    moveCooldown: 0
+    moveCooldown: 2
     cleanAllAvailableTiles: 0
     _toCleanTilesNumber: 12
     relativeTilesAvailableToBeCleaned:
@@ -506,10 +506,10 @@ MonoBehaviour:
     - {x: -1, y: 2}
     - {x: 0, y: 2}
     - {x: 1, y: 2}
-    _numberOfKids: 1.2
+    _numberOfKids: 1
     moveType: 0
     relativeTilesAvailableForMovement: []
-    longevity: 1
+    longevity: 2
     canOverrun: 1
     overrunPercentage: 0.95
     maxNumberOfInstances: 0
@@ -593,7 +593,7 @@ MonoBehaviour:
     cooldown: 5
     moveCooldown: 1
     cleanAllAvailableTiles: 0
-    _toCleanTilesNumber: 6
+    _toCleanTilesNumber: 16
     relativeTilesAvailableToBeCleaned:
     - {x: -2, y: -2}
     - {x: 0, y: -2}
@@ -611,7 +611,7 @@ MonoBehaviour:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
     - {x: 1, y: 1}
-    _numberOfKids: 1.1
+    _numberOfKids: 1
     moveType: 2
     relativeTilesAvailableForMovement:
     - {x: -3, y: 3}
@@ -622,14 +622,6 @@ MonoBehaviour:
     - {x: 3, y: 3}
     - {x: 0, y: 3}
     - {x: 0, y: -3}
-    - {x: -3, y: 1}
-    - {x: -3, y: -2}
-    - {x: 3, y: 1}
-    - {x: 3, y: -2}
-    - {x: -3, y: 2}
-    - {x: 3, y: -1}
-    - {x: 2, y: -3}
-    - {x: -1, y: 3}
     longevity: 1
     canOverrun: 0
     overrunPercentage: 0
@@ -704,7 +696,7 @@ MonoBehaviour:
   canAlwaysSpawn: 0
   length: 30
   width: 30
-  initialPlantsNumber: 2
+  initialPlantsNumber: 1
   saneTilesPercentageToLose: 0.1
   minNumberOfSaneTiles: 100
   tilePrefab: {fileID: 1131052392334732, guid: 0c8f802ac7a754abbaacc4782061a6ef, type: 2}
