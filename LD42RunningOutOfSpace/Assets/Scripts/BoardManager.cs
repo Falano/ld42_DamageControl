@@ -159,11 +159,14 @@ public class BoardManager : MonoBehaviour
                 // and we grow it appropriately
                 for (int j = 1; j < Random.Range(pair.Value.Size.x, pair.Value.Size.y + 1); j++)
                 {
-                    Vector2 chosenNeighbour = availableNeighbours[Random.Range(0, availableNeighbours.Count)];
-                    availableNeighbours.Remove(chosenNeighbour);
-                    CheckAvailableNeighbours(chosenNeighbour);
-                    Tiles[chosenNeighbour].Type = pair.Key;
-                    emptyTilesAtStart--;
+                    if (availableNeighbours.Count != 0)
+                    {
+                        Vector2 chosenNeighbour = availableNeighbours[Random.Range(0, availableNeighbours.Count)];
+                        availableNeighbours.Remove(chosenNeighbour);
+                        CheckAvailableNeighbours(chosenNeighbour);
+                        Tiles[chosenNeighbour].Type = pair.Key;
+                        emptyTilesAtStart--;
+                    }
                 }
             }
         }

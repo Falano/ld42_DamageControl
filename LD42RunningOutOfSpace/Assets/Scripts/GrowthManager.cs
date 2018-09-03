@@ -296,7 +296,7 @@ public class GrowthManager : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
         {
-            CreateOccupant("hunter");
+            CreateAtRandomPosition("hunter");
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
