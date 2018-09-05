@@ -4533,7 +4533,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: If you this written here
+  m_Text: If you see this written here
 --- !u!114 &114394687264203894
 MonoBehaviour:
   m_ObjectHideFlags: 1
