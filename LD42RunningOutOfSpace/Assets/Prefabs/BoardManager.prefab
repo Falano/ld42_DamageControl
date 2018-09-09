@@ -581,6 +581,7 @@ MonoBehaviour:
     State: 6
     meshes:
     - {fileID: 4300002, guid: 61ec4afd63999494690fcf53721946fc, type: 3}
+    - {fileID: 4300002, guid: ff475e7991f41436984b1646d05dbaf7, type: 3}
     preys: 0400000005000000
     specialType: 0
     button: {fileID: 0}
@@ -641,6 +642,7 @@ MonoBehaviour:
     State: 7
     meshes:
     - {fileID: 4300002, guid: c4d9fb64e2888432d830117ccb430655, type: 3}
+    - {fileID: 4300002, guid: 491c1dd6321e340d79bb6d9c7dccbb5a, type: 3}
     preys: 010000000200000003000000040000000500000006000000
     specialType: 0
     button: {fileID: 0}
